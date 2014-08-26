@@ -214,5 +214,6 @@ public class ServerApiLiveTest extends BaseNovaApiLiveTest {
    private void checkServer(Server server) {
       checkResource(server);
       assertFalse(server.getAddresses().isEmpty());
+      assertNotNull(server.getAvailabilityZone());
    }
 }
