@@ -95,6 +95,7 @@ public class Server extends Resource {
       protected Date updated;
       protected Date created;
       protected String hostId;
+      protected String hostName;
       protected String accessIPv4;
       protected String accessIPv6;
       protected Server.Status status;
@@ -154,6 +155,14 @@ public class Server extends Resource {
        */
       public T hostId(String hostId) {
          this.hostId = hostId;
+         return self();
+      }
+
+      /**
+       * @see Server#getHostId()
+       */
+      public T hostName(String hostName) {
+         this.hostName = hostName;
          return self();
       }
 
@@ -262,7 +271,7 @@ public class Server extends Resource {
       }
 
       public Server build() {
-         return new Server(id, name, links, uuid, tenantId, userId, updated, created, hostId, accessIPv4, accessIPv6,
+         return new Server(id, name, links, uuid, tenantId, userId, updated, created, hostId, hostName, accessIPv4, accessIPv6,
                status, image, flavor, keyName, configDrive, addresses, metadata, extendedStatus,
                extendedAttributes, diskConfig, availabilityZone);
       }
@@ -275,6 +284,7 @@ public class Server extends Resource {
                .updated(in.getUpdated())
                .created(in.getCreated())
                .hostId(in.getHostId())
+               .hostName(in.getHostName())
                .accessIPv4(in.getAccessIPv4())
                .accessIPv6(in.getAccessIPv6())
                .status(in.getStatus())
@@ -306,6 +316,7 @@ public class Server extends Resource {
    private final Date updated;
    private final Date created;
    private final String hostId;
+   private final String hostName;
    private final String accessIPv4;
    private final String accessIPv6;
    private final Server.Status status;
@@ -324,10 +335,10 @@ public class Server extends Resource {
    private final String availabilityZone;
 
    @ConstructorProperties({
-         "id", "name", "links", "uuid", "tenant_id", "user_id", "updated", "created", "hostId", "accessIPv4", "accessIPv6", "status", "image", "flavor", "key_name", "config_drive", "addresses", "metadata", "extendedStatus", "extendedAttributes", "OS-DCF:diskConfig", "OS-EXT-AZ:availability_zone"
+         "id", "name", "links", "uuid", "tenant_id", "user_id", "updated", "created", "hostId", "OS-EXT-SRV-ATTR:host", "accessIPv4", "accessIPv6", "status", "image", "flavor", "key_name", "config_drive", "addresses", "metadata", "extendedStatus", "extendedAttributes", "OS-DCF:diskConfig", "OS-EXT-AZ:availability_zone"
    })
    protected Server(String id, @Nullable String name, java.util.Set<Link> links, @Nullable String uuid, String tenantId,
-                    String userId, @Nullable Date updated, Date created, @Nullable String hostId, @Nullable String accessIPv4,
+                    String userId, @Nullable Date updated, Date created, @Nullable String hostId, @Nullable String hostName, @Nullable String accessIPv4,
                     @Nullable String accessIPv6, Server.Status status, @Nullable Resource image, Resource flavor, @Nullable String keyName,
                     @Nullable String configDrive, Multimap<String, Address> addresses, Map<String, String> metadata,
                     @Nullable ServerExtendedStatus extendedStatus, @Nullable ServerExtendedAttributes extendedAttributes,
@@ -339,6 +350,7 @@ public class Server extends Resource {
       this.updated = updated;
       this.created = checkNotNull(created, "created");
       this.hostId = Strings.emptyToNull(hostId);
+      this.hostName = Strings.emptyToNull(hostName);
       this.accessIPv4 = Strings.emptyToNull(accessIPv4);
       this.accessIPv6 = Strings.emptyToNull(accessIPv6);
       this.status = checkNotNull(status, "status");
@@ -387,6 +399,11 @@ public class Server extends Resource {
    @Nullable
    public String getHostId() {
       return this.hostId;
+   }
+
+   @Nullable
+   public String getHostName() {
+      return hostName;
    }
 
    @Nullable
@@ -489,7 +506,7 @@ public class Server extends Resource {
    protected ToStringHelper string() {
       return super.string()
             .add("uuid", uuid).add("tenantId", tenantId).add("userId", userId).add("updated", updated).add("created", created)
-            .add("hostId", hostId).add("accessIPv4", accessIPv4).add("accessIPv6", accessIPv6).add("status", status).add("image", image)
+            .add("hostId", hostId).add("hostName", hostName).add("accessIPv4", accessIPv4).add("accessIPv6", accessIPv6).add("status", status).add("image", image)
             .add("flavor", flavor).add("keyName", keyName).add("configDrive", configDrive).add("addresses", addresses)
             .add("metadata", metadata).add("extendedStatus", extendedStatus).add("extendedAttributes", extendedAttributes)
             .add("diskConfig", diskConfig).add("availabilityZone",availabilityZone);
