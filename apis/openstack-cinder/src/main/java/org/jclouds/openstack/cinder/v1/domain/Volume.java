@@ -82,6 +82,7 @@ public class Volume {
       protected String name;
       protected String description;
       protected Map<String, String> metadata = ImmutableMap.of();
+      protected String tenantId;
    
       /** 
        * @see Volume#getId()
@@ -175,8 +176,16 @@ public class Volume {
          return self();
       }
 
+      /**
+       * @see Volume#getTenantId()
+       */
+      public T tenantId(String tenantId) {
+         this.tenantId = tenantId;
+         return self();
+      }
+
       public Volume build() {
-         return new Volume(id, status, size, zone, created, attachments, volumeType, snapshotId, name, description, metadata);
+         return new Volume(id, status, size, zone, created, attachments, volumeType, snapshotId, name, description, metadata, tenantId);
       }
       
       public T fromVolume(Volume in) {
@@ -191,7 +200,8 @@ public class Volume {
                   .snapshotId(in.getSnapshotId())
                   .name(in.getName())
                   .description(in.getDescription())
-                  .metadata(in.getMetadata());
+                  .metadata(in.getMetadata())
+                  .tenantId(in.getTenantId());
       }
    }
 
@@ -231,11 +241,13 @@ public class Volume {
    @Named("display_description")
    private final String description;
    private final Map<String, String> metadata;
+   @Named("os-vol-tenant-attr:tenant_id")
+   private final String tenantId;
 
    @ConstructorProperties({
-      "id", "status", "size", "availability_zone", "created_at", "attachments", "volume_type", "snapshot_id", "display_name", "display_description", "metadata"
+      "id", "status", "size", "availability_zone", "created_at", "attachments", "volume_type", "snapshot_id", "display_name", "display_description", "metadata", "os-vol-tenant-attr:tenant_id"
    })
-   protected Volume(String id, Volume.Status status, int size, String zone, Date created, @Nullable Set<VolumeAttachment> attachments, @Nullable String volumeType, @Nullable String snapshotId, @Nullable String name, @Nullable String description, @Nullable Map<String, String> metadata) {
+   protected Volume(String id, Volume.Status status, int size, String zone, Date created, @Nullable Set<VolumeAttachment> attachments, @Nullable String volumeType, @Nullable String snapshotId, @Nullable String name, @Nullable String description, @Nullable Map<String, String> metadata, @Nullable String tenantId) {
       this.id = checkNotNull(id, "id");
       this.status = checkNotNull(status, "status");
       this.size = size;
@@ -246,7 +258,9 @@ public class Volume {
       this.snapshotId = snapshotId;
       this.name = name;
       this.description = description;
-      this.metadata = metadata == null ? ImmutableMap.<String, String>of() : ImmutableMap.copyOf(metadata);      
+      this.metadata = metadata == null ? ImmutableMap.<String, String>of() : ImmutableMap.copyOf(metadata);
+      this.tenantId = tenantId;
+
    }
 
    /**
@@ -324,10 +338,18 @@ public class Volume {
    public Map<String, String> getMetadata() {
       return this.metadata;
    }
-   
+
+   /**
+    * @return the tenant id of this volume
+    */
+   @Nullable
+   public String getTenantId() {
+      return this.tenantId;
+   }
+
    @Override
    public int hashCode() {
-      return Objects.hashCode(id, status, size, zone, created, attachments, volumeType, snapshotId, name, description, metadata);
+      return Objects.hashCode(id, status, size, zone, created, attachments, volumeType, snapshotId, name, description, metadata, tenantId);
    }
 
    @Override
@@ -345,12 +367,13 @@ public class Volume {
                && Objects.equal(this.snapshotId, that.snapshotId)
                && Objects.equal(this.name, that.name)
                && Objects.equal(this.description, that.description)
-               && Objects.equal(this.metadata, that.metadata);
+               && Objects.equal(this.metadata, that.metadata)
+               && Objects.equal(this.tenantId, that.tenantId);
    }
    
    protected ToStringHelper string() {
       return Objects.toStringHelper(this)
-            .add("id", id).add("status", status).add("size", size).add("zone", zone).add("created", created).add("attachments", attachments).add("volumeType", volumeType).add("snapshotId", snapshotId).add("name", name).add("description", description).add("metadata", metadata);
+            .add("id", id).add("status", status).add("size", size).add("zone", zone).add("created", created).add("attachments", attachments).add("volumeType", volumeType).add("snapshotId", snapshotId).add("name", name).add("description", description).add("metadata", metadata).add("tenantId", tenantId);
    }
    
    @Override

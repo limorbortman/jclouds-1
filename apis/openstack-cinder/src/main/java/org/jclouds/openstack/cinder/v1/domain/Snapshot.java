@@ -51,6 +51,7 @@ public class Snapshot {
       protected Date created;
       protected String name;
       protected String description;
+      protected String projectId;
    
       /** 
        * @see Snapshot#getId()
@@ -108,8 +109,16 @@ public class Snapshot {
          return self();
       }
 
+      /**
+       * @see Snapshot#getProjectId()
+       */
+      public T projectId(String projectId) {
+         this.projectId = projectId;
+         return self();
+      }
+
       public Snapshot build() {
-         return new Snapshot(id, volumeId, status, size, created, name, description);
+         return new Snapshot(id, volumeId, status, size, created, name, description, projectId);
       }
       
       public T fromSnapshot(Snapshot in) {
@@ -120,7 +129,8 @@ public class Snapshot {
                   .size(in.getSize())
                   .created(in.getCreated())
                   .name(in.getName())
-                  .description(in.getDescription());
+                  .description(in.getDescription())
+                  .projectId(in.getProjectId());
       }
    }
 
@@ -142,11 +152,13 @@ public class Snapshot {
    private final String name;
    @Named("display_description")
    private final String description;
+   @Named("os-extended-snapshot-attributes:project_id")
+   private final String projectId;
 
    @ConstructorProperties({
-      "id", "volume_id", "status", "size", "created_at", "display_name", "display_description"
+      "id", "volume_id", "status", "size", "created_at", "display_name", "display_description", "os-extended-snapshot-attributes:project_id"
    })
-   protected Snapshot(String id, String volumeId, Volume.Status status, int size, @Nullable Date created, @Nullable String name, @Nullable String description) {
+   protected Snapshot(String id, String volumeId, Volume.Status status, int size, @Nullable Date created, @Nullable String name, @Nullable String description, @Nullable String projectId) {
       this.id = checkNotNull(id, "id");
       this.volumeId = checkNotNull(volumeId, "volumeId");
       this.status = checkNotNull(status, "status");
@@ -154,6 +166,7 @@ public class Snapshot {
       this.created = created;
       this.name = name;
       this.description = description;
+      this.projectId = projectId;
    }
 
    /**
@@ -208,9 +221,17 @@ public class Snapshot {
       return this.description;
    }
 
+   /**
+    * @return the project id of this snapshot - as displayed in the openstack console
+    */
+   @Nullable
+   public String getProjectId() {
+      return this.projectId;
+   }
+
    @Override
    public int hashCode() {
-      return Objects.hashCode(id, volumeId, status, size, created, name, description);
+      return Objects.hashCode(id, volumeId, status, size, created, name, description, projectId);
    }
 
    @Override
@@ -224,12 +245,13 @@ public class Snapshot {
                && Objects.equal(this.size, that.size)
                && Objects.equal(this.created, that.created)
                && Objects.equal(this.name, that.name)
-               && Objects.equal(this.description, that.description);
+               && Objects.equal(this.description, that.description)
+               && Objects.equal(this.projectId, that.projectId);
    }
    
    protected ToStringHelper string() {
       return Objects.toStringHelper(this)
-            .add("id", id).add("volumeId", volumeId).add("status", status).add("size", size).add("created", created).add("name", name).add("description", description);
+            .add("id", id).add("volumeId", volumeId).add("status", status).add("size", size).add("created", created).add("name", name).add("description", description).add("projectId", projectId);
    }
    
    @Override
