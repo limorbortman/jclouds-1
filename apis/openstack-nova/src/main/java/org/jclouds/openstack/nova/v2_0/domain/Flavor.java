@@ -56,6 +56,7 @@ public class Flavor extends Resource {
       protected String swap;
       protected Double rxtxFactor;
       protected Integer ephemeral;
+      protected Boolean isPublic;
    
       /** 
        * @see Flavor#getRam()
@@ -105,8 +106,16 @@ public class Flavor extends Resource {
          return self();
       }
 
+      /**
+       * @see Flavor#isPublic
+       */
+      public T isPublic(Boolean isPublic) {
+         this.isPublic = isPublic;
+         return self();
+      }
+
       public Flavor build() {
-         return new Flavor(id, name, links, ram, disk, vcpus, swap, rxtxFactor, ephemeral);
+         return new Flavor(id, name, links, ram, disk, vcpus, swap, rxtxFactor, ephemeral, isPublic);
       }
       
       public T fromFlavor(Flavor in) {
@@ -116,7 +125,8 @@ public class Flavor extends Resource {
                   .vcpus(in.getVcpus())
                   .swap(in.getSwap().orNull())
                   .rxtxFactor(in.getRxtxFactor().orNull())
-                  .ephemeral(in.getEphemeral().orNull());
+                  .ephemeral(in.getEphemeral().orNull())
+                  .isPublic(in.getPublic().orNull());
       }
    }
 
@@ -135,12 +145,14 @@ public class Flavor extends Resource {
    private final Optional<Double> rxtxFactor;
    @Named("OS-FLV-EXT-DATA:ephemeral")
    private final Optional<Integer> ephemeral;
+   @Named("os-flavor-access:is_public")
+   protected Optional<Boolean> isPublic;
 
    @ConstructorProperties({
-      "id", "name", "links", "ram", "disk", "vcpus", "swap", "rxtx_factor", "OS-FLV-EXT-DATA:ephemeral"
+      "id", "name", "links", "ram", "disk", "vcpus", "swap", "rxtx_factor", "OS-FLV-EXT-DATA:ephemeral", "os-flavor-access:is_public"
    })
    protected Flavor(String id, String name, java.util.Set<Link> links, int ram, int disk, int vcpus,
-                    @Nullable String swap, @Nullable Double rxtxFactor, @Nullable Integer ephemeral) {
+                    @Nullable String swap, @Nullable Double rxtxFactor, @Nullable Integer ephemeral, @Nullable Boolean isPublic) {
       super(id, checkNotNull(name, "name"), links);
       checkArgument(ram > 0, "Value of ram has to greater than 0");
       checkArgument(vcpus > 0,  "Value of vcpus has to greater than 0");
@@ -150,6 +162,7 @@ public class Flavor extends Resource {
       this.swap = Optional.fromNullable(swap);
       this.rxtxFactor = Optional.fromNullable(rxtxFactor);
       this.ephemeral = Optional.fromNullable(ephemeral);
+      this.isPublic = Optional.fromNullable(isPublic);
    }
    
    public int getRam() {
@@ -184,9 +197,13 @@ public class Flavor extends Resource {
       return this.ephemeral;
    }
 
+   public Optional<Boolean> getPublic() {
+      return this.isPublic;
+   }
+
    @Override
    public int hashCode() {
-      return Objects.hashCode(ram, disk, vcpus, swap, rxtxFactor, ephemeral);
+      return Objects.hashCode(ram, disk, vcpus, swap, rxtxFactor, ephemeral, isPublic);
    }
 
    @Override
@@ -199,12 +216,13 @@ public class Flavor extends Resource {
                && Objects.equal(this.vcpus, that.vcpus)
                && Objects.equal(this.swap, that.swap)
                && Objects.equal(this.rxtxFactor, that.rxtxFactor)
-               && Objects.equal(this.ephemeral, that.ephemeral);
+               && Objects.equal(this.ephemeral, that.ephemeral)
+               && Objects.equal(this.isPublic, that.isPublic);
    }
    
    protected ToStringHelper string() {
       return super.string()
-            .add("ram", ram).add("disk", disk).add("vcpus", vcpus).add("swap", swap).add("rxtxFactor", rxtxFactor).add("ephemeral", ephemeral);
+            .add("ram", ram).add("disk", disk).add("vcpus", vcpus).add("swap", swap).add("rxtxFactor", rxtxFactor).add("ephemeral", ephemeral).add("isPublic", isPublic);
    }
    
 }
