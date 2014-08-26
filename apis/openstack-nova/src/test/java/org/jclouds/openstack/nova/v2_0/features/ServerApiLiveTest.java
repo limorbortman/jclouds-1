@@ -24,8 +24,10 @@ import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.FluentIterable;
 import org.jclouds.http.HttpResponseException;
 import org.jclouds.openstack.nova.v2_0.domain.Network;
+import org.jclouds.openstack.nova.v2_0.domain.SecurityGroup;
 import org.jclouds.openstack.nova.v2_0.domain.Server;
 import org.jclouds.openstack.nova.v2_0.domain.ServerCreated;
 import org.jclouds.openstack.nova.v2_0.extensions.AvailabilityZoneApi;
@@ -96,6 +98,23 @@ public class ServerApiLiveTest extends BaseNovaApiLiveTest {
          } finally {
             if (serverId != null) {
                serverApi.delete(serverId);
+            }
+         }
+      }
+   }
+
+   @Test(description = "GET /v${apiVersion}/{tenantId}/servers/{id}/os-security-groups")
+   public void testListSecurityGroupsByServer() {
+      for (String zoneId : zones) {
+         ServerApi serverApi = api.getServerApiForZone(zoneId);
+         for (Server server : serverApi.listInDetail().concat()) {
+            FluentIterable<? extends SecurityGroup> listSecurityGroupsForServer = serverApi.listSecurityGroupsByServer(server.getId());
+            assertNotNull(listSecurityGroupsForServer);
+            assertTrue(listSecurityGroupsForServer.size() > 0);
+            for (SecurityGroup securityGroup : listSecurityGroupsForServer) {
+               assertTrue(securityGroup.getId() != null && securityGroup.getId().trim().length() > 0);
+               assertTrue(securityGroup.getName() != null && securityGroup.getName().trim().length() > 0);
+               assertTrue(securityGroup.getRules() != null && securityGroup.getRules().size() > 0);
             }
          }
       }
