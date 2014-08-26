@@ -52,4 +52,13 @@ public class InterfaceApiLiveTest extends BaseNovaApiLiveTest {
          assertEquals(inListenableFuture.getNetId(), netId);
       }
    }
+
+   @Test(description = "DELETE /v${apiVersion}/{tenantId}/servers/{server_id}/os-interface/{port_id}\"")
+   public void testDetachIInterfaces() throws Exception {
+      for (String zoneId : zones) {
+         InterfaceApi interfaceApi = api.getInterfaceApiForZone(zoneId).get();
+         interfaceApi.detachInterface("532eff71-c523-4380-aa24-e39695c983a2", "2839d4cd-0f99-4742-98ce-0585605d0222");
+      }
+   }
+
 }
