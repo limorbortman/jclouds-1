@@ -40,6 +40,7 @@ import org.jclouds.openstack.nova.v2_0.extensions.VolumeAttachmentApi;
 import org.jclouds.openstack.nova.v2_0.extensions.VolumeTypeApi;
 import org.jclouds.openstack.nova.v2_0.features.FlavorApi;
 import org.jclouds.openstack.nova.v2_0.features.ImageApi;
+import org.jclouds.openstack.nova.v2_0.features.InterfaceApi;
 import org.jclouds.openstack.nova.v2_0.features.ServerApi;
 import org.jclouds.openstack.v2_0.features.ExtensionApi;
 import org.jclouds.rest.annotations.Delegate;
@@ -201,4 +202,12 @@ public interface NovaApi extends Closeable {
    @Delegate
    Optional<? extends ConsolesApi> getConsolesExtensionForZone(
          @EndpointParam(parser = ZoneToEndpoint.class) @Nullable String zone);
+
+   /**
+    * Provides synchronous access to interface Type features.
+    */
+   @Delegate
+   Optional<? extends InterfaceApi> getInterfaceApiForZone(
+         @EndpointParam(parser = ZoneToEndpoint.class) @Nullable String zone);
+
 }
