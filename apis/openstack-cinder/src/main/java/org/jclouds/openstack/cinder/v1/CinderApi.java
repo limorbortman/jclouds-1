@@ -21,6 +21,7 @@ import java.util.Set;
 import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.location.Zone;
 import org.jclouds.location.functions.ZoneToEndpoint;
+import org.jclouds.openstack.cinder.v1.extentions.AvailabilityZoneApi;
 import org.jclouds.openstack.cinder.v1.features.QuotaApi;
 import org.jclouds.openstack.cinder.v1.features.SnapshotApi;
 import org.jclouds.openstack.cinder.v1.features.VolumeApi;
@@ -77,6 +78,13 @@ public interface CinderApi extends Closeable {
     */
    @Delegate
    QuotaApi getQuotaApi(
+         @EndpointParam(parser = ZoneToEndpoint.class) @Nullable String zone);
+
+   /**
+    * provides synchronous access to availability zone features
+    */
+   @Delegate
+   AvailabilityZoneApi getAvailabilityZoneApi(
          @EndpointParam(parser = ZoneToEndpoint.class) @Nullable String zone);
 
 }
