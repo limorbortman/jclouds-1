@@ -23,6 +23,7 @@ import org.jclouds.rest.annotations.RequestFilters;
 import org.jclouds.rest.annotations.SelectJson;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -43,4 +44,9 @@ public interface InterfaceApi {
    @RequestFilters(AuthenticateRequest.class)
    InterfaceAttachment attachInterface(@PathParam("server_id") String serverId, AttachInterfaceOptions... options);
 
+   @DELETE
+   @Consumes(MediaType.APPLICATION_JSON)
+   @Path("/{server_id}/os-interface/{port_id}")
+   @RequestFilters(AuthenticateRequest.class)
+   void detachInterface(@PathParam("server_id") String serverId, @PathParam("port_id") String portId);
 }
