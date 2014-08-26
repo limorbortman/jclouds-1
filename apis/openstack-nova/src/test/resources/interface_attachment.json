@@ -1,0 +1,14 @@
+{
+    "interfaceAttachment": {
+        "port_state": "DOWN",
+        "fixed_ips": [
+            {
+                "subnet_id": "09226399-c417-476c-85bb-3ca176e9823a",
+                "ip_address": "12.40.7.6"
+            }
+        ],
+        "port_id": "2839d4cd-0f99-4742-98ce-0585605d0222",
+        "net_id": "1017d1c5-963b-4ae3-b40f-2e8266287249",
+        "mac_addr": "fa:16:3e:28:c6:34"
+    }
+}
