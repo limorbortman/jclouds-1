@@ -31,6 +31,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.google.common.collect.FluentIterable;
 import org.jclouds.Fallbacks.AbsentOn403Or404Or500;
 import org.jclouds.Fallbacks.EmptyMapOnNotFoundOr404;
 import org.jclouds.Fallbacks.EmptyPagedIterableOnNotFoundOr404;
@@ -40,6 +41,7 @@ import org.jclouds.Fallbacks.VoidOnNotFoundOr404;
 import org.jclouds.collect.PagedIterable;
 import org.jclouds.fallbacks.MapHttp4xxCodesToExceptions;
 import org.jclouds.javax.annotation.Nullable;
+import org.jclouds.openstack.nova.v2_0.domain.SecurityGroup;
 import org.jclouds.openstack.v2_0.domain.PaginatedCollection;
 import org.jclouds.openstack.keystone.v2_0.KeystoneFallbacks.EmptyPaginatedCollectionOnNotFoundOr404;
 import org.jclouds.openstack.keystone.v2_0.filters.AuthenticateRequest;
@@ -126,6 +128,14 @@ public interface ServerApi {
    @Fallback(NullOnNotFoundOr404.class)
    @Nullable
    Server get(@PathParam("id") String id);
+
+   @Named("security_groups:get")
+   @GET
+   @Consumes(MediaType.APPLICATION_JSON)
+   @Path("/{id}/os-security-groups")
+   @SelectJson("security_groups")
+   @Fallback(NullOnNotFoundOr404.class)
+   FluentIterable<? extends SecurityGroup> listSecurityGroupsByServer(@PathParam("id") String id);
 
    /**
     * Create a new server

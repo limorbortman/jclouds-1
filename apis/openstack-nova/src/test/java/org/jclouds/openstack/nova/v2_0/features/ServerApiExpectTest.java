@@ -30,6 +30,7 @@ import org.jclouds.openstack.nova.v2_0.options.RebuildServerOptions;
 import org.jclouds.openstack.nova.v2_0.parse.ParseCreatedServerTest;
 import org.jclouds.openstack.nova.v2_0.parse.ParseMetadataListTest;
 import org.jclouds.openstack.nova.v2_0.parse.ParseMetadataUpdateTest;
+import org.jclouds.openstack.nova.v2_0.parse.ParseSecurityGroupListTest;
 import org.jclouds.openstack.nova.v2_0.parse.ParseServerDetailsStatesTest;
 import org.jclouds.openstack.nova.v2_0.parse.ParseServerDiagnostics;
 import org.jclouds.openstack.nova.v2_0.parse.ParseServerListTest;
@@ -731,5 +732,27 @@ public class ServerApiExpectTest extends BaseNovaApiExpectTest {
         assertTrue(!requestsSendResponses(keystoneAuthWithUsernameAndPasswordAndTenantName, responseWithKeystoneAccess, getDiagnostics,
             HttpResponse.builder().statusCode(statusCode).build()).getServerApiForZone("az-1.region-a.geo-1").getDiagnostics(serverId).isPresent());
       }
+   }
+
+   public void testListSecurityGroupsByServer() {
+      String serverId = "123";
+      String tenantId = "3456";
+      HttpRequest listSecurityGroupsByServer = HttpRequest
+            .builder()
+            .method("GET")
+            .endpoint("https://az-1.region-a.geo-1.compute.hpcloudsvc.com/v2/" + tenantId + "/servers/" + serverId + "/os-security-groups")
+            .addHeader("Accept", "application/json")
+            .addHeader("X-Auth-Token", authToken)
+            .build();
+
+      HttpResponse listSecurityGroupsByServerResponse = HttpResponse.builder().statusCode(200)
+            .payload(payloadFromResource("/securitygroup_list.json")).build();
+
+      NovaApi apiWhenServerExists = requestsSendResponses(keystoneAuthWithUsernameAndPasswordAndTenantName,
+            responseWithKeystoneAccess, listSecurityGroupsByServer, listSecurityGroupsByServerResponse);
+
+      assertEquals(apiWhenServerExists.getServerApiForZone("az-1.region-a.geo-1").listSecurityGroupsByServer(serverId).toString(),
+            new ParseSecurityGroupListTest().expected().toString());
+
    }
 }
