@@ -45,6 +45,7 @@
     <module>openstack-keystone</module>
     <module>openstack-cinder</module>
     <module>openstack-nova</module>
+    <module>openstack-heat</module>
     <module>openstack-nova-ec2</module>
     <module>openstack-trove</module>
     <module>cloudfiles</module>
