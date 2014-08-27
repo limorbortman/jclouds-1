@@ -32,6 +32,7 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.google.common.collect.ImmutableList;
 import org.jclouds.http.HttpRequest;
 import org.jclouds.openstack.nova.v2_0.domain.Network;
 import org.jclouds.rest.MapBinder;
@@ -108,6 +109,7 @@ public class CreateServerOptions implements MapBinder {
    private Set<Network> novaNetworks = ImmutableSet.of();
    private String availabilityZone;
    private boolean configDrive;
+   private List<Map<String, String>> blockDeviceMapping = Lists.newArrayList();
 
    @Override
    public boolean equals(Object object) {
@@ -121,7 +123,8 @@ public class CreateServerOptions implements MapBinder {
                && equal(adminPass, other.adminPass) && equal(diskConfig, other.diskConfig)
                && equal(adminPass, other.adminPass) && equal(networks, other.networks)
                && equal(availabilityZone, other.availabilityZone)
-               && equal(configDrive, other.configDrive);
+               && equal(configDrive, other.configDrive)
+               && equal(blockDeviceMapping, other.blockDeviceMapping);
       } else {
          return false;
       }
@@ -129,7 +132,7 @@ public class CreateServerOptions implements MapBinder {
 
    @Override
    public int hashCode() {
-      return Objects.hashCode(keyName, securityGroupNames, metadata, personality, adminPass, networks, availabilityZone, configDrive);
+      return Objects.hashCode(keyName, securityGroupNames, metadata, personality, adminPass, networks, availabilityZone, configDrive, blockDeviceMapping);
    }
 
    protected ToStringHelper string() {
@@ -148,6 +151,8 @@ public class CreateServerOptions implements MapBinder {
       toString.add("userData", userData == null ? null : new String(userData));
       if (!networks.isEmpty())
          toString.add("networks", networks);
+      if (blockDeviceMapping.size() > 0)
+         toString.add("block_device_mapping", blockDeviceMapping);
       toString.add("availability_zone", availabilityZone == null ? null : availabilityZone);
       toString.add("configDrive", configDrive);
       return toString;
@@ -176,10 +181,12 @@ public class CreateServerOptions implements MapBinder {
       Set<Map<String, String>> networks;
       @Named("config_drive")
       String configDrive;
+      @Named("block_device_mapping")
+      List<Map<String, String>> blockDeviceMapping;
 
       private ServerRequest(String name, String imageRef, String flavorRef) {
          this.name = name;
-         this.imageRef = imageRef;
+         this.imageRef = imageRef == null ? "" : imageRef;
          this.flavorRef = flavorRef;
       }
 
@@ -188,7 +195,7 @@ public class CreateServerOptions implements MapBinder {
    @Override
    public <R extends HttpRequest> R bindToRequest(R request, Map<String, Object> postParams) {
       ServerRequest server = new ServerRequest(checkNotNull(postParams.get("name"), "name parameter not present").toString(),
-            checkNotNull(postParams.get("imageRef"), "imageRef parameter not present").toString(),
+            (String)postParams.get("imageRef"),
             checkNotNull(postParams.get("flavorRef"), "flavorRef parameter not present").toString());
       if (metadata.size() > 0)
          server.metadata = metadata;
@@ -235,6 +242,10 @@ public class CreateServerOptions implements MapBinder {
          for (String network : networks) {
             server.networks.add(ImmutableMap.of("uuid", network));
          }
+      }
+
+      if (blockDeviceMapping != null && blockDeviceMapping.size() > 0) {
+         server.blockDeviceMapping = blockDeviceMapping;
       }
 
       return bindToRequest(request, ImmutableMap.of("server", server));
@@ -303,6 +314,28 @@ public class CreateServerOptions implements MapBinder {
       this.metadata = ImmutableMap.copyOf(metadata);
       return this;
    }
+
+   /**
+    * Custom cloud server block_device_mapping can also be supplied at launch time.
+    * The Server can be supplied with multiple additional storage and boot storage options.
+    */
+   public CreateServerOptions blockDeviceMapping(List<Map<String, String>> blockDeviceMapping) {
+      checkNotNull(blockDeviceMapping, "block_device_mapping");
+      for (Map<String, String> blockDeviceMappingsIterator : blockDeviceMapping) {
+         for (Entry<String, String> entry : blockDeviceMappingsIterator.entrySet()) {
+            checkArgument(
+                  entry.getKey().getBytes().length < 255,
+                  String.format("maximum length of block_device_mapping key is 255 bytes.  Key specified %s is %d bytes",
+                        entry.getKey(), entry.getKey().getBytes().length)
+            );
+         }
+      }
+      this.blockDeviceMapping = blockDeviceMapping == null ? ImmutableList.<Map<String, String>>of() :
+            ImmutableList.copyOf(checkNotNull(blockDeviceMapping, "block_device_mapping "));
+      return this;
+   }
+
+
 
    /**
     * Custom user-data can be also be supplied at launch time.
@@ -543,6 +576,14 @@ public class CreateServerOptions implements MapBinder {
       public static CreateServerOptions availabilityZone(String availabilityZone) {
          CreateServerOptions options = new CreateServerOptions();
          return options.availabilityZone(availabilityZone);
+      }
+
+      /**
+       * @see CreateServerOptions#blockDeviceMapping(java.util.List)
+       */
+      public static CreateServerOptions blockDeviceMapping(List<Map<String, String>> blockDeviceMapping) {
+         CreateServerOptions options = new CreateServerOptions();
+         return options.blockDeviceMapping(blockDeviceMapping);
       }
    }
 

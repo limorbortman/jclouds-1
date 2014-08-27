@@ -20,6 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.beans.ConstructorProperties;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -69,7 +70,7 @@ public class ServerWithSecurityGroups extends Server {
       public ServerWithSecurityGroups build() {
          return new ServerWithSecurityGroups(id, name, links, uuid, tenantId, userId, updated, created, hostId, hostName,
                accessIPv4, accessIPv6, status, image, flavor, keyName, configDrive, addresses,
-               metadata, extendedStatus, extendedAttributes, diskConfig, securityGroupNames, availabilityZone);
+               metadata, extendedStatus, extendedAttributes, diskConfig, securityGroupNames, availabilityZone, blockDeviceMapping);
       }
       
       public T fromServerWithSecurityGroups(ServerWithSecurityGroups in) {
@@ -89,16 +90,16 @@ public class ServerWithSecurityGroups extends Server {
    private final Set<String> securityGroupNames;
 
    @ConstructorProperties({
-      "id", "name", "links", "uuid", "tenant_id", "user_id", "updated", "created", "hostId", "OS-EXT-SRV-ATTR:host", "accessIPv4", "accessIPv6", "status", "image", "flavor", "key_name", "config_drive", "addresses", "metadata", "extendedStatus", "extendedAttributes", "OS-DCF:diskConfig", "security_groups", "OS-EXT-AZ:availability_zone"
+      "id", "name", "links", "uuid", "tenant_id", "user_id", "updated", "created", "hostId", "OS-EXT-SRV-ATTR:host", "accessIPv4", "accessIPv6", "status", "image", "flavor", "key_name", "config_drive", "addresses", "metadata", "extendedStatus", "extendedAttributes", "OS-DCF:diskConfig", "security_groups", "OS-EXT-AZ:availability_zone", "blockDeviceMapping"
    })
    protected ServerWithSecurityGroups(String id, @Nullable String name, Set<Link> links, @Nullable String uuid,
                                       String tenantId, String userId, Date updated, Date created, @Nullable String hostId, @Nullable String hostName,
-                                      @Nullable String accessIPv4, @Nullable String accessIPv6, Server.Status status, Resource image,
+                                      @Nullable String accessIPv4, @Nullable String accessIPv6, Server.Status status, @Nullable Resource image,
                                       Resource flavor, @Nullable String keyName, @Nullable String configDrive,
                                       Multimap<String, Address> addresses, Map<String, String> metadata, 
                                       @Nullable ServerExtendedStatus extendedStatus, @Nullable ServerExtendedAttributes extendedAttributes,
-                                      @Nullable String diskConfig, Set<String> securityGroupNames, @Nullable String availabilityZone) {
-      super(id, name, links, uuid, tenantId, userId, updated, created, hostId, hostName, accessIPv4, accessIPv6, status, image, flavor, keyName, configDrive, addresses, metadata, extendedStatus, extendedAttributes, diskConfig, availabilityZone);
+                                      @Nullable String diskConfig, Set<String> securityGroupNames, @Nullable String availabilityZone, @Nullable List<Map<String, String>> blockDeviceMapping) {
+      super(id, name, links, uuid, tenantId, userId, updated, created, hostId, hostName, accessIPv4, accessIPv6, status, image, flavor, keyName, configDrive, addresses, metadata, extendedStatus, extendedAttributes, diskConfig, availabilityZone, blockDeviceMapping);
       this.securityGroupNames = ImmutableSet.copyOf(checkNotNull(securityGroupNames, "securityGroupNames"));      
    }
 
