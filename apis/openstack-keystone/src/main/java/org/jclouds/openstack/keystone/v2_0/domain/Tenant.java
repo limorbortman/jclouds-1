@@ -147,7 +147,7 @@ public class Tenant {
 
    @Override
    public int hashCode() {
-      return Objects.hashCode(id, name, description);
+      return Objects.hashCode(id, name, description, enabled);
    }
 
    @Override
