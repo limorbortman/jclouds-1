@@ -132,5 +132,5 @@ public interface FlavorApi {
    @DELETE
    @Path("/{id}")
    @Fallback(VoidOnNotFoundOr404.class)
-   void delete(@PathParam("id") String id);
+   boolean delete(@PathParam("id") String id);
 }
