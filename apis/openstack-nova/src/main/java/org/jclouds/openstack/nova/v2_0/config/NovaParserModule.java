@@ -19,6 +19,7 @@ package org.jclouds.openstack.nova.v2_0.config;
 import java.beans.ConstructorProperties;
 import java.lang.reflect.Type;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -149,27 +150,27 @@ public class NovaParserModule extends AbstractModule {
 
       private static class ServerInternal extends Server {
          @ConstructorProperties({
-               "id", "name", "links", "uuid", "tenant_id", "user_id", "updated", "created", "hostId", "OS-EXT-SRV-ATTR:host", "accessIPv4", "accessIPv6", "status", "image", "flavor", "key_name", "config_drive", "addresses", "metadata", "extendedStatus", "extendedAttributes", "OS-DCF:diskConfig", "OS-EXT-AZ:availability_zone"
+               "id", "name", "links", "uuid", "tenant_id", "user_id", "updated", "created", "hostId", "OS-EXT-SRV-ATTR:host", "accessIPv4", "accessIPv6", "status", "image", "flavor", "key_name", "config_drive", "addresses", "metadata", "extendedStatus", "extendedAttributes", "OS-DCF:diskConfig", "OS-EXT-AZ:availability_zone", "blockDeviceMapping"
          })
          protected ServerInternal(String id, @Nullable String name, java.util.Set<Link> links, @Nullable String uuid, String tenantId,
                                   String userId, Date updated, Date created, @Nullable String hostId, @Nullable String hostName, @Nullable String accessIPv4,
-                                  @Nullable String accessIPv6, Server.Status status, Resource image, Resource flavor, @Nullable String keyName,
+                                  @Nullable String accessIPv6, Server.Status status, @Nullable Resource image, Resource flavor, @Nullable String keyName,
                                   @Nullable String configDrive, Multimap<String, Address> addresses, Map<String, String> metadata,
-                                  @Nullable ServerExtendedStatus extendedStatus, @Nullable ServerExtendedAttributes extendedAttributes, @Nullable String diskConfig, @Nullable String availabilityZone) {
-            super(id, name, links, uuid, tenantId, userId, updated, created, hostId, hostName, accessIPv4, accessIPv6, status, image, flavor, keyName, configDrive, addresses, metadata, extendedStatus, extendedAttributes, diskConfig, availabilityZone);
+                                  @Nullable ServerExtendedStatus extendedStatus, @Nullable ServerExtendedAttributes extendedAttributes, @Nullable String diskConfig, @Nullable String availabilityZone, @Nullable List<Map<String, String>> blockDeviceMapping) {
+            super(id, name, links, uuid, tenantId, userId, updated, created, hostId, hostName, accessIPv4, accessIPv6, status, image, flavor, keyName, configDrive, addresses, metadata, extendedStatus, extendedAttributes, diskConfig, availabilityZone, blockDeviceMapping);
          }
       }
 
       private static class ServerInternalWithoutImage extends Server {
          @ConstructorProperties({
-               "id", "name", "links", "uuid", "tenant_id", "user_id", "updated", "created", "hostId", "OS-EXT-SRV-ATTR:host", "accessIPv4", "accessIPv6", "status", "flavor", "key_name", "config_drive", "addresses", "metadata", "extendedStatus", "extendedAttributes", "OS-DCF:diskConfig", "OS-EXT-AZ:availability_zone"
+               "id", "name", "links", "uuid", "tenant_id", "user_id", "updated", "created", "hostId", "OS-EXT-SRV-ATTR:host", "accessIPv4", "accessIPv6", "status", "flavor", "key_name", "config_drive", "addresses", "metadata", "extendedStatus", "extendedAttributes", "OS-DCF:diskConfig", "OS-EXT-AZ:availability_zone", "blockDeviceMapping"
          })
          protected ServerInternalWithoutImage(String id, @Nullable String name, java.util.Set<Link> links, @Nullable String uuid, String tenantId,
                                   String userId, Date updated, Date created, @Nullable String hostId, @Nullable String hostName, @Nullable String accessIPv4,
                                   @Nullable String accessIPv6, Server.Status status, Resource flavor, @Nullable String keyName,
                                   @Nullable String configDrive, Multimap<String, Address> addresses, Map<String, String> metadata,
-                                  @Nullable ServerExtendedStatus extendedStatus, @Nullable ServerExtendedAttributes extendedAttributes, @Nullable String diskConfig, @Nullable String availabilityZone) {
-            super(id, name, links, uuid, tenantId, userId, updated, created, hostId, hostName, accessIPv4, accessIPv6, status, null, flavor, keyName, configDrive, addresses, metadata, extendedStatus, extendedAttributes, diskConfig, availabilityZone);
+                                  @Nullable ServerExtendedStatus extendedStatus, @Nullable ServerExtendedAttributes extendedAttributes, @Nullable String diskConfig, @Nullable String availabilityZone, @Nullable List<Map<String, String>> blockDeviceMapping) {
+            super(id, name, links, uuid, tenantId, userId, updated, created, hostId, hostName, accessIPv4, accessIPv6, status, null, flavor, keyName, configDrive, addresses, metadata, extendedStatus, extendedAttributes, diskConfig, availabilityZone, blockDeviceMapping);
          }
       }
    }

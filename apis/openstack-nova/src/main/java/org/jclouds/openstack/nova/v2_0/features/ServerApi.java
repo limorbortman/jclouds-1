@@ -155,7 +155,7 @@ public interface ServerApi {
    @POST
    @Unwrap
    @MapBinder(CreateServerOptions.class)
-   ServerCreated create(@PayloadParam("name") String name, @PayloadParam("imageRef") String imageRef,
+   ServerCreated create(@PayloadParam("name") String name, @Nullable @PayloadParam("imageRef") String imageRef,
          @PayloadParam("flavorRef") String flavorRef, CreateServerOptions... options);
 
    /**

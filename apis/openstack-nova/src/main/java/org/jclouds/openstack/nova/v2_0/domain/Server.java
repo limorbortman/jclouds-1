@@ -20,10 +20,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.beans.ConstructorProperties;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Named;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.openstack.v2_0.domain.Link;
 import org.jclouds.openstack.v2_0.domain.Resource;
@@ -36,7 +39,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 
 /**
- * A server is a virtual machine instance in the compute system. Flavor and image are requisite
+ * A server is a virtual machine instance in the compute system. Flavor and either image or storage are requisite
  * elements when creating a server.
  *
  * @see <a href=
@@ -109,6 +112,7 @@ public class Server extends Resource {
       protected ServerExtendedAttributes extendedAttributes;
       protected String diskConfig;
       protected String availabilityZone;
+      protected List<Map<String, String>> blockDeviceMapping = Lists.newArrayList();
 
       /**
        * @see Server#getUuid()
@@ -270,10 +274,18 @@ public class Server extends Resource {
          return self();
       }
 
+      /**
+       * @see Server#getBlockDeviceMapping()
+       */
+      public T blockDeviceMapping(List<Map<String, String>> blockDeviceMapping) {
+         this.blockDeviceMapping = blockDeviceMapping == null ? ImmutableList.<Map<String, String>>of() : ImmutableList.copyOf(checkNotNull(blockDeviceMapping, "block_device_mapping"));
+         return self();
+      }
+
       public Server build() {
          return new Server(id, name, links, uuid, tenantId, userId, updated, created, hostId, hostName, accessIPv4, accessIPv6,
                status, image, flavor, keyName, configDrive, addresses, metadata, extendedStatus,
-               extendedAttributes, diskConfig, availabilityZone);
+               extendedAttributes, diskConfig, availabilityZone, blockDeviceMapping);
       }
 
       public T fromServer(Server in) {
@@ -297,7 +309,8 @@ public class Server extends Resource {
                .extendedStatus(in.getExtendedStatus().orNull())
                .extendedAttributes(in.getExtendedAttributes().orNull())
                .diskConfig(in.getDiskConfig().orNull())
-               .availabilityZone(in.getAvailabilityZone());
+               .availabilityZone(in.getAvailabilityZone())
+               .blockDeviceMapping(in.getBlockDeviceMapping());
       }
    }
 
@@ -333,16 +346,18 @@ public class Server extends Resource {
    @Named("OS-DCF:diskConfig")
    private final Optional<String> diskConfig;
    private final String availabilityZone;
+   @Named("block_Device_mapping")
+   private final List<Map<String, String>> blockDeviceMapping;
 
    @ConstructorProperties({
-         "id", "name", "links", "uuid", "tenant_id", "user_id", "updated", "created", "hostId", "OS-EXT-SRV-ATTR:host", "accessIPv4", "accessIPv6", "status", "image", "flavor", "key_name", "config_drive", "addresses", "metadata", "extendedStatus", "extendedAttributes", "OS-DCF:diskConfig", "OS-EXT-AZ:availability_zone"
+         "id", "name", "links", "uuid", "tenant_id", "user_id", "updated", "created", "hostId", "OS-EXT-SRV-ATTR:host", "accessIPv4", "accessIPv6", "status", "image", "flavor", "key_name", "config_drive", "addresses", "metadata", "extendedStatus", "extendedAttributes", "OS-DCF:diskConfig", "OS-EXT-AZ:availability_zone", "block_device_mapping"
    })
    protected Server(String id, @Nullable String name, java.util.Set<Link> links, @Nullable String uuid, String tenantId,
                     String userId, @Nullable Date updated, Date created, @Nullable String hostId, @Nullable String hostName, @Nullable String accessIPv4,
                     @Nullable String accessIPv6, Server.Status status, @Nullable Resource image, Resource flavor, @Nullable String keyName,
                     @Nullable String configDrive, Multimap<String, Address> addresses, Map<String, String> metadata,
                     @Nullable ServerExtendedStatus extendedStatus, @Nullable ServerExtendedAttributes extendedAttributes,
-                    @Nullable String diskConfig, @Nullable String availabilityZone) {
+                    @Nullable String diskConfig, @Nullable String availabilityZone, @Nullable List<Map<String, String>> blockDeviceMapping) {
       super(id, name, links);
       this.uuid = uuid;
       this.tenantId = checkNotNull(tenantId, "tenantId");
@@ -364,6 +379,7 @@ public class Server extends Resource {
       this.extendedAttributes = Optional.fromNullable(extendedAttributes);
       this.diskConfig = Optional.fromNullable(diskConfig);
       this.availabilityZone = availabilityZone;
+      this.blockDeviceMapping = blockDeviceMapping == null ? ImmutableList.<Map<String, String>>of() : ImmutableList.copyOf(checkNotNull(blockDeviceMapping, "block_device_mapping"));
    }
 
    /**
@@ -487,7 +503,6 @@ public class Server extends Resource {
     * {@link Server#DISK_CONFIG_MANUAL} were added later as Strings to preserve backwards
     * compatibility.
     *
-    * @see org.jclouds.openstack.nova.v2_0.features.ExtensionApi#getExtensionByAlias
     * @see org.jclouds.openstack.nova.v2_0.extensions.ExtensionNamespaces#DISK_CONFIG
     * @see CreateServerOptions#getDiskConfig()
     */
@@ -500,6 +515,11 @@ public class Server extends Resource {
       return availabilityZone;
    }
 
+   @Nullable
+   public List<Map<String, String>> getBlockDeviceMapping() {
+      return blockDeviceMapping;
+   }
+
    // hashCode/equals from super is ok
 
    @Override
@@ -509,7 +529,7 @@ public class Server extends Resource {
             .add("hostId", hostId).add("hostName", hostName).add("accessIPv4", accessIPv4).add("accessIPv6", accessIPv6).add("status", status).add("image", image)
             .add("flavor", flavor).add("keyName", keyName).add("configDrive", configDrive).add("addresses", addresses)
             .add("metadata", metadata).add("extendedStatus", extendedStatus).add("extendedAttributes", extendedAttributes)
-            .add("diskConfig", diskConfig).add("availabilityZone",availabilityZone);
+            .add("diskConfig", diskConfig).add("availabilityZone",availabilityZone).add("blockDeviceMapping", blockDeviceMapping);
    }
 
 }
