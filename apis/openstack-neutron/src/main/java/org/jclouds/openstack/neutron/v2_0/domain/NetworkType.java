@@ -21,7 +21,7 @@ package  org.jclouds.openstack.neutron.v2_0.domain;
  * The type of Network
  */
 public enum NetworkType {
-   LOCAL("local"), FLAT("flat"), VLAN("vlan"), GRE("gre");
+   LOCAL("local"), FLAT("flat"), VLAN("vlan"), GRE("gre"),  VxLAN("vxlan");
 
    private String value;
 
