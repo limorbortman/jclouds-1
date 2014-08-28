@@ -20,6 +20,8 @@ import com.google.common.base.CaseFormat;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.name.Named;
+import org.jclouds.openstack.v2_0.domain.Link;
+import org.jclouds.openstack.v2_0.domain.Resource;
 
 import java.beans.ConstructorProperties;
 import java.util.Date;
@@ -30,7 +32,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Stack of Heat
  */
-public class Stack {
+public class Stack extends Resource {
 
    public static enum Status {
       INIT_IN_PROGRESS, INIT_FAILED, INIT_COMPLETED,
@@ -78,10 +80,8 @@ public class Stack {
       return new ConcreteBuilder().fromStack(this);
    }
 
-   public static abstract class Builder<T extends Builder<T>> {
-      protected abstract T self();
+   public static abstract class Builder<T extends Builder<T>> extends Resource.Builder<T>  {
 
-      protected String id;
       protected String stackName;
       protected String description;
       protected Map<String, String> parameters = ImmutableMap.of();
@@ -90,14 +90,6 @@ public class Stack {
       protected String stackStatusReason;
       protected Map<String, String> outputs = ImmutableMap.of();
       protected Date updateTime;
-
-      /**
-       * @see Stack#getId()
-       */
-      public T id(String id) {
-         this.id = id;
-         return self();
-      }
 
       /**
        * @see Stack#getStackName()
@@ -164,12 +156,11 @@ public class Stack {
       }
 
       public Stack build() {
-         return new Stack(id, stackName, description, parameters, creationTime, stackStatus, stackStatusReason, outputs, updateTime);
+         return new Stack(id, stackName, links, description, parameters, creationTime, stackStatus, stackStatusReason, outputs, updateTime);
       }
 
       public T fromStack(Stack in) {
-         return this
-               .id(in.getId())
+         return super.fromResource(in)
                .stackName(in.getStackName())
                .description(in.getDescription())
                .parameters(in.getParameters())
@@ -188,7 +179,6 @@ public class Stack {
       }
    }
 
-   private String id;
    @Named("stack_name")
    private String stackName;
    private String description;
@@ -204,11 +194,12 @@ public class Stack {
    private Date updateTime;
 
    @ConstructorProperties({
-         "id", "stack_name", "description", "parameters", "creation_time", "stack_status", "stack_status_reason", "outputs", "updated_time"
+         "id", "stack_name", "links", "description", "parameters", "creation_time", "stack_status", "stack_status_reason", "outputs", "updated_time"
    })
 
    protected Stack(String id,
                    String stackName,
+                   java.util.Set<Link> links,
                    String description,
                    Map<String, String> parameters,
                    Date creationTime,
@@ -217,22 +208,15 @@ public class Stack {
                    Map<String, String> outputs,
                    Date updateTime) {
 
-      this.id = checkNotNull(id, "id");
+      super(id, stackName, links);
       this.stackName = stackName;
       this.description = description;
       this.parameters = parameters == null ? ImmutableMap.<String, String>of() : ImmutableMap.copyOf(parameters);
-      this.creationTime = checkNotNull(creationTime, "creationTime");
-      this.stackStatus = checkNotNull(stackStatus, "stackStatus");
+      this.creationTime = creationTime;
+      this.stackStatus = stackStatus;
       this.stackStatusReason = stackStatusReason;
       this.outputs = outputs == null ? ImmutableMap.<String, String>of() : ImmutableMap.copyOf(outputs);
       this.updateTime = updateTime;
-   }
-
-   /**
-    * @return the id of this stack
-    */
-   public String getId() {
-      return this.id;
    }
 
    /**
@@ -293,7 +277,7 @@ public class Stack {
 
    @Override
    public int hashCode() {
-      return Objects.hashCode(id, stackName, description, parameters, creationTime, stackStatus, stackStatusReason, outputs, updateTime);
+      return Objects.hashCode(getId(), stackName, description, parameters, creationTime, stackStatus, stackStatusReason, outputs, updateTime);
    }
 
    @Override
@@ -301,7 +285,7 @@ public class Stack {
       if (this == obj) return true;
       if (obj == null || getClass() != obj.getClass()) return false;
       Stack that = Stack.class.cast(obj);
-      return Objects.equal(this.id, that.id)
+      return super.equals(obj)
             && Objects.equal(this.stackName, that.stackName)
             && Objects.equal(this.description, that.description)
             && Objects.equal(this.parameters, that.parameters)
@@ -313,8 +297,7 @@ public class Stack {
    }
 
    protected Objects.ToStringHelper string() {
-      return Objects.toStringHelper(this)
-            .add("id", id)
+      return super.string()
             .add("stackName", stackName)
             .add("description", description)
             .add("parameters", parameters)
