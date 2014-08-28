@@ -41,7 +41,9 @@ import org.jclouds.Fallbacks.VoidOnNotFoundOr404;
 import org.jclouds.collect.PagedIterable;
 import org.jclouds.fallbacks.MapHttp4xxCodesToExceptions;
 import org.jclouds.javax.annotation.Nullable;
+import org.jclouds.openstack.nova.v2_0.domain.InterfaceAttachment;
 import org.jclouds.openstack.nova.v2_0.domain.SecurityGroup;
+import org.jclouds.openstack.nova.v2_0.options.AttachInterfaceOptions;
 import org.jclouds.openstack.v2_0.domain.PaginatedCollection;
 import org.jclouds.openstack.keystone.v2_0.KeystoneFallbacks.EmptyPaginatedCollectionOnNotFoundOr404;
 import org.jclouds.openstack.keystone.v2_0.filters.AuthenticateRequest;
@@ -440,4 +442,31 @@ public interface ServerApi {
    @ResponseParser(ParseDiagnostics.class)
    @Fallback(AbsentOn403Or404Or500.class)
    Optional<Map<String, String>> getDiagnostics(@PathParam("id") String id);
+
+   /**
+    * Attach an existed network interface to a running Server. The network interface is
+    * identified by either a network ID, port ID or fixed IPs.
+    *
+    * @param serverId ID of the running server
+    * @param options  Network ID, port ID or fixed IPs that identify the network interface to attach.
+    * @return Interface attachment presentation
+    */
+   @POST
+   @Consumes(MediaType.APPLICATION_JSON)
+   @SelectJson("interfaceAttachment")
+   @Path("/{server_id}/os-interface")
+   @RequestFilters(AuthenticateRequest.class)
+   InterfaceAttachment attachInterface(@PathParam("server_id") String serverId, AttachInterfaceOptions... options);
+
+   /**
+    * Detach a network interface from a running Server.
+    *
+    * @param serverId ID of the running server
+    * @param portId   Port ID The network interface port ID to detach.
+    */
+   @DELETE
+   @Consumes(MediaType.APPLICATION_JSON)
+   @Path("/{server_id}/os-interface/{port_id}")
+   @RequestFilters(AuthenticateRequest.class)
+   void detachInterface(@PathParam("server_id") String serverId, @PathParam("port_id") String portId);
 }

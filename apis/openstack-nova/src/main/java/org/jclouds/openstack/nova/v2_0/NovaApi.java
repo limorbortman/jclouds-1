@@ -203,11 +203,4 @@ public interface NovaApi extends Closeable {
    Optional<? extends ConsolesApi> getConsolesExtensionForZone(
          @EndpointParam(parser = ZoneToEndpoint.class) @Nullable String zone);
 
-   /**
-    * Provides synchronous access to interface Type features.
-    */
-   @Delegate
-   Optional<? extends InterfaceApi> getInterfaceApiForZone(
-         @EndpointParam(parser = ZoneToEndpoint.class) @Nullable String zone);
-
 }

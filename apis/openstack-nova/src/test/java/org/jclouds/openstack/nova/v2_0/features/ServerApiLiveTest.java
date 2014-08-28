@@ -26,12 +26,15 @@ import static org.testng.Assert.assertTrue;
 import com.google.common.base.Optional;
 import com.google.common.collect.FluentIterable;
 import org.jclouds.http.HttpResponseException;
+import org.jclouds.openstack.nova.v2_0.domain.FixedIp;
+import org.jclouds.openstack.nova.v2_0.domain.InterfaceAttachment;
 import org.jclouds.openstack.nova.v2_0.domain.Network;
 import org.jclouds.openstack.nova.v2_0.domain.SecurityGroup;
 import org.jclouds.openstack.nova.v2_0.domain.Server;
 import org.jclouds.openstack.nova.v2_0.domain.ServerCreated;
 import org.jclouds.openstack.nova.v2_0.extensions.AvailabilityZoneApi;
 import org.jclouds.openstack.nova.v2_0.internal.BaseNovaApiLiveTest;
+import org.jclouds.openstack.nova.v2_0.options.AttachInterfaceOptions;
 import org.jclouds.openstack.nova.v2_0.options.CreateServerOptions;
 import org.jclouds.openstack.nova.v2_0.options.RebuildServerOptions;
 import org.jclouds.openstack.v2_0.domain.Link.Relation;
@@ -41,6 +44,9 @@ import org.testng.annotations.Test;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Tests behavior of {@link ServerApi}
@@ -205,6 +211,49 @@ public class ServerApiLiveTest extends BaseNovaApiLiveTest {
                serverApi.delete(serverId);
             }
          }
+      }
+   }
+
+   @Test(description = "POST /v${apiVersion}/{tenantId}/servers/{server_id}/os-interfaces")
+   public void testAttachedInterfaces() throws Exception {
+      for (String zoneId : zones) {
+         ServerApi serverApi = api.getServerApiForZone(zoneId);
+         String netId = "727ce2ef-6983-49c2-a404-e11a92e8fd28";
+         AttachInterfaceOptions attachInterfaceOptions = AttachInterfaceOptions.Builder.netId(netId);
+         InterfaceAttachment inListenableFuture = serverApi.attachInterface("532eff71-c523-4380-aa24-e39695c983a2", attachInterfaceOptions);
+         assertNotNull(inListenableFuture);
+         assertNotNull(inListenableFuture.getFixedIp());
+         assertNotNull(inListenableFuture.getMacAddr());
+         assertNotNull(inListenableFuture.getPortId());
+         assertNotNull(inListenableFuture.getPortState());
+         assertEquals(inListenableFuture.getNetId(), netId);
+      }
+   }
+
+   @Test(description = "POST /v${apiVersion}/{tenantId}/servers/{server_id}/os-interfaces")
+   public void testAttachedInterfacesWithOptions() throws Exception {
+      for (String zoneId : zones) {
+         ServerApi serverApi = api.getServerApiForZone(zoneId);
+         String netId = "727ce2ef-6983-49c2-a404-e11a92e8fd28";
+         FixedIp fixedIp = FixedIp.builder().subnetId("cf18362d-f117-4598-b32d-edb316f26c3f").ipAddress("11.40.7.22").build();
+         List<FixedIp> fixIpsLis = new LinkedList<FixedIp>();
+         fixIpsLis.add(fixedIp);
+         AttachInterfaceOptions attachInterfaceOptions = AttachInterfaceOptions.Builder.netId(netId).fixedIps(fixIpsLis);
+         InterfaceAttachment inListenableFuture = serverApi.attachInterface("532eff71-c523-4380-aa24-e39695c983a2", attachInterfaceOptions);
+         assertNotNull(inListenableFuture);
+         assertNotNull(inListenableFuture.getMacAddr());
+         assertEquals(inListenableFuture.getFixedIp(), fixedIp);
+         assertNotNull(inListenableFuture.getPortId());
+         assertNotNull(inListenableFuture.getPortState());
+         assertEquals(inListenableFuture.getNetId(), netId);
+      }
+   }
+
+   @Test(description = "DELETE /v${apiVersion}/{tenantId}/servers/{server_id}/os-interface/{port_id}\"")
+   public void testDetachIInterfaces() throws Exception {
+      for (String zoneId : zones) {
+         ServerApi serverApi = api.getServerApiForZone(zoneId);
+         serverApi.detachInterface("532eff71-c523-4380-aa24-e39695c983a2", "2839d4cd-0f99-4742-98ce-0585605d0222");
       }
    }
 
