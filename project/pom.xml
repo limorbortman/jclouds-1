@@ -99,10 +99,16 @@
   </repositories>
 
   <distributionManagement>
-    <site>
-      <id>jclouds-github-pages-site</id>
-      <url>${maven.site.url.base}/${project.version}</url>
-    </site>
+      <repository>
+          <id>releases</id>
+          <name>Nexus Release</name>
+          <url>http://nexus/nexus/content/repositories/releases</url>
+      </repository>
+      <snapshotRepository>
+          <id>snapshots</id>
+          <name>Nexus Snapshot</name>
+          <url>http://nexus/nexus/content/repositories/thirdparty-snapshots</url>
+      </snapshotRepository>
   </distributionManagement>
 
   <developers>
@@ -1070,6 +1076,21 @@
           </plugin>
         </plugins>
       </build>
+    </profile>
+    <profile>
+        <id>antwerp</id>
+        <distributionManagement>
+            <repository>
+                <id>cb-ant-releases</id>
+                <name>Antwerp Nexus Release</name>
+                <url>https://nexus.ant.c7d.net/nexus/content/repositories/releases</url>
+            </repository>
+            <snapshotRepository>
+                <id>cb-ant-snapshots</id>
+                <name>Antwerp Nexus Snapshot</name>
+                <url>https://nexus.ant.c7d.net/nexus/content/repositories/snapshots</url>
+            </snapshotRepository>
+        </distributionManagement>
     </profile>
   </profiles>
 </project>
