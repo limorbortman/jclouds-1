@@ -39,6 +39,7 @@ import org.jclouds.Fallbacks.NullOnNotFoundOr404;
 import org.jclouds.collect.PagedIterable;
 import org.jclouds.io.Payload;
 import org.jclouds.javax.annotation.Nullable;
+import org.jclouds.openstack.glance.v1_0.binders.BindGlanceObjectToRequest;
 import org.jclouds.openstack.glance.v1_0.domain.Image;
 import org.jclouds.openstack.glance.v1_0.domain.ImageDetails;
 import org.jclouds.openstack.glance.v1_0.functions.ParseImageDetailsFromHeaders;
@@ -50,6 +51,7 @@ import org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions;
 import org.jclouds.openstack.keystone.v2_0.KeystoneFallbacks.EmptyPaginatedCollectionOnNotFoundOr404;
 import org.jclouds.openstack.keystone.v2_0.filters.AuthenticateRequest;
 import org.jclouds.openstack.v2_0.domain.PaginatedCollection;
+import org.jclouds.rest.annotations.BinderParam;
 import org.jclouds.rest.annotations.Fallback;
 import org.jclouds.rest.annotations.RequestFilters;
 import org.jclouds.rest.annotations.ResponseParser;
@@ -132,7 +134,7 @@ public interface ImageApi {
    @POST
    @Produces(APPLICATION_OCTET_STREAM)
    @SelectJson("image")
-   ImageDetails create(@HeaderParam("x-image-meta-name") String name, Payload payload, CreateImageOptions... options);
+   ImageDetails create(@HeaderParam("x-image-meta-name") String name, @BinderParam(BindGlanceObjectToRequest.class) Payload payload, CreateImageOptions... options);
 
    /**
     * Reserves a new image to be uploaded later
@@ -166,7 +168,7 @@ public interface ImageApi {
    @Path("/{id}")
    @Produces(APPLICATION_OCTET_STREAM)
    @SelectJson("image")
-   ImageDetails upload(@PathParam("id") String id, Payload imageData, UpdateImageOptions... options);
+   ImageDetails upload(@PathParam("id") String id, @BinderParam(BindGlanceObjectToRequest.class) Payload imageData, UpdateImageOptions... options);
 
    /**
     * Adjusts the metadata stored for an existing image
