@@ -72,7 +72,7 @@ public class Image extends Resource {
       protected String checksum;
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.domain.Image#getContainerFormat()
+       * @see  org.jclouds.openstack.glance.v1_0.domain.Image#getContainerFormat()
        */
       public T containerFormat(ContainerFormat containerFormat) {
          this.containerFormat = containerFormat;
@@ -80,7 +80,7 @@ public class Image extends Resource {
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.domain.Image#getDiskFormat()
+       * @see  org.jclouds.openstack.glance.v1_0.domain.Image#getDiskFormat()
        */
       public T diskFormat(DiskFormat diskFormat) {
          this.diskFormat = diskFormat;
@@ -88,7 +88,7 @@ public class Image extends Resource {
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.domain.Image#getSize()
+       * @see  org.jclouds.openstack.glance.v1_0.domain.Image#getSize()
        */
       public T size(Long size) {
          this.size = size;
@@ -96,7 +96,7 @@ public class Image extends Resource {
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.domain.Image#getChecksum()
+       * @see  org.jclouds.openstack.glance.v1_0.domain.Image#getChecksum()
        */
       public T checksum(String checksum) {
          this.checksum = checksum;

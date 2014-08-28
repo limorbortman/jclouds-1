@@ -63,7 +63,7 @@ public class ImageDetails extends Image {
       protected Map<String, String> properties = ImmutableMap.of();
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.domain.ImageDetails#getMinDisk()
+       * @see  org.jclouds.openstack.glance.v1_0.domain.ImageDetails#getMinDisk()
        */
       public T minDisk(long minDisk) {
          this.minDisk = minDisk;
@@ -71,7 +71,7 @@ public class ImageDetails extends Image {
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.domain.ImageDetails#getMinRam()
+       * @see  org.jclouds.openstack.glance.v1_0.domain.ImageDetails#getMinRam()
        */
       public T minRam(long minRam) {
          this.minRam = minRam;
@@ -79,7 +79,7 @@ public class ImageDetails extends Image {
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.domain.ImageDetails#getLocation()
+       * @see  org.jclouds.openstack.glance.v1_0.domain.ImageDetails#getLocation()
        */
       public T location(String location) {
          this.location = location;
@@ -87,7 +87,7 @@ public class ImageDetails extends Image {
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.domain.ImageDetails#getOwner()
+       * @see  org.jclouds.openstack.glance.v1_0.domain.ImageDetails#getOwner()
        */
       public T owner(String owner) {
          this.owner = owner;
@@ -95,7 +95,7 @@ public class ImageDetails extends Image {
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.domain.ImageDetails#getUpdatedAt()
+       * @see  org.jclouds.openstack.glance.v1_0.domain.ImageDetails#getUpdatedAt()
        */
       public T updatedAt(Date updatedAt) {
          this.updatedAt = updatedAt;
@@ -103,7 +103,7 @@ public class ImageDetails extends Image {
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.domain.ImageDetails#getCreatedAt()
+       * @see  org.jclouds.openstack.glance.v1_0.domain.ImageDetails#getCreatedAt()
        */
       public T createdAt(Date createdAt) {
          this.createdAt = createdAt;
@@ -111,7 +111,7 @@ public class ImageDetails extends Image {
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.domain.ImageDetails#getDeletedAt()
+       * @see  org.jclouds.openstack.glance.v1_0.domain.ImageDetails#getDeletedAt()
        */
       public T deletedAt(Date deletedAt) {
          this.deletedAt = deletedAt;
@@ -119,7 +119,7 @@ public class ImageDetails extends Image {
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.domain.ImageDetails#getStatus()
+       * @see  org.jclouds.openstack.glance.v1_0.domain.ImageDetails#getStatus()
        */
       public T status(Image.Status status) {
          this.status = status;
@@ -127,7 +127,7 @@ public class ImageDetails extends Image {
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.domain.ImageDetails#isPublic()
+       * @see  org.jclouds.openstack.glance.v1_0.domain.ImageDetails#isPublic()
        */
       public T isPublic(boolean isPublic) {
          this.isPublic = isPublic;
@@ -135,7 +135,7 @@ public class ImageDetails extends Image {
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.domain.ImageDetails#getProperties()
+       * @see  org.jclouds.openstack.glance.v1_0.domain.ImageDetails#getProperties()
        */
       public T properties(Map<String, String> properties) {
          this.properties = ImmutableMap.copyOf(checkNotNull(properties, "properties"));
