@@ -119,6 +119,8 @@ public class RetryOnRenew implements HttpRetryHandler {
                break;
             case 408:
                return backoffHandler.shouldRetryRequest(command, response);
+            default:
+               logger.warn("shouldRetryRequest(): request failed, response code is %s", response.getStatusCode());
          }
          return retry;
       } finally {
