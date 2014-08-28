@@ -25,6 +25,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.jclouds.http.HttpRequest;
 import org.jclouds.http.HttpResponse;
+import org.jclouds.io.Payload;
 import org.jclouds.io.Payloads;
 import org.jclouds.io.payloads.StringPayload;
 import org.jclouds.openstack.glance.v1_0.GlanceApi;
@@ -430,4 +431,59 @@ public class ImageApiExpectTest extends BaseGlanceExpectTest {
 
       assertFalse(apiWhenExist.getImageApiForZone("az-1.region-a.geo-1").delete("fcc451d0-f6e4-4824-ad8f-70ec12326d07"));
    }
+
+   public void testCreateWithLargePayloadWhenResponseIs2xx() throws Exception {
+
+      Payload fakeBigPayload = payloadFromStringWithContentType("somedata", MediaType.APPLICATION_OCTET_STREAM);
+      fakeBigPayload.getContentMetadata().setContentLength(3l * 1024 * 1024);
+
+      HttpRequest get = HttpRequest.builder().method("POST")
+            .endpoint("https://glance.jclouds.org:9292/v1.0/images")
+            .addHeader("x-image-meta-name", "test")
+            .addHeader("Accept", MediaType.APPLICATION_JSON)
+            .addHeader("Transfer-Encoding", "chunked")
+            .addHeader("X-Auth-Token", authToken)
+            .payload(fakeBigPayload).build();
+
+      HttpResponse createResponse = HttpResponse.builder().statusCode(200)
+            .payload(payloadFromResource("/image.json")).build();
+
+      GlanceApi apiWhenExist = requestsSendResponses(keystoneAuthWithUsernameAndPassword,
+            responseWithKeystoneAccess, versionNegotiationRequest, versionNegotiationResponse,
+            get, createResponse);
+
+      assertEquals(apiWhenExist.getConfiguredZones(), ImmutableSet.of("az-1.region-a.geo-1"));
+
+      assertEquals(apiWhenExist.getImageApiForZone("az-1.region-a.geo-1").create("test", fakeBigPayload),
+            new ParseImageDetailsTest().expected());
+
+   }
+
+   public void testUpdateLargeImageWhenResponseIs2xx() throws Exception {
+
+      Payload fakeBigPayload = payloadFromStringWithContentType("somedata", MediaType.APPLICATION_OCTET_STREAM);
+      fakeBigPayload.getContentMetadata().setContentLength(3l * 1024 * 1024);
+
+      HttpRequest get = HttpRequest.builder().method("PUT")
+            .endpoint("https://glance.jclouds.org:9292/v1.0/images/fcc451d0-f6e4-4824-ad8f-70ec12326d07")
+            .addHeader("Accept", MediaType.APPLICATION_JSON)
+            .addHeader("Transfer-Encoding", "chunked")
+            .addHeader("X-Auth-Token", authToken)
+            .payload(fakeBigPayload)
+            .build();
+
+      HttpResponse updateResponse = HttpResponse.builder().statusCode(200)
+            .payload(payloadFromResource("/image.json")).build();
+
+
+      GlanceApi apiWhenExist = requestsSendResponses(keystoneAuthWithUsernameAndPassword,
+            responseWithKeystoneAccess, versionNegotiationRequest, versionNegotiationResponse,
+            get, updateResponse);
+
+      assertEquals(apiWhenExist.getConfiguredZones(), ImmutableSet.of("az-1.region-a.geo-1"));
+
+      assertEquals(apiWhenExist.getImageApiForZone("az-1.region-a.geo-1").upload("fcc451d0-f6e4-4824-ad8f-70ec12326d07",
+            fakeBigPayload), new ParseImageDetailsTest().expected());
+   }
+
 }
