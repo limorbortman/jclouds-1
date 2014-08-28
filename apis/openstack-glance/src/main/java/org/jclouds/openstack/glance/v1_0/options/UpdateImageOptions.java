@@ -159,91 +159,91 @@ public class UpdateImageOptions extends BaseHttpRequestOptions {
 
    public static class Builder {
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions#name
+       * @see  org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions#name
        */
       public static UpdateImageOptions name(String name) {
          return new UpdateImageOptions().name(name);
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions#storeType
+       * @see  org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions#storeType
        */
       public static UpdateImageOptions storeType(StoreType storeType) {
          return new UpdateImageOptions().storeType(storeType);
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions#diskFormat
+       * @see  org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions#diskFormat
        */
       public static UpdateImageOptions diskFormat(DiskFormat diskFormat) {
          return new UpdateImageOptions().diskFormat(diskFormat);
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions#containerFormat
+       * @see  org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions#containerFormat
        */
       public static UpdateImageOptions containerFormat(ContainerFormat containerFormat) {
          return new UpdateImageOptions().containerFormat(containerFormat);
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions#size
+       * @see  org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions#size
        */
       public static UpdateImageOptions size(long size) {
          return new UpdateImageOptions().size(size);
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions#checksum
+       * @see  org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions#checksum
        */
       public static UpdateImageOptions checksum(String checksum) {
          return new UpdateImageOptions().checksum(checksum);
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions#location
+       * @see  org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions#location
        */
       public static UpdateImageOptions location(String location) {
          return new UpdateImageOptions().location(location);
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions#isPublic
+       * @see  org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions#isPublic
        */
       public static UpdateImageOptions isPublic(boolean isPublic) {
          return new UpdateImageOptions().isPublic(isPublic);
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions#isProtected
+       * @see  org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions#isProtected
        */
       public static UpdateImageOptions isProtected(boolean isProtected) {
          return new UpdateImageOptions().isProtected(isProtected);
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions#minRam
+       * @see  org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions#minRam
        */
       public static UpdateImageOptions minRam(long ram) {
          return new UpdateImageOptions().minRam(ram);
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions#minDisk
+       * @see  org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions#minDisk
        */
       public static UpdateImageOptions minDisk(long disk) {
          return new UpdateImageOptions().minDisk(disk);
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions#owner
+       * @see  org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions#owner
        */
       public static UpdateImageOptions owner(String owner) {
          return new UpdateImageOptions().owner(owner);
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions#property
+       * @see  org.jclouds.openstack.glance.v1_0.options.UpdateImageOptions#property
        */
       public static UpdateImageOptions property(String key, String value) {
          return new UpdateImageOptions().property(key, value);

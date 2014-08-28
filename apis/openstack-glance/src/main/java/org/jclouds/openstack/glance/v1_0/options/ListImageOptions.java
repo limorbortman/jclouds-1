@@ -151,28 +151,28 @@ public class ListImageOptions extends PaginationOptions {
 
    public static class Builder {
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.ListImageOptions#name
+       * @see  org.jclouds.openstack.glance.v1_0.options.ListImageOptions#name
        */
       public static ListImageOptions name(String name) {
          return new ListImageOptions().name(name);
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.ListImageOptions#diskFormat
+       * @see  org.jclouds.openstack.glance.v1_0.options.ListImageOptions#diskFormat
        */
       public static ListImageOptions diskFormat(DiskFormat diskFormat) {
          return new ListImageOptions().diskFormat(diskFormat);
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.ListImageOptions#containerFormat
+       * @see  org.jclouds.openstack.glance.v1_0.options.ListImageOptions#containerFormat
        */
       public static ListImageOptions containerFormat(ContainerFormat containerFormat) {
          return new ListImageOptions().containerFormat(containerFormat);
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.ListImageOptions#minRam
+       * @see  org.jclouds.openstack.glance.v1_0.options.ListImageOptions#minRam
        */
       public static ListImageOptions minRam(long size) {
          return new ListImageOptions().minRam(size);
@@ -180,70 +180,70 @@ public class ListImageOptions extends PaginationOptions {
 
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.ListImageOptions#minDisk
+       * @see  org.jclouds.openstack.glance.v1_0.options.ListImageOptions#minDisk
        */
       public static ListImageOptions minDisk(long size) {
          return new ListImageOptions().minDisk(size);
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.ListImageOptions#minSize
+       * @see  org.jclouds.openstack.glance.v1_0.options.ListImageOptions#minSize
        */
       public static ListImageOptions minSize(long size) {
          return new ListImageOptions().minSize(size);
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.ListImageOptions#maxSize
+       * @see  org.jclouds.openstack.glance.v1_0.options.ListImageOptions#maxSize
        */
       public static ListImageOptions maxSize(long size) {
          return new ListImageOptions().maxSize(size);
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.ListImageOptions#sortBy
+       * @see  org.jclouds.openstack.glance.v1_0.options.ListImageOptions#sortBy
        */
       public static ListImageOptions status(Status status) {
          return new ListImageOptions().status(status);
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.ListImageOptions#sortBy
+       * @see  org.jclouds.openstack.glance.v1_0.options.ListImageOptions#sortBy
        */
       public static ListImageOptions sortBy(ImageField sortKey) {
          return new ListImageOptions().sortBy(sortKey);
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.ListImageOptions#sortAscending
+       * @see  org.jclouds.openstack.glance.v1_0.options.ListImageOptions#sortAscending
        */
       public static ListImageOptions sortAscending() {
          return new ListImageOptions().sortAscending();
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.ListImageOptions#isPublic
+       * @see  org.jclouds.openstack.glance.v1_0.options.ListImageOptions#isPublic
        */
       public static ListImageOptions isPublic(boolean isPublic) {
          return ListImageOptions.class.cast(new ListImageOptions().isPublic(isPublic));
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.ListImageOptions#isProtected
+       * @see  org.jclouds.openstack.glance.v1_0.options.ListImageOptions#isProtected
        */
       public static ListImageOptions isProtected(boolean isProtected) {
          return ListImageOptions.class.cast(new ListImageOptions().isProtected(isProtected));
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.ListImageOptions#limit
+       * @see  org.jclouds.openstack.glance.v1_0.options.ListImageOptions#limit
        */
       public static ListImageOptions limit(int limit) {
          return new ListImageOptions().limit(limit);
       }
 
       /**
-       * @see main.java.org.jclouds.openstack.glance.v1_0.options.ListImageOptions#marker
+       * @see  org.jclouds.openstack.glance.v1_0.options.ListImageOptions#marker
        */
       public static ListImageOptions marker(String marker) {
          return new ListImageOptions().marker(marker);
