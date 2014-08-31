@@ -38,13 +38,14 @@ public class Port extends ReferenceWithName {
    private final String deviceOwner;
    private final String macAddress;
    private final Set<IP> fixedIps;
+   private final PortStats portStats;
    private final Set<ExtraDhcpOpt> extraDhcpOpts;
 
    @ConstructorProperties({
-      "id", "tenant_id", "name", "status", "network_id", "admin_state_up", "device_id", "device_owner", "fixed_ips", "mac_address", "extra_dhcp_opts"
+      "id", "tenant_id", "name", "status", "network_id", "admin_state_up", "device_id", "device_owner", "fixed_ips", "binding:stats", "mac_address", "extra_dhcp_opts"
    })
    protected Port(String id, String tenantId, String name, State state, String networkId, Boolean adminStateUp,
-                  String deviceId, String deviceOwner, Set<IP> fixedIps, String macAddress, Set<ExtraDhcpOpt> extraDhcpOpts) {
+                  String deviceId, String deviceOwner, Set<IP> fixedIps, PortStats portStats, String macAddress, Set<ExtraDhcpOpt> extraDhcpOpts) {
       super(id, tenantId, name);
       this.adminStateUp = adminStateUp;
       this.state = state;
@@ -54,6 +55,7 @@ public class Port extends ReferenceWithName {
       this.fixedIps = fixedIps;
       this.macAddress = macAddress;
       this.extraDhcpOpts = extraDhcpOpts;
+      this.portStats = portStats;
    }
 
    /**
@@ -99,6 +101,13 @@ public class Port extends ReferenceWithName {
    }
 
    /**
+    * @return the stats of this port
+    */
+   public PortStats getPortStats() {
+      return portStats;
+   }
+   
+   /**
     * @return the mac address of this port
     */
    public String getMacAddress() {
@@ -114,7 +123,7 @@ public class Port extends ReferenceWithName {
 
    @Override
    public int hashCode() {
-      return Objects.hashCode(super.hashCode(), state, adminStateUp, networkId, deviceId, deviceOwner, fixedIps, macAddress, extraDhcpOpts);
+      return Objects.hashCode(super.hashCode(), state, adminStateUp, networkId, deviceId, deviceOwner, fixedIps, portStats, macAddress, extraDhcpOpts);
    }
 
    @Override
@@ -129,6 +138,7 @@ public class Port extends ReferenceWithName {
          && Objects.equal(this.deviceId, that.deviceId)
          && Objects.equal(this.deviceOwner, that.deviceOwner)
          && Objects.equal(this.fixedIps, that.fixedIps)
+         && Objects.equal(this.portStats, that.portStats)
          && Objects.equal(this.macAddress, that.macAddress)
          && Objects.equal(this.extraDhcpOpts, that.extraDhcpOpts);
    }
@@ -136,7 +146,7 @@ public class Port extends ReferenceWithName {
    protected Objects.ToStringHelper string() {
       return super.string()
          .add("state", state).add("adminStateUp", adminStateUp).add("networkId", networkId).add("deviceId", deviceId)
-         .add("deviceOwner", deviceOwner).add("fixedIps", fixedIps).add("macAddress", macAddress).add("extraDhcpOpts", extraDhcpOpts);
+         .add("deviceOwner", deviceOwner).add("fixedIps", fixedIps).add("portStats", portStats).add("macAddress", macAddress).add("extraDhcpOpts", extraDhcpOpts);
    }
 
    @Override
@@ -160,6 +170,7 @@ public class Port extends ReferenceWithName {
       protected Set<IP> fixedIps;
       protected State state;
       protected Boolean adminStateUp;
+      protected PortStats portStats;
       protected Set<ExtraDhcpOpt> extraDhcpOpts;
 
       /**
@@ -187,6 +198,14 @@ public class Port extends ReferenceWithName {
          return self();
       }
 
+      /**
+       * @see Port#getPortStats()
+       */
+      public T portStats(PortStats portStats) {
+         this.portStats = portStats;
+         return self();
+      }
+      
       /**
        * @see org.jclouds.openstack.neutron.v2_0.domain.Port#getDeviceId()
        */
@@ -228,7 +247,7 @@ public class Port extends ReferenceWithName {
       }
 
       public Port build() {
-         return new Port(id, tenantId, name, state, networkId, adminStateUp, deviceId, deviceOwner, fixedIps, macAddress, extraDhcpOpts);
+         return new Port(id, tenantId, name, state, networkId, adminStateUp, deviceId, deviceOwner, fixedIps, portStats, macAddress, extraDhcpOpts);
       }
 
       public T fromPort(Port in) {
@@ -239,6 +258,7 @@ public class Port extends ReferenceWithName {
                .deviceId(in.getDeviceId())
                .deviceOwner(in.getDeviceOwner())
                .fixedIps(in.getFixedIps())
+               .portStats(in.getPortStats())
                .macAddress(in.getMacAddress())
                .extraDhcpOpts(in.getExtraDhcpOpts());
       }
