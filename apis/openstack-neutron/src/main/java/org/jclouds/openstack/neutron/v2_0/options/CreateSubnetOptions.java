@@ -55,6 +55,7 @@ public class CreateSubnetOptions implements MapBinder {
       protected Boolean enableDhcp;
       protected Set<String> dnsNameServers;
       protected Set<HostRoute> hostRoutes;
+      protected String netPartition;
 
       /**
        * @see org.jclouds.openstack.neutron.v2_0.options.CreateSubnetOptions#getName()
@@ -104,8 +105,16 @@ public class CreateSubnetOptions implements MapBinder {
          return self();
       }
 
+      /**
+       * @see CreateSubnetOptions#getNetPartition()
+       */
+      public T netPartition(String netPartition) {
+         this.netPartition = netPartition;
+         return self();
+      }
+
       public CreateSubnetOptions build() {
-         return new CreateSubnetOptions(name, allocationPools, gatewayIp, enableDhcp, dnsNameServers, hostRoutes);
+         return new CreateSubnetOptions(name, allocationPools, gatewayIp, enableDhcp, dnsNameServers, hostRoutes, netPartition);
       }
 
       public T fromCreateSubnetOptions(CreateSubnetOptions in) {
@@ -114,7 +123,8 @@ public class CreateSubnetOptions implements MapBinder {
             .gatewayIp(in.getGatewayIp())
             .enableDhcp(in.getEnableDhcp())
             .dnsNameServers(in.getDnsNameServers())
-            .hostRoutes(in.getHostRoutes());
+            .hostRoutes(in.getHostRoutes())
+            .netPartition(in.getNetPartition());
       }
    }
 
@@ -135,6 +145,7 @@ public class CreateSubnetOptions implements MapBinder {
       protected Boolean enable_dhcp;
       protected Set<String> dns_nameservers;
       protected Set<HostRoute> host_routes;
+      protected String net_partition;
 
       protected CreateSubnetRequest(String networkId, Integer ipVersion, String cidr) {
          this.network_id = networkId;
@@ -154,6 +165,7 @@ public class CreateSubnetOptions implements MapBinder {
    private final Boolean enableDhcp;
    private final Set<String> dnsNameServers;
    private final Set<HostRoute> hostRoutes;
+   private final String netPartition;
 
    protected CreateSubnetOptions() {
       this.name = null;
@@ -162,16 +174,18 @@ public class CreateSubnetOptions implements MapBinder {
       this.enableDhcp = null;
       this.dnsNameServers = Sets.newHashSet();
       this.hostRoutes = Sets.newHashSet();
+      this.netPartition = null;
    }
 
    public CreateSubnetOptions(String name, Set<AllocationPool> allocationPools, String gatewayIp,
-                              Boolean enableDhcp, Set<String> dnsNameServers, Set<HostRoute> hostRoutes) {
+                              Boolean enableDhcp, Set<String> dnsNameServers, Set<HostRoute> hostRoutes, String netPartition) {
       this.name = name;
       this.allocationPools = allocationPools != null ? ImmutableSet.copyOf(allocationPools) : Sets.<AllocationPool>newHashSet();
       this.gatewayIp = gatewayIp;
       this.enableDhcp = enableDhcp;
       this.dnsNameServers = dnsNameServers != null ? ImmutableSet.copyOf(dnsNameServers) : Sets.<String>newHashSet();
       this.hostRoutes = hostRoutes != null ? ImmutableSet.copyOf(hostRoutes) : Sets.<HostRoute>newHashSet();
+      this.netPartition = netPartition;
    }
 
    /**
@@ -216,6 +230,15 @@ public class CreateSubnetOptions implements MapBinder {
       return hostRoutes;
    }
 
+   /**
+    * Nuage extension
+    *
+    * @return The net partition this subnet belongs to
+    */
+   public String getNetPartition() {
+      return netPartition;
+   }
+
    @Override
    public <R extends HttpRequest> R bindToRequest(R request, Map<String, Object> postParams) {
       CreateSubnetRequest createSubnetRequest =
@@ -244,6 +267,8 @@ public class CreateSubnetOptions implements MapBinder {
             createSubnetRequest.host_routes.add(requestHostRoute);
          }
       }
+      if (this.netPartition != null)
+                createSubnetRequest.net_partition = this.netPartition;
 
       return bindToRequest(request, ImmutableMap.of("subnet", createSubnetRequest));
    }
