@@ -17,11 +17,14 @@
 package org.jclouds.openstack.neutron.v2_0.extensions;
 
 import com.google.common.collect.FluentIterable;
-import com.google.common.util.concurrent.ListenableFuture;
 import org.jclouds.Fallbacks;
+import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.openstack.keystone.v2_0.filters.AuthenticateRequest;
 import org.jclouds.openstack.neutron.v2_0.domain.NuageNetPartition;
+import org.jclouds.openstack.neutron.v2_0.options.CreateNuageNetPartitionOptions;
+import org.jclouds.openstack.neutron.v2_0.options.DeleteNuageNetPartitionOptions;
 import org.jclouds.rest.annotations.Fallback;
+import org.jclouds.rest.annotations.PayloadParam;
 import org.jclouds.rest.annotations.RequestFilters;
 import org.jclouds.rest.annotations.SelectJson;
 import org.jclouds.rest.annotations.WrapWith;
@@ -70,13 +73,13 @@ public interface NuageNetPartitionApi {
    @SelectJson("net_partition")
    @Produces(MediaType.APPLICATION_JSON)
    @WrapWith("net_partitions")
-   NuageNetPartition create(String name);
+   NuageNetPartition create(@PayloadParam("name") String name, @Nullable CreateNuageNetPartitionOptions... createNuageNetPartitionOptions);
 
    /**
     * @see NuageNetPartitionApi#delete
     */
    @DELETE
-   @Fallback(Fallbacks.EmptyFluentIterableOnNotFoundOr404.class)
+   @Fallback(Fallbacks.NullOnNotFoundOr404.class)
    @Path("/{id}")
-   boolean delete(@PathParam("id") String id);
+   boolean delete(@PathParam("id") String id, @Nullable DeleteNuageNetPartitionOptions... deleteNuageNetPartitionOptions);
 }
