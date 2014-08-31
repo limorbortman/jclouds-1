@@ -22,6 +22,7 @@ import org.jclouds.Fallbacks;
 import org.jclouds.openstack.keystone.v2_0.filters.AuthenticateRequest;
 import org.jclouds.openstack.neutron.v2_0.domain.ReferenceWithName;
 import org.jclouds.openstack.neutron.v2_0.domain.SecurityGroup;
+import org.jclouds.openstack.neutron.v2_0.options.ListSecurityGroupOptions;
 import org.jclouds.rest.annotations.Fallback;
 import org.jclouds.rest.annotations.PayloadParam;
 import org.jclouds.rest.annotations.QueryParams;
@@ -68,7 +69,7 @@ public interface SecurityGroupApi {
    @GET
    @SelectJson("security_groups")
    @Fallback(Fallbacks.EmptyFluentIterableOnNotFoundOr404.class)
-   FluentIterable<? extends SecurityGroup> list();
+   FluentIterable<? extends SecurityGroup> list(ListSecurityGroupOptions... options);
 
    /**
     * Returns the specific security group.

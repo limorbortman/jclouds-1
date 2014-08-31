@@ -28,6 +28,7 @@ import org.jclouds.openstack.neutron.v2_0.functions.ParseNetworkDetails;
 import org.jclouds.openstack.neutron.v2_0.functions.ParseNetworks;
 import org.jclouds.openstack.neutron.v2_0.options.CreateNetworkBulkOptions;
 import org.jclouds.openstack.neutron.v2_0.options.CreateNetworkOptions;
+import org.jclouds.openstack.neutron.v2_0.options.ListNetworkOptions;
 import org.jclouds.openstack.neutron.v2_0.options.UpdateNetworkOptions;
 import org.jclouds.openstack.v2_0.options.PaginationOptions;
 import org.jclouds.rest.annotations.Fallback;
@@ -79,7 +80,7 @@ public interface NetworkApi {
    @Transform(ParseNetworks.ToPagedIterable.class)
    @Fallback(EmptyPagedIterableOnNotFoundOr404.class)
    @QueryParams(keys = {"fields", "fields", "fields"}, values = {"id", "tenant_id", "name"})
-   PagedIterable<? extends ReferenceWithName> list();
+   PagedIterable<? extends ReferenceWithName> list(ListNetworkOptions... options);
 
    /**
     * @see <a href="http://docs.openstack.org/api/openstack-network/2.0/content/pagination.html">api doc</a>
@@ -89,7 +90,7 @@ public interface NetworkApi {
    @ResponseParser(ParseNetworks.class)
    @Fallback(EmptyPaginatedCollectionOnNotFoundOr404.class)
    @QueryParams(keys = {"fields", "fields", "fields"}, values = {"id", "tenant_id", "name"})
-   PagedIterable<? extends ReferenceWithName> list(PaginationOptions options);
+   PagedIterable<? extends ReferenceWithName> list(PaginationOptions options, ListNetworkOptions... listNetworkOptions);
 
    /**
     * Returns all networks currently defined in Neutron for the current tenant.

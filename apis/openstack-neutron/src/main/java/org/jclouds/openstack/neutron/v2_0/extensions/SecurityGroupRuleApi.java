@@ -23,6 +23,7 @@ import org.jclouds.openstack.keystone.v2_0.filters.AuthenticateRequest;
 import org.jclouds.openstack.neutron.v2_0.domain.Reference;
 import org.jclouds.openstack.neutron.v2_0.domain.SecurityGroupRule;
 import org.jclouds.openstack.neutron.v2_0.options.CreateSecurityGroupRuleOptions;
+import org.jclouds.openstack.neutron.v2_0.options.ListSecurityGroupRuleOptions;
 import org.jclouds.rest.annotations.Fallback;
 import org.jclouds.rest.annotations.PayloadParam;
 import org.jclouds.rest.annotations.QueryParams;
@@ -70,7 +71,7 @@ public interface SecurityGroupRuleApi {
    @GET
    @SelectJson("security_group_rules")
    @Fallback(Fallbacks.EmptyFluentIterableOnNotFoundOr404.class)
-   FluentIterable<? extends SecurityGroupRule> list();
+   FluentIterable<? extends SecurityGroupRule> list(ListSecurityGroupRuleOptions... options);
 
    /**
     * Returns the specific security group rules.

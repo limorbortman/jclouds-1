@@ -28,6 +28,7 @@ import org.jclouds.openstack.neutron.v2_0.functions.ParseSubnetDetails;
 import org.jclouds.openstack.neutron.v2_0.functions.ParseSubnets;
 import org.jclouds.openstack.neutron.v2_0.options.CreateSubnetBulkOptions;
 import org.jclouds.openstack.neutron.v2_0.options.CreateSubnetOptions;
+import org.jclouds.openstack.neutron.v2_0.options.ListSubnetOptions;
 import org.jclouds.openstack.neutron.v2_0.options.UpdateSubnetOptions;
 import org.jclouds.openstack.v2_0.options.PaginationOptions;
 import org.jclouds.rest.annotations.Fallback;
@@ -78,7 +79,7 @@ public interface SubnetApi {
    @Transform(ParseSubnets.ToPagedIterable.class)
    @Fallback(EmptyPagedIterableOnNotFoundOr404.class)
    @QueryParams(keys = {"fields", "fields", "fields"}, values = {"id", "tenant_id", "name"})
-   PagedIterable<? extends ReferenceWithName> list();
+   PagedIterable<? extends ReferenceWithName> list(ListSubnetOptions... options);
 
    /**
     * @see <a href="http://docs.openstack.org/api/openstack-network/2.0/content/pagination.html">api doc</a>
@@ -88,7 +89,7 @@ public interface SubnetApi {
    @ResponseParser(ParseSubnets.class)
    @Fallback(EmptyPaginatedCollectionOnNotFoundOr404.class)
    @QueryParams(keys = {"fields", "fields", "fields"}, values = {"id", "tenant_id", "name"})
-   PagedIterable<? extends ReferenceWithName> list(PaginationOptions options);
+   PagedIterable<? extends ReferenceWithName> list(PaginationOptions options, ListSubnetOptions... listSubnetOptions);
 
    /**
     * Returns all subnets currently defined in Neutron for the current tenant.

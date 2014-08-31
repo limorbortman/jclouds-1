@@ -28,6 +28,7 @@ import org.jclouds.openstack.neutron.v2_0.functions.ParsePortDetails;
 import org.jclouds.openstack.neutron.v2_0.functions.ParsePorts;
 import org.jclouds.openstack.neutron.v2_0.options.CreatePortBulkOptions;
 import org.jclouds.openstack.neutron.v2_0.options.CreatePortOptions;
+import org.jclouds.openstack.neutron.v2_0.options.ListPortOptions;
 import org.jclouds.openstack.neutron.v2_0.options.UpdatePortOptions;
 import org.jclouds.openstack.v2_0.options.PaginationOptions;
 import org.jclouds.rest.annotations.Fallback;
@@ -82,7 +83,7 @@ public interface PortApi {
    @Transform(ParsePorts.ToPagedIterable.class)
    @Fallback(EmptyPagedIterableOnNotFoundOr404.class)
    @QueryParams(keys = {"fields", "fields", "fields"}, values = {"id", "tenant_id", "name"})
-   PagedIterable<? extends ReferenceWithName> list();
+   PagedIterable<? extends ReferenceWithName> list(ListPortOptions... options);
 
    /**
     * @see <a href="http://docs.openstack.org/api/openstack-network/2.0/content/pagination.html">api doc</a>
@@ -92,7 +93,7 @@ public interface PortApi {
    @ResponseParser(ParsePorts.class)
    @Fallback(EmptyPaginatedCollectionOnNotFoundOr404.class)
    @QueryParams(keys = {"fields", "fields", "fields"}, values = {"id", "tenant_id", "name"})
-   PagedIterable<? extends ReferenceWithName> list(PaginationOptions options);
+   PagedIterable<? extends ReferenceWithName> list(PaginationOptions options, ListPortOptions... listPortOptions);
 
    /**
     * Returns the set of ports currently defined in Neutron for the requested network.
