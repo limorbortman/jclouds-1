@@ -42,13 +42,14 @@ public class Subnet extends ReferenceWithName {
    private final Boolean enableDhcp;
    private final Set<String> dnsNameServers;
    private final Set<HostRoute> hostRoutes;
+   private final String netPartition;
 
    @ConstructorProperties({
-      "id", "tenant_id", "name", "network_id", "gateway_ip", "ip_version", "cidr", "allocation_pools", "enable_dhcp", "dns_nameservers", "host_routes"
+      "id", "tenant_id", "name", "network_id", "gateway_ip", "ip_version", "cidr", "allocation_pools", "enable_dhcp", "dns_nameservers", "host_routes", "net_partition"
    })
    protected Subnet(String id, String tenantId, String name, String networkId,
                     String gatewayIp, Integer ipVersion, String cidr, Set<AllocationPool> allocationPools,
-                    Boolean enableDhcp, Set<String> dnsNameServers, Set<HostRoute> hostRoutes) {
+                    Boolean enableDhcp, Set<String> dnsNameServers, Set<HostRoute> hostRoutes, String netPartition) {
       super(id, tenantId, name);
       this.networkId = checkNotNull(networkId, "networkId");
       this.gatewayIp = gatewayIp;
@@ -58,6 +59,7 @@ public class Subnet extends ReferenceWithName {
       this.enableDhcp = enableDhcp;
       this.dnsNameServers = dnsNameServers != null ? ImmutableSet.copyOf(dnsNameServers) : ImmutableSet.<String>of();
       this.hostRoutes = hostRoutes != null ? ImmutableSet.copyOf(hostRoutes) : ImmutableSet.<HostRoute>of();
+       this.netPartition = netPartition;
    }
 
    /**
@@ -116,10 +118,19 @@ public class Subnet extends ReferenceWithName {
       return hostRoutes;
    }
 
+   /**
+    * Nuage extension
+    *
+    * @return The net partition this subnet belongs to
+    */
+   public String getNetPartition() {
+      return netPartition;
+   }
+
    @Override
    public int hashCode() {
       return Objects.hashCode(super.hashCode(), networkId, gatewayIp, ipVersion, cidr,
-         allocationPools, enableDhcp, dnsNameServers, hostRoutes);
+         allocationPools, enableDhcp, dnsNameServers, hostRoutes, netPartition);
    }
 
    @Override
@@ -135,7 +146,8 @@ public class Subnet extends ReferenceWithName {
          && Objects.equal(this.allocationPools, that.allocationPools)
          && Objects.equal(this.enableDhcp, that.enableDhcp)
          && Objects.equal(this.dnsNameServers, that.dnsNameServers)
-         && Objects.equal(this.hostRoutes, that.hostRoutes);
+         && Objects.equal(this.hostRoutes, that.hostRoutes)
+         && Objects.equal(this.netPartition, that.netPartition);
    }
 
    protected ToStringHelper string() {
@@ -147,7 +159,8 @@ public class Subnet extends ReferenceWithName {
          .add("enableDHCP", enableDhcp)
          .add("allocationPools", allocationPools)
          .add("dnsNameServers", dnsNameServers)
-         .add("hostRoutes", hostRoutes);
+         .add("hostRoutes", hostRoutes)
+         .add("netPartition", netPartition);
    }
 
    @Override
@@ -172,6 +185,7 @@ public class Subnet extends ReferenceWithName {
       protected Boolean enableDhcp;
       protected Set<String> dnsNameServers;
       protected Set<HostRoute> hostRoutes;
+      protected String netPartition;
 
       /**
        * @see org.jclouds.openstack.neutron.v2_0.domain.Subnet#getNetworkId()
@@ -237,8 +251,16 @@ public class Subnet extends ReferenceWithName {
          return self();
       }
 
+      /**
+       * @see Subnet#getNetPartition()
+       */
+      public T netPartition(String netPartition) {
+         this.netPartition = netPartition;
+         return self();
+      }
+      
       public Subnet build() {
-         return new Subnet(id, tenantId, name, networkId, gatewayIp, ipVersion, cidr, allocationPools, enableDhcp, dnsNameServers, hostRoutes);
+         return new Subnet(id, tenantId, name, networkId, gatewayIp, ipVersion, cidr, allocationPools, enableDhcp, dnsNameServers, hostRoutes, netPartition);
       }
 
       public T fromSubnet(Subnet in) {
@@ -250,7 +272,8 @@ public class Subnet extends ReferenceWithName {
                .allocationPools(in.getAllocationPools())
                .enableDhcp(in.getEnableDhcp())
                .dnsNameServers(in.getDnsNameServers())
-               .hostRoutes(in.getHostRoutes());
+               .hostRoutes(in.getHostRoutes())
+               .netPartition(in.getNetPartition());
       }
    }
 

@@ -22,6 +22,7 @@ import com.google.inject.Provides;
 import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.location.Zone;
 import org.jclouds.location.functions.ZoneToEndpoint;
+import org.jclouds.openstack.neutron.v2_0.extensions.NuageNetPartitionApi;
 import org.jclouds.openstack.neutron.v2_0.extensions.RouterApi;
 import org.jclouds.openstack.neutron.v2_0.features.NetworkApi;
 import org.jclouds.openstack.neutron.v2_0.features.PortApi;
@@ -79,4 +80,11 @@ public interface NeutronApi extends Closeable {
     */
    @Delegate
    Optional<? extends RouterApi> getRouterExtensionForZone(@EndpointParam(parser = ZoneToEndpoint.class) @Nullable String zone);
+
+   /**
+    * Provides synchronous access to Nuage net partition features
+    */
+   @Delegate
+   Optional<? extends NuageNetPartitionApi> getNuageNetPartitionApiExtensionForZone(
+         @EndpointParam(parser = ZoneToEndpoint.class) @Nullable String zone);
 }
