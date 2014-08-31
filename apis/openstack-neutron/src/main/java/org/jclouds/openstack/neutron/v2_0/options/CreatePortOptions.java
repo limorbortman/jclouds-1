@@ -53,6 +53,7 @@ public class CreatePortOptions implements MapBinder {
       protected String macAddress;
       protected Set<IP> fixedIps;
       protected Boolean adminStateUp;
+      protected String nuageVportTagId;
 
       /**
        * @see org.jclouds.openstack.neutron.v2_0.options.CreatePortOptions#getName()
@@ -102,8 +103,16 @@ public class CreatePortOptions implements MapBinder {
          return self();
       }
 
+      /**
+       * @see CreatePortOptions#getNuageVportTagId()
+       */
+      public T nuageVportTagId(String nuageVportTagId) {
+         this.nuageVportTagId = nuageVportTagId;
+         return self();
+      }
+
       public CreatePortOptions build() {
-         return new CreatePortOptions(name, deviceId, deviceOwner, macAddress, fixedIps, adminStateUp);
+         return new CreatePortOptions(name, deviceId, deviceOwner, macAddress, fixedIps, adminStateUp, nuageVportTagId);
       }
 
       public T fromCreatePortOptions(CreatePortOptions options) {
@@ -112,7 +121,8 @@ public class CreatePortOptions implements MapBinder {
             .deviceOwner(options.getDeviceOwner())
             .macAddress(options.getMacAddress())
             .fixedIps(options.getFixedIps())
-            .adminStateUp(options.getAdminStateUp());
+            .adminStateUp(options.getAdminStateUp())
+            .nuageVportTagId(options.getNuageVportTagId());
       }
    }
 
@@ -131,6 +141,7 @@ public class CreatePortOptions implements MapBinder {
       protected String mac_address;
       protected Set<IP> fixed_ips;
       protected Boolean admin_state_up;
+      protected String nuagetag;
 
       protected CreatePortRequest(String networkId) {
          this.network_id = networkId;
@@ -148,6 +159,7 @@ public class CreatePortOptions implements MapBinder {
    private final String macAddress;
    private final Set<IP> fixedIps;
    private final Boolean adminStateUp;
+   private final String nuageVportTagId;
 
    protected CreatePortOptions() {
       this.name = null;
@@ -156,16 +168,18 @@ public class CreatePortOptions implements MapBinder {
       this.macAddress = null;
       this.fixedIps = Sets.newHashSet();
       this.adminStateUp = null;
+      this.nuageVportTagId = null;
    }
 
    public CreatePortOptions(String name, String deviceId, String deviceOwner, String macAddress,
-                            Set<IP> fixedIps, Boolean adminStateUp) {
+                            Set<IP> fixedIps, Boolean adminStateUp, String nuageVportTagId) {
       this.name = name;
       this.deviceId = deviceId;
       this.deviceOwner = deviceOwner;
       this.macAddress = macAddress;
       this.fixedIps = fixedIps != null ? ImmutableSet.copyOf(fixedIps) : Sets.<IP>newHashSet();
       this.adminStateUp = adminStateUp;
+      this.nuageVportTagId = nuageVportTagId;
    }
 
    public String getName() {
@@ -207,6 +221,15 @@ public class CreatePortOptions implements MapBinder {
       return adminStateUp;
    }
 
+   /**
+    * Nuage extension
+    *
+    * @return The corresponding vTag name, defined in Nuage VSD
+    */
+   public String getNuageVportTagId() {
+      return nuageVportTagId;
+   }
+
    @Override
    public <R extends HttpRequest> R bindToRequest(R request, Map<String, Object> postParams) {
       CreatePortRequest createPortRequest = new CreatePortRequest(checkNotNull(postParams.get("network_id"), "networkId not present").toString());
@@ -230,7 +253,9 @@ public class CreatePortOptions implements MapBinder {
       }
       if (this.adminStateUp != null)
          createPortRequest.admin_state_up = this.adminStateUp;
-
+      if (this.nuageVportTagId != null) {
+         createPortRequest.nuagetag = this.nuageVportTagId;
+      }
       return bindToRequest(request, ImmutableMap.of("port", createPortRequest));
    }
 
