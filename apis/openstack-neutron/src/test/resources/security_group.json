@@ -1,0 +1,12 @@
+{"security_group":{
+    "security_group_rules":[{
+        "ethertype":"IPv4",
+        "protocol":"TCP",
+        "tenant_id":"1234567890",
+        "id":"3c0e45ff-adaf-4124-b083-bf390e5482ff"
+    }],
+    "description":"jclouds-wibble",
+    "name":"jclouds-wibble",
+    "tenant_id":"1234567890",
+    "id":"16dba3bc-f3fa-4775-afdc-237e12c72f6a"
+}}
