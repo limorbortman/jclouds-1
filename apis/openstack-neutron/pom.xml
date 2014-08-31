@@ -25,7 +25,7 @@
     <version>1.8.1-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.apache.jclouds.apis</groupId>
+  <groupId>org.apache.jclouds.api</groupId>
   <artifactId>openstack-neutron</artifactId>
   <version>1.8.1-SNAPSHOT</version>
   <name>jclouds openstack-neutron api</name>
