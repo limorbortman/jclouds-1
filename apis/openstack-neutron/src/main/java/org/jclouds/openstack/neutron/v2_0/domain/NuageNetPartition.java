@@ -42,6 +42,7 @@ public class NuageNetPartition {
 
       protected String id;
       protected String name;
+      protected String enterpriseId;
 
       /**
        * @see NuageNetPartition#getId()
@@ -59,14 +60,23 @@ public class NuageNetPartition {
          return self();
       }
 
+      /**
+       * @see NuageNetPartition#getEnterpriseId()
+       */
+      public T enterpriseId(String enterpriseId) {
+         this.enterpriseId = enterpriseId;
+         return self();
+      }
+
       public NuageNetPartition build() {
-         return new NuageNetPartition(id, name);
+         return new NuageNetPartition(id, name, enterpriseId);
       }
 
       public T fromNuageNetPartition(NuageNetPartition in) {
          return this
                .id(in.getId())
-               .name(in.getName());
+               .name(in.getName())
+               .enterpriseId(in.getEnterpriseId());
       }
    }
 
@@ -79,13 +89,15 @@ public class NuageNetPartition {
 
    private final String id;
    private final String name;
+   private final String enterpriseId;
 
    @ConstructorProperties({
-         "id", "name"
+         "id", "name", "enterprise_id"
    })
-   protected NuageNetPartition(String id, String name) {
+   protected NuageNetPartition(String id, String name, String enterpriseId) {
       this.id = id;
       this.name = name;
+      this.enterpriseId = enterpriseId;
    }
 
    /**
@@ -102,9 +114,16 @@ public class NuageNetPartition {
       return name;
    }
 
+   /**
+    * @return The ID of the enterprise this net partition is linked to
+    */
+   public String getEnterpriseId() {
+      return enterpriseId;
+   }
+
    @Override
    public int hashCode() {
-      return Objects.hashCode(super.hashCode(), id, name);
+      return Objects.hashCode(super.hashCode(), id, name, enterpriseId);
    }
 
    @Override
@@ -114,11 +133,12 @@ public class NuageNetPartition {
       NuageNetPartition that = NuageNetPartition.class.cast(obj);
       return super.equals(obj)
             && Objects.equal(this.id, that.id)
-            && Objects.equal(this.name, that.name);
+            && Objects.equal(this.name, that.name)
+            && Objects.equal(this.enterpriseId, that.enterpriseId);
    }
 
    protected Objects.ToStringHelper string() {
-      return Objects.toStringHelper(this).add("id", id).add("name", name);
+      return Objects.toStringHelper(this).add("id", id).add("name", name).add("enterpriseId", enterpriseId);
    }
 
    @Override

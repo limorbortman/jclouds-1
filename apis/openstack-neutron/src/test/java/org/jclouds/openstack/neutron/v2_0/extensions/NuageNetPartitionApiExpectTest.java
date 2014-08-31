@@ -22,6 +22,7 @@ import com.google.common.collect.ImmutableSet;
 import org.jclouds.http.HttpResponse;
 import org.jclouds.openstack.neutron.v2_0.domain.NuageNetPartition;
 import org.jclouds.openstack.neutron.v2_0.internal.BaseNeutronApiExpectTest;
+import org.jclouds.openstack.neutron.v2_0.options.DeleteNuageNetPartitionOptions;
 import org.jclouds.openstack.neutron.v2_0.parse.ParseNuageNetPartitionTest;
 import org.jclouds.rest.AuthorizationException;
 import org.testng.annotations.Test;
@@ -111,11 +112,12 @@ public class NuageNetPartitionApiExpectTest extends BaseNeutronApiExpectTest {
    public void testDeleteReturns2xx() {
       NuageNetPartitionApi api = requestsSendResponses(
             keystoneAuthWithUsernameAndPasswordAndTenantName, responseWithKeystoneAccess,
-            authenticatedGET().endpoint(endpoint + "/net-partitions/12345").method("DELETE").build(),
+            authenticatedGET().endpoint(endpoint + "/net-partitions/12345").method("DELETE")
+                                          .payload(payloadFromStringWithContentType("{\"cascade_delete\":true}", MediaType.APPLICATION_JSON)).build(),
             HttpResponse.builder().statusCode(200).build())
             .getNuageNetPartitionApiExtensionForZone(ZONE).get();
 
-      assertTrue(api.delete("12345"));
+      assertTrue(api.delete("12345", DeleteNuageNetPartitionOptions.builder().cascadeDelete(true).build()));
    }
 
    @Test(expectedExceptions = AuthorizationException.class)
