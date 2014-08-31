@@ -38,12 +38,13 @@ public class Port extends ReferenceWithName {
    private final String deviceOwner;
    private final String macAddress;
    private final Set<IP> fixedIps;
+   private final Set<ExtraDhcpOpt> extraDhcpOpts;
 
    @ConstructorProperties({
-      "id", "tenant_id", "name", "status", "network_id", "admin_state_up", "device_id", "device_owner", "fixed_ips", "mac_address"
+      "id", "tenant_id", "name", "status", "network_id", "admin_state_up", "device_id", "device_owner", "fixed_ips", "mac_address", "extra_dhcp_opts"
    })
    protected Port(String id, String tenantId, String name, State state, String networkId, Boolean adminStateUp,
-                  String deviceId, String deviceOwner, Set<IP> fixedIps, String macAddress) {
+                  String deviceId, String deviceOwner, Set<IP> fixedIps, String macAddress, Set<ExtraDhcpOpt> extraDhcpOpts) {
       super(id, tenantId, name);
       this.adminStateUp = adminStateUp;
       this.state = state;
@@ -52,6 +53,7 @@ public class Port extends ReferenceWithName {
       this.deviceOwner = deviceOwner;
       this.fixedIps = fixedIps;
       this.macAddress = macAddress;
+      this.extraDhcpOpts = extraDhcpOpts;
    }
 
    /**
@@ -103,9 +105,16 @@ public class Port extends ReferenceWithName {
       return macAddress;
    }
 
+   /**
+    * @return The set of extra DHCP options for this port
+    */
+   public Set<ExtraDhcpOpt> getExtraDhcpOpts() {
+      return extraDhcpOpts;
+   }
+
    @Override
    public int hashCode() {
-      return Objects.hashCode(super.hashCode(), state, adminStateUp, networkId, deviceId, deviceOwner, fixedIps, macAddress);
+      return Objects.hashCode(super.hashCode(), state, adminStateUp, networkId, deviceId, deviceOwner, fixedIps, macAddress, extraDhcpOpts);
    }
 
    @Override
@@ -120,13 +129,14 @@ public class Port extends ReferenceWithName {
          && Objects.equal(this.deviceId, that.deviceId)
          && Objects.equal(this.deviceOwner, that.deviceOwner)
          && Objects.equal(this.fixedIps, that.fixedIps)
-         && Objects.equal(this.macAddress, that.macAddress);
+         && Objects.equal(this.macAddress, that.macAddress)
+         && Objects.equal(this.extraDhcpOpts, that.extraDhcpOpts);
    }
 
    protected Objects.ToStringHelper string() {
       return super.string()
          .add("state", state).add("adminStateUp", adminStateUp).add("networkId", networkId).add("deviceId", deviceId)
-         .add("deviceOwner", deviceOwner).add("fixedIps", fixedIps).add("macAddress", macAddress);
+         .add("deviceOwner", deviceOwner).add("fixedIps", fixedIps).add("macAddress", macAddress).add("extraDhcpOpts", extraDhcpOpts);
    }
 
    @Override
@@ -150,6 +160,7 @@ public class Port extends ReferenceWithName {
       protected Set<IP> fixedIps;
       protected State state;
       protected Boolean adminStateUp;
+      protected Set<ExtraDhcpOpt> extraDhcpOpts;
 
       /**
        * @see org.jclouds.openstack.neutron.v2_0.domain.Port#getState()
@@ -208,8 +219,16 @@ public class Port extends ReferenceWithName {
          return self();
       }
 
+      /**
+       * @see Port#getExtraDhcpOpts()
+       */
+      public T extraDhcpOpts(Set<ExtraDhcpOpt> extraDhcpOpts) {
+         this.extraDhcpOpts = extraDhcpOpts;
+         return self();
+      }
+
       public Port build() {
-         return new Port(id, tenantId, name, state, networkId, adminStateUp, deviceId, deviceOwner, fixedIps, macAddress);
+         return new Port(id, tenantId, name, state, networkId, adminStateUp, deviceId, deviceOwner, fixedIps, macAddress, extraDhcpOpts);
       }
 
       public T fromPort(Port in) {
@@ -220,7 +239,8 @@ public class Port extends ReferenceWithName {
                .deviceId(in.getDeviceId())
                .deviceOwner(in.getDeviceOwner())
                .fixedIps(in.getFixedIps())
-               .macAddress(in.getMacAddress());
+               .macAddress(in.getMacAddress())
+               .extraDhcpOpts(in.getExtraDhcpOpts());
       }
    }
 

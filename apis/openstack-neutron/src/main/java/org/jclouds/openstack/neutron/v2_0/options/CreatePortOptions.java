@@ -21,11 +21,13 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import org.jclouds.http.HttpRequest;
+import org.jclouds.openstack.neutron.v2_0.domain.ExtraDhcpOpt;
 import org.jclouds.openstack.neutron.v2_0.domain.IP;
 import org.jclouds.rest.MapBinder;
 import org.jclouds.rest.binders.BindToJsonPayload;
 
 import javax.inject.Inject;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -53,6 +55,7 @@ public class CreatePortOptions implements MapBinder {
       protected String macAddress;
       protected Set<IP> fixedIps;
       protected Boolean adminStateUp;
+      protected Set<ExtraDhcpOpt> extraDhcpOpts;
       protected String nuageVportTagId;
 
       /**
@@ -111,8 +114,16 @@ public class CreatePortOptions implements MapBinder {
          return self();
       }
 
+      /**
+       * @see CreatePortOptions#getExtraDhcpOpts()
+       */
+      public T extraDhcpOpts(Set<ExtraDhcpOpt> extraDhcpOpts) {
+         this.extraDhcpOpts = extraDhcpOpts;
+         return self();
+      }
+      
       public CreatePortOptions build() {
-         return new CreatePortOptions(name, deviceId, deviceOwner, macAddress, fixedIps, adminStateUp, nuageVportTagId);
+         return new CreatePortOptions(name, deviceId, deviceOwner, macAddress, fixedIps, adminStateUp, extraDhcpOpts, nuageVportTagId);
       }
 
       public T fromCreatePortOptions(CreatePortOptions options) {
@@ -122,6 +133,7 @@ public class CreatePortOptions implements MapBinder {
             .macAddress(options.getMacAddress())
             .fixedIps(options.getFixedIps())
             .adminStateUp(options.getAdminStateUp())
+            .extraDhcpOpts(options.getExtraDhcpOpts())
             .nuageVportTagId(options.getNuageVportTagId());
       }
    }
@@ -142,6 +154,7 @@ public class CreatePortOptions implements MapBinder {
       protected Set<IP> fixed_ips;
       protected Boolean admin_state_up;
       protected String nuagetag;
+      protected Set<ExtraDhcpOpt> extra_dhcp_opts;
 
       protected CreatePortRequest(String networkId) {
          this.network_id = networkId;
@@ -151,6 +164,11 @@ public class CreatePortOptions implements MapBinder {
          protected String ip_address;
          protected String subnet_id;
       }
+
+      protected static final class ExtraDhcpOpt {
+         protected String opt_name;
+         protected String opt_value;
+      }
    }
 
    private final String name;
@@ -159,6 +177,7 @@ public class CreatePortOptions implements MapBinder {
    private final String macAddress;
    private final Set<IP> fixedIps;
    private final Boolean adminStateUp;
+   private final Set<ExtraDhcpOpt> extraDhcpOpts;
    private final String nuageVportTagId;
 
    protected CreatePortOptions() {
@@ -168,11 +187,12 @@ public class CreatePortOptions implements MapBinder {
       this.macAddress = null;
       this.fixedIps = Sets.newHashSet();
       this.adminStateUp = null;
+      this.extraDhcpOpts = null;
       this.nuageVportTagId = null;
    }
 
    public CreatePortOptions(String name, String deviceId, String deviceOwner, String macAddress,
-                            Set<IP> fixedIps, Boolean adminStateUp, String nuageVportTagId) {
+                            Set<IP> fixedIps, Boolean adminStateUp, Set<ExtraDhcpOpt> extraDhcpOpts, String nuageVportTagId) {
       this.name = name;
       this.deviceId = deviceId;
       this.deviceOwner = deviceOwner;
@@ -180,6 +200,7 @@ public class CreatePortOptions implements MapBinder {
       this.fixedIps = fixedIps != null ? ImmutableSet.copyOf(fixedIps) : Sets.<IP>newHashSet();
       this.adminStateUp = adminStateUp;
       this.nuageVportTagId = nuageVportTagId;
+      this.extraDhcpOpts = extraDhcpOpts != null ? ImmutableSet.copyOf(extraDhcpOpts) : new HashSet<ExtraDhcpOpt>();
    }
 
    public String getName() {
@@ -230,6 +251,13 @@ public class CreatePortOptions implements MapBinder {
       return nuageVportTagId;
    }
 
+   /**
+    * @return The set of extra DHCP options this port has
+    */
+   public Set<ExtraDhcpOpt> getExtraDhcpOpts() {
+      return extraDhcpOpts;
+   }
+
    @Override
    public <R extends HttpRequest> R bindToRequest(R request, Map<String, Object> postParams) {
       CreatePortRequest createPortRequest = new CreatePortRequest(checkNotNull(postParams.get("network_id"), "networkId not present").toString());
@@ -253,6 +281,15 @@ public class CreatePortOptions implements MapBinder {
       }
       if (this.adminStateUp != null)
          createPortRequest.admin_state_up = this.adminStateUp;
+      if (!this.extraDhcpOpts.isEmpty()) {
+         createPortRequest.extra_dhcp_opts = new HashSet<CreatePortRequest.ExtraDhcpOpt>();
+         for (ExtraDhcpOpt extraDhcpOpt : this.extraDhcpOpts) {
+            CreatePortRequest.ExtraDhcpOpt requestExtraDhcpOpt = new CreatePortRequest.ExtraDhcpOpt();
+            requestExtraDhcpOpt.opt_name = extraDhcpOpt.getOptName();
+            requestExtraDhcpOpt.opt_value = extraDhcpOpt.getOptValue();
+            createPortRequest.extra_dhcp_opts.add(requestExtraDhcpOpt);
+         }
+      }
       if (this.nuageVportTagId != null) {
          createPortRequest.nuagetag = this.nuageVportTagId;
       }

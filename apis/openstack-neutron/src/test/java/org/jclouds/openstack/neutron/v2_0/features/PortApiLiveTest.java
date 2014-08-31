@@ -24,6 +24,7 @@ import static org.testng.Assert.assertTrue;
 import java.util.Set;
 
 import org.jclouds.openstack.neutron.v2_0.domain.BulkPort;
+import org.jclouds.openstack.neutron.v2_0.domain.ExtraDhcpOpt;
 import org.jclouds.openstack.neutron.v2_0.domain.IP;
 import org.jclouds.openstack.neutron.v2_0.domain.NetworkType;
 import org.jclouds.openstack.neutron.v2_0.domain.Port;
@@ -79,7 +80,8 @@ public class PortApiLiveTest extends BaseNeutronApiLiveTest {
          assertNotNull(ipv4SubnetId);
          assertNotNull(ipv6SubnetId);
 
-         String ipv4PortId = portApi.create(networkId, CreatePortOptions.builder().name("JClouds-Live-IPv4-Port").fixedIps(getFixedAddresses(ipv4SubnetId)).build()).getId();
+         ExtraDhcpOpt extraDhcpOpt = ExtraDhcpOpt.builder().optName("router").optValue("198.51.100.1").build();
+         String ipv4PortId = portApi.create(networkId, CreatePortOptions.builder().name("JClouds-Live-IPv4-Port").fixedIps(getFixedAddresses(ipv4SubnetId)).extraDhcpOpts(Sets.newHashSet(extraDhcpOpt)).build()).getId();
          String ipv6PortId = portApi.create(networkId, CreatePortOptions.builder().name("JClouds-Live-IPv6-Port").fixedIps(getFixedAddresses(ipv6SubnetId)).build()).getId();
 
          assertNotNull(ipv4PortId);
