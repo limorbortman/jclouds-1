@@ -22,12 +22,17 @@ package org.jclouds.openstack.glance.v1_0.options;
  */
 public enum ImageField {
    ID, NAME, CHECKSUM, MIN_DISK, MIN_RAM, IS_PUBLIC, PROTECTED, CREATED_AT, UPDATED_AT, DELETED_AT,
-   OWNER, LOCATION, STATUS, DISK_FORMAT, CONTAINER_FORMAT, SIZE, SIZE_MIN, SIZE_MAX, STORE, PROPERTY;
+   OWNER, LOCATION, COPY_FROM, STATUS, DISK_FORMAT, CONTAINER_FORMAT, SIZE, SIZE_MIN, SIZE_MAX, STORE, PROPERTY;
 
    public static final String HEADER_PREFIX = "X-Image-Meta-";
+   public static final String GLANCE_HEADER_PREFIX = "x-glance-api-";
 
    public String asParam() {
       return name().toLowerCase();
+   }
+
+   public String asGlanceHeader() {
+      return GLANCE_HEADER_PREFIX + name().charAt(0) + name().substring(1).toLowerCase();
    }
 
    public String asHeader() {

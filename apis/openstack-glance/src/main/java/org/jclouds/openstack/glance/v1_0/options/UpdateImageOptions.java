@@ -21,6 +21,7 @@ import static org.jclouds.openstack.glance.v1_0.options.ImageField.CONTAINER_FOR
 import static org.jclouds.openstack.glance.v1_0.options.ImageField.DISK_FORMAT;
 import static org.jclouds.openstack.glance.v1_0.options.ImageField.IS_PUBLIC;
 import static org.jclouds.openstack.glance.v1_0.options.ImageField.LOCATION;
+import static org.jclouds.openstack.glance.v1_0.options.ImageField.COPY_FROM;
 import static org.jclouds.openstack.glance.v1_0.options.ImageField.MIN_DISK;
 import static org.jclouds.openstack.glance.v1_0.options.ImageField.MIN_RAM;
 import static org.jclouds.openstack.glance.v1_0.options.ImageField.NAME;
@@ -99,6 +100,11 @@ public class UpdateImageOptions extends BaseHttpRequestOptions {
 
    public UpdateImageOptions location(String location) {
       headers.put(LOCATION.asHeader(), location);
+      return this;
+   }
+
+   public UpdateImageOptions copyFrom(String url) {
+      headers.put(COPY_FROM.asGlanceHeader(), url);
       return this;
    }
 
@@ -205,6 +211,13 @@ public class UpdateImageOptions extends BaseHttpRequestOptions {
        */
       public static UpdateImageOptions location(String location) {
          return new UpdateImageOptions().location(location);
+      }
+
+      /**
+       * @see UpdateImageOptions#copyFrom
+       */
+      public static UpdateImageOptions copyFrom(String url) {
+         return new UpdateImageOptions().copyFrom(url);
       }
 
       /**

@@ -131,5 +131,19 @@ public class CreateImageOptions extends UpdateImageOptions {
       public static CreateImageOptions property(String key, String value) {
          return CreateImageOptions.class.cast(new CreateImageOptions().property(key, value));
       }
+
+      /**
+       * @see org.jclouds.openstack.glance.v1_0.options.CreateImageOptions#location
+       */
+      public static CreateImageOptions location(String location) {
+         return CreateImageOptions.class.cast(new CreateImageOptions().location(location));
+      }
+
+      /**
+       * @see org.jclouds.openstack.glance.v1_0.options.CreateImageOptions#copyFrom(String)
+       */
+      public static CreateImageOptions copyFrom(String url) {
+         return CreateImageOptions.class.cast(new CreateImageOptions().copyFrom(url));
+      }
    }
 }
