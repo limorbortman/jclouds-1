@@ -26,6 +26,7 @@ import org.jclouds.openstack.neutron.v2.domain.SecurityGroups;
 import org.jclouds.openstack.neutron.v2.fallbacks.EmptySecurityGroupsFallback;
 import org.jclouds.openstack.neutron.v2.functions.ParseSecurityGroups;
 import org.jclouds.openstack.neutron.v2.functions.SecurityGroupsToPagedIterable;
+import org.jclouds.openstack.neutron.v2.options.ListSecurityGroupOptions;
 import org.jclouds.openstack.v2_0.options.PaginationOptions;
 import org.jclouds.rest.annotations.Fallback;
 import org.jclouds.rest.annotations.RequestFilters;
@@ -69,7 +70,7 @@ public interface SecurityGroupApi {
    @Transform(SecurityGroupsToPagedIterable.class)
    @ResponseParser(ParseSecurityGroups.class)
    @Fallback(Fallbacks.EmptyPagedIterableOnNotFoundOr404.class)
-   PagedIterable<SecurityGroup> list();
+   PagedIterable<SecurityGroup> list(ListSecurityGroupOptions... options);
 
    /**
     * @see <a href="http://docs.openstack.org/api/openstack-network/2.0/content/pagination.html">api doc</a>

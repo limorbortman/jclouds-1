@@ -26,6 +26,7 @@ import org.jclouds.openstack.neutron.v2.domain.SecurityGroupRules;
 import org.jclouds.openstack.neutron.v2.fallbacks.EmptySecurityGroupRulesFallback;
 import org.jclouds.openstack.neutron.v2.functions.ParseSecurityGroupRules;
 import org.jclouds.openstack.neutron.v2.functions.SecurityGroupRulesToPagedIterable;
+import org.jclouds.openstack.neutron.v2.options.ListSecurityGroupRuleOptions;
 import org.jclouds.openstack.v2_0.options.PaginationOptions;
 import org.jclouds.rest.annotations.Fallback;
 import org.jclouds.rest.annotations.RequestFilters;
@@ -66,7 +67,7 @@ public interface SecurityGroupRuleApi {
    @Transform(SecurityGroupRulesToPagedIterable.class)
    @ResponseParser(ParseSecurityGroupRules.class)
    @Fallback(Fallbacks.EmptyPagedIterableOnNotFoundOr404.class)
-   PagedIterable<SecurityGroupRule> list();
+   PagedIterable<SecurityGroupRule> list(ListSecurityGroupRuleOptions... options);
 
    /**
     * @see <a href="http://docs.openstack.org/api/openstack-network/2.0/content/pagination.html">api doc</a>

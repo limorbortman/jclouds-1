@@ -30,6 +30,7 @@ import org.jclouds.openstack.neutron.v2.domain.Ports;
 import org.jclouds.openstack.neutron.v2.fallbacks.EmptyPortsFallback;
 import org.jclouds.openstack.neutron.v2.functions.ParsePorts;
 import org.jclouds.openstack.neutron.v2.functions.PortsToPagedIterable;
+import org.jclouds.openstack.neutron.v2.options.ListPortOptions;
 import org.jclouds.openstack.v2_0.options.PaginationOptions;
 import org.jclouds.rest.annotations.Fallback;
 import org.jclouds.rest.annotations.RequestFilters;
@@ -75,7 +76,7 @@ public interface PortApi {
    @Transform(PortsToPagedIterable.class)
    @ResponseParser(ParsePorts.class)
    @Fallback(EmptyPagedIterableOnNotFoundOr404.class)
-   PagedIterable<Port> list();
+   PagedIterable<Port> list(ListPortOptions... options);
 
    /**
     * @see <a href="http://docs.openstack.org/api/openstack-network/2.0/content/pagination.html">api doc</a>
