@@ -25,7 +25,6 @@ import org.jclouds.javax.annotation.Nullable;
 import javax.inject.Named;
 import java.beans.ConstructorProperties;
 import java.util.Collection;
-import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -62,11 +61,17 @@ public class Subnet {
    @Named("ipv6_ra_mode")
    private IPv6DHCPMode ipv6RaMode;
 
+   @Named("nuagenet")
+   private String nuageId;
+   private String enterprise;
+   @Named("net_partition")
+   private String netPartition;
+
    @ConstructorProperties({"id", "name", "network_id", "tenant_id", "allocation_pools", "gateway_ip", "ip_version",
-         "cidr", "enable_dhcp", "dns_nameservers", "host_routes", "ipv6_address_mode", "ipv6_ra_mode"})
+         "cidr", "enable_dhcp", "dns_nameservers", "host_routes", "ipv6_address_mode", "ipv6_ra_mode", "nuagenet", "enterprise", "net_partition"})
    private Subnet(String id, String name, String networkId, String tenantId, ImmutableSet<AllocationPool> allocationPools,
          String gatewayIp, Integer ipVersion, String cidr, Boolean enableDhcp, ImmutableSet<String> dnsNameServers, ImmutableSet<HostRoute> hostRoutes,
-         IPv6DHCPMode ipv6AddressMode, IPv6DHCPMode ipv6RaMode) {
+         IPv6DHCPMode ipv6AddressMode, IPv6DHCPMode ipv6RaMode, String nuageId, String enterprise, String netPartition) {
       this.id = id;
       this.name = name;
       this.networkId = networkId;
@@ -80,6 +85,9 @@ public class Subnet {
       this.hostRoutes = hostRoutes;
       this.ipv6AddressMode = ipv6AddressMode;
       this.ipv6RaMode = ipv6RaMode;
+      this.nuageId = nuageId;
+      this.enterprise = enterprise;
+      this.netPartition = netPartition;
    }
 
    /**
@@ -104,7 +112,10 @@ public class Subnet {
             subnet.dnsNameServers,
             subnet.hostRoutes,
             subnet.ipv6AddressMode,
-            subnet.ipv6RaMode);
+            subnet.ipv6RaMode,
+            subnet.nuageId,
+            subnet.enterprise,
+            subnet.netPartition);
    }
 
    /**
@@ -211,11 +222,38 @@ public class Subnet {
       return ipv6RaMode;
    }
 
+   /**
+    * Nuage extension
+    * @return The corresponding UUID of the subnet in the Nuage VSD
+    */
+   @Nullable
+   public String getNuageId() {
+      return nuageId;
+   }
+
+   /**
+    * Nuage extension
+    * @return The enterprise this subnet belongs to
+    */
+   @Nullable
+   public String getEnterprise() {
+      return enterprise;
+   }
+
+   /**
+    * Nuage extension
+    * @return The net partition this subnet belongs to
+    */
+   @Nullable
+   public String getNetPartition() {
+      return netPartition;
+   }
+
    @Override
    public int hashCode() {
       return Objects.hashCode(id, name, networkId, tenantId, allocationPools, gatewayIp,
             ipVersion, cidr, enableDhcp, dnsNameServers, hostRoutes,
-            ipv6AddressMode, ipv6RaMode);
+            ipv6AddressMode, ipv6RaMode, nuageId, enterprise, netPartition);
    }
 
    @Override
@@ -239,7 +277,10 @@ public class Subnet {
             Objects.equal(this.dnsNameServers, that.dnsNameServers) &&
             Objects.equal(this.hostRoutes, that.hostRoutes) &&
             Objects.equal(this.ipv6AddressMode, that.ipv6AddressMode) &&
-            Objects.equal(this.ipv6RaMode, that.ipv6RaMode);
+            Objects.equal(this.ipv6RaMode, that.ipv6RaMode) &&
+            Objects.equal(this.nuageId, that.nuageId) &&
+            Objects.equal(this.enterprise, that.enterprise) &&
+            Objects.equal(this.netPartition, that.netPartition);
    }
 
    @Override
@@ -258,6 +299,9 @@ public class Subnet {
             .add("hostRoutes", hostRoutes)
             .add("ipv6AddressMode", ipv6AddressMode)
             .add("ipv6RaMode", ipv6RaMode)
+            .add("nuageId", nuageId)
+            .add("enterprise", enterprise)
+            .add("netPartition", netPartition)
             .toString();
    }
 
@@ -386,6 +430,30 @@ public class Subnet {
        */
       public ParameterizedBuilderType ipv6AddressMode(IPv6DHCPMode ipv6AddressMode) {
          subnet.ipv6AddressMode = ipv6AddressMode;
+         return self();
+      }
+
+      /**
+       * @see  org.jclouds.openstack.neutron.v2.domain.Subnet#getNuageId()
+       */
+      public ParameterizedBuilderType nuageId(String nuageId) {
+         subnet.nuageId = nuageId;
+         return self();
+      }
+
+      /**
+       * @see  org.jclouds.openstack.neutron.v2.domain.Subnet#getEnterprise()
+       */
+      public ParameterizedBuilderType enterprise(String enterprise) {
+         subnet.enterprise = enterprise;
+         return self();
+      }
+
+      /**
+       * @see  org.jclouds.openstack.neutron.v2.domain.Subnet#getNetPartition()
+       */
+      public ParameterizedBuilderType netPartition(String netPartition) {
+         subnet.netPartition = netPartition;
          return self();
       }
    }
