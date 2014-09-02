@@ -320,6 +320,34 @@ public interface ServerApi {
    String createImageFromServer(@PayloadParam("name") String name, @PathParam("id") String id);
 
    /**
+    * Add a security group to a server.
+    *
+    * @param id
+    *           id of the server
+    * @param secGroupName
+    *           name of the security group
+    */
+   @POST
+   @Path("/{id}/action")
+   @Consumes(MediaType.APPLICATION_JSON)
+   @Produces(MediaType.APPLICATION_JSON)
+   @Payload("%7B\"addSecurityGroup\":%7B\"name\":\"{secGroupName}\"%7D%7D")
+   void addSecurityGroup(@PathParam("id") String id, @PayloadParam("secGroupName") String secGroupName);
+
+   /**
+    * Remove a security group from a server
+    *
+    * @param id           id of the server
+    * @param secGroupName name of the security group
+    */
+   @POST
+   @Path("/{id}/action")
+   @Consumes(MediaType.APPLICATION_JSON)
+   @Produces(MediaType.APPLICATION_JSON)
+   @Payload("%7B\"removeSecurityGroup\":%7B\"name\":\"{secGroupName}\"%7D%7D")
+   void removeSecurityGroup(@PathParam("id") String id, @PayloadParam("secGroupName") String secGroupName);
+
+   /**
     * List all metadata for a server.
     *
     * @param id
