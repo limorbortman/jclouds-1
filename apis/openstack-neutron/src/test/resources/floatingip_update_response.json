@@ -1,0 +1,8 @@
+{"floatingip":{
+   "fixed_ip_address":"192.168.0.25",
+   "port_id":"b71fcac1-e864-4031-8c5b-edbecd9ece36",
+   "floating_network_id":"5f9cf7dc-22ca-4097-8e49-1cc8b23faf17",
+   "router_id":"5d51d012-3491-4db7-b1b5-6f254015015d",
+   "tenant_id":"1234567890",
+   "id":"16dba3bc-f3fa-4775-afdc-237e12c72f6a"
+}}
