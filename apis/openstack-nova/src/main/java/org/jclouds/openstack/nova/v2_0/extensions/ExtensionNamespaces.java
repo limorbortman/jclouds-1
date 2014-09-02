@@ -110,4 +110,9 @@ public interface ExtensionNamespaces {
     * Consoles extension
     */
    public static final String CONSOLES = "http://docs.openstack.org/compute/ext/os-consoles/api/v2";
+
+   /**
+    * Floating IP pools support
+    */
+   public static final String FLOATING_IP_POOLS = "http://docs.openstack.org/ext/floating_ip_pools/api/v1.1";
 }
