@@ -142,6 +142,11 @@ public class CreateUserOptions implements MapBinder{
       return this;
    }
 
+   public CreateUserOptions password(String password) {
+      this.password = password;
+      return this;
+   }
+
    public static class Builder {
 
       /**
@@ -167,6 +172,15 @@ public class CreateUserOptions implements MapBinder{
          CreateUserOptions options = new CreateUserOptions();
          return options.enabled(enabled);
       }
+
+      /**
+       * @see CreateUserOptions#enabled(boolean)
+       */
+      public static CreateUserOptions password(String password) {
+         CreateUserOptions options = new CreateUserOptions();
+         return options.password(password);
+      }
+
 
    }
 
