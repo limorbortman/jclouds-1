@@ -44,6 +44,12 @@ public class Router {
    @Named("external_gateway_info")
    private ExternalGatewayInfo externalGatewayInfo;
 
+   private String enterprise;
+   @Named("rd")
+   private String routeDistinguisher;
+   @Named("rt")
+   private String routeTarget;
+
    /**
     * @param id
     * @param status
@@ -52,14 +58,18 @@ public class Router {
     * @param adminStateUp
     * @param externalGatewayInfo
     */
-   @ConstructorProperties({"id", "status", "name", "tenant_id", "admin_state_up", "external_gateway_info"})
-   private Router(String id, NetworkStatus status, String name, String tenantId, Boolean adminStateUp, ExternalGatewayInfo externalGatewayInfo) {
+   @ConstructorProperties({"id", "status", "name", "tenant_id", "admin_state_up", "external_gateway_info", "enterprise", "rd", "rt"})
+   private Router(String id, NetworkStatus status, String name, String tenantId, Boolean adminStateUp, ExternalGatewayInfo externalGatewayInfo,
+                  String enterprise, String routeDistinguisher, String routeTarget) {
       this.id = id;
       this.status = status;
       this.name = name;
       this.tenantId = tenantId;
       this.adminStateUp = adminStateUp;
       this.externalGatewayInfo = externalGatewayInfo;
+      this.enterprise = enterprise;
+      this.routeDistinguisher = routeDistinguisher;
+      this.routeTarget = routeTarget;
    }
 
    /**
@@ -72,7 +82,15 @@ public class Router {
     * @param router
     */
    private Router(Router router) {
-      this(router.id, router.status, router.name, router.tenantId, router.adminStateUp, router.externalGatewayInfo);
+      this(router.id,
+            router.status,
+            router.name,
+            router.tenantId,
+            router.adminStateUp,
+            router.externalGatewayInfo,
+            router.enterprise,
+            router.routeDistinguisher,
+            router.routeTarget);
    }
 
    /**
@@ -124,6 +142,30 @@ public class Router {
    }
 
    /**
+    * @return the enterprise to put this router in
+    */
+   @Nullable
+   public String getEnterprise() {
+      return enterprise;
+   }
+
+   /**
+    * @return the route distinguisher
+    */
+   @Nullable
+   public String getRouteDistinguisher() {
+      return routeDistinguisher;
+   }
+
+   /**
+    * @return the route target
+    */
+   @Nullable
+   public String getRouteTarget() {
+      return routeTarget;
+   }
+
+   /**
     * @return the Builder for creating a new Router
     */
    public static CreateBuilder createOptions() {
@@ -151,12 +193,16 @@ public class Router {
             Objects.equal(this.name, that.name) &&
             Objects.equal(this.tenantId, that.tenantId) &&
             Objects.equal(this.adminStateUp, that.adminStateUp) &&
-            Objects.equal(this.externalGatewayInfo, that.externalGatewayInfo);
+            Objects.equal(this.externalGatewayInfo, that.externalGatewayInfo) &&
+            Objects.equal(this.enterprise, that.enterprise) &&
+            Objects.equal(this.routeDistinguisher, that.routeDistinguisher) &&
+            Objects.equal(this.routeTarget, that.routeTarget);
    }
 
    @Override
    public int hashCode() {
-      return Objects.hashCode(id, status, name, tenantId, adminStateUp, externalGatewayInfo);
+      return Objects.hashCode(id, status, name, tenantId, adminStateUp, externalGatewayInfo,
+            enterprise, routeDistinguisher, routeTarget);
    }
 
    @Override
@@ -168,6 +214,9 @@ public class Router {
             .add("tenantId", tenantId)
             .add("adminStateUp", adminStateUp)
             .add("externalGatewayInfo", externalGatewayInfo)
+            .add("enterprise", enterprise)
+            .add("routeDistinguisher", routeDistinguisher)
+            .add("routeTarget", routeTarget)
             .toString();
    }
 
@@ -224,6 +273,39 @@ public class Router {
        */
       public ParameterizedBuilderType externalGatewayInfo(ExternalGatewayInfo externalGatewayInfo) {
          router.externalGatewayInfo = externalGatewayInfo;
+         return self();
+      }
+
+      /**
+       * Provide the enterprise to the Router's Builder.
+       *
+       * @return the Builder.
+       * @see  org.jclouds.openstack.neutron.v2.domain.Router#getEnterprise()
+       */
+      public ParameterizedBuilderType enterprise(String enterprise) {
+         router.enterprise = enterprise;
+         return self();
+      }
+
+      /**
+       * Provide the routeDistinguisher to the Router's Builder.
+       *
+       * @return the Builder.
+       * @see  org.jclouds.openstack.neutron.v2.domain.Router#getRouteDistinguisher()
+       */
+      public ParameterizedBuilderType routeDistinguisher(String routeDistinguisher) {
+         router.routeDistinguisher = routeDistinguisher;
+         return self();
+      }
+
+      /**
+       * Provide the routeTarget to the Router's Builder.
+       *
+       * @return the Builder.
+       * @see  org.jclouds.openstack.neutron.v2.domain.Router#getRouteTarget()
+       */
+      public ParameterizedBuilderType routeTarget(String routeTarget) {
+         router.routeTarget = routeTarget;
          return self();
       }
    }
