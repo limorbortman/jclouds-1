@@ -14,12 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package org.jclouds.openstack.neutron.v2_0.domain;
+package org.jclouds.openstack.neutron.v2.domain;
 
 import com.google.common.base.Objects;
 
-import java.beans.ConstructorProperties;
+import javax.inject.Named;
 import java.util.Date;
 
 /**
@@ -29,70 +28,12 @@ import java.util.Date;
  */
 public class PortStats {
 
-   public static Builder<?> builder() {
-      return new ConcreteBuilder();
-   }
+   private Date timestamp;
+   @Named("bytes_in")
+   private Long bytesIn;
+   @Named("bytes_out")
+   private Long bytesOut;
 
-   public Builder<?> toBuilder() {
-      return new ConcreteBuilder().fromPortStats(this);
-   }
-
-   public static abstract class Builder<T extends Builder<T>> {
-      protected abstract T self();
-
-      protected Date timestamp;
-      protected Long bytesIn;
-      protected Long bytesOut;
-
-      /**
-       * @see PortStats#getTimestamp()
-       */
-      public T timestamp(Date timestamp) {
-         this.timestamp = timestamp;
-         return self();
-      }
-
-      /**
-       * @see PortStats#getBytesIn()
-       */
-      public T bytesIn(Long bytesIn) {
-         this.bytesIn = bytesIn;
-         return self();
-      }
-
-      /**
-       * @see PortStats#getBytesOut()
-       */
-      public T bytesOut(Long bytesOut) {
-         this.bytesOut = bytesOut;
-         return self();
-      }
-
-      public PortStats build() {
-         return new PortStats(timestamp, bytesIn, bytesOut);
-      }
-
-      public T fromPortStats(PortStats in) {
-         return this.timestamp(in.getTimestamp())
-               .bytesIn(in.getBytesIn())
-               .bytesOut(in.getBytesOut());
-      }
-   }
-
-   private static class ConcreteBuilder extends Builder<ConcreteBuilder> {
-      @Override
-      protected ConcreteBuilder self() {
-         return this;
-      }
-   }
-
-   private final Date timestamp;
-   private final Long bytesIn;
-   private final Long bytesOut;
-
-   @ConstructorProperties({
-         "timestamp", "bytes_in", "bytes_out"
-   })
    protected PortStats(Date timestamp, Long bytesIn, Long bytesOut) {
       this.timestamp = timestamp;
       this.bytesIn = bytesIn;
@@ -135,13 +76,61 @@ public class PortStats {
             && Objects.equal(this.bytesOut, that.bytesOut);
    }
 
-   protected Objects.ToStringHelper string() {
-      return Objects.toStringHelper(this).add("timestamp", timestamp)
-            .add("bytesIn", bytesIn).add("bytesOut", bytesOut);
-   }
-
    @Override
    public String toString() {
-      return string().toString();
+      return Objects.toStringHelper(this)
+            .add("timestamp", timestamp)
+            .add("bytesIn", bytesIn)
+            .add("bytesOut", bytesOut)
+            .toString();
    }
+
+   public Builder builder() {
+      return new Builder();
+   }
+
+   public Builder toBuilder() {
+      return new Builder().fromPortStats(this);
+   }
+
+   public class Builder {
+      protected Date timestamp;
+      protected Long bytesIn;
+      protected Long bytesOut;
+
+      /**
+       * @see PortStats#getTimestamp()
+       */
+      public Builder timestamp(Date timestamp) {
+         this.timestamp = timestamp;
+         return this;
+      }
+
+      /**
+       * @see PortStats#getBytesIn()
+       */
+      public Builder bytesIn(Long bytesIn) {
+         this.bytesIn = bytesIn;
+         return this;
+      }
+
+      /**
+       * @see PortStats#getBytesOut()
+       */
+      public Builder bytesOut(Long bytesOut) {
+         this.bytesOut = bytesOut;
+         return this;
+      }
+
+      public PortStats build() {
+         return new PortStats(timestamp, bytesIn, bytesOut);
+      }
+
+      public Builder fromPortStats(PortStats in) {
+         return this.timestamp(in.getTimestamp())
+               .bytesIn(in.getBytesIn())
+               .bytesOut(in.getBytesOut());
+      }
+   }
+
 }

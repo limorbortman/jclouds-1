@@ -104,6 +104,9 @@ public class Port {
    @Named("port_security_enabled")
    private Boolean portSecurity;
 
+   @Named("binding:stats")
+   private PortStats portStats;
+
    // Plugins
 
    // n1kv.py
@@ -121,12 +124,12 @@ public class Port {
    @ConstructorProperties({"id", "status", "binding:vif_type", "binding:vif_details", "queue_id", "name", "network_id",
          "admin_state_up", "mac_address", "fixed_ips", "device_id", "device_owner", "tenant_id", "security_groups",
          "allowed_address_pairs", "extra_dhcp_opts", "binding:vnic_type", "binding:host_id", "binding:profile",
-         "port_security_enabled", "n1kv:profile_id", "mac_learning_enabled", "rxtx_factor"})
+         "port_security_enabled", "binding:stats", "n1kv:profile_id", "mac_learning_enabled", "rxtx_factor"})
    protected Port(String id, NetworkStatus status, VIFType vifType, ImmutableMap<String, Object> vifDetails, String qosQueueId,
          String name, String networkId, Boolean adminStateUp, String macAddress, ImmutableSet<IP> fixedIps, String deviceId,
          String deviceOwner, String tenantId, ImmutableSet<String> securityGroups, ImmutableSet<AddressPair> allowedAddressPairs,
          ImmutableSet<ExtraDhcpOption> extraDhcpOptions, VNICType vnicType, String hostId, ImmutableMap<String, Object> profile,
-         Boolean portSecurity, String profileId, Boolean macLearning, Integer qosRxtxFactor) {
+         Boolean portSecurity, PortStats portStats, String profileId, Boolean macLearning, Integer qosRxtxFactor) {
       this.id = id;
       this.status = status;
       this.vifType = vifType;
@@ -147,6 +150,7 @@ public class Port {
       this.hostId = hostId;
       this.profile = profile;
       this.portSecurity = portSecurity;
+      this.portStats = portStats;
       this.profileId = profileId;
       this.macLearning = macLearning;
       this.qosRxtxFactor = qosRxtxFactor;
@@ -182,6 +186,7 @@ public class Port {
       port.hostId,
       port.profile,
       port.portSecurity,
+      port.portStats,
       port.profileId,
       port.macLearning,
       port.qosRxtxFactor);
@@ -359,6 +364,14 @@ public class Port {
    }
 
    /**
+    * @return the stats of this port
+    */
+   @Nullable
+   public PortStats getPortStats() {
+      return portStats;
+   }
+
+   /**
     * @return the profileId of the Port
     */
    @Nullable
@@ -411,6 +424,7 @@ public class Port {
             Objects.equal(this.hostId, that.hostId) &&
             Objects.equal(this.profile, that.profile) &&
             Objects.equal(this.portSecurity, that.portSecurity) &&
+            Objects.equal(this.portStats, that.portStats) &&
             Objects.equal(this.profileId, that.profileId) &&
             Objects.equal(this.macLearning, that.macLearning) &&
             Objects.equal(this.qosRxtxFactor, that.qosRxtxFactor);
@@ -421,7 +435,7 @@ public class Port {
       return Objects.hashCode(id, status, vifType, vifDetails, qosQueueId, name,
             networkId, adminStateUp, macAddress, fixedIps, deviceId,
             deviceOwner, tenantId, securityGroups, allowedAddressPairs, extraDhcpOptions,
-            vnicType, hostId, profile, portSecurity, profileId,
+            vnicType, hostId, profile, portSecurity, portStats, profileId,
             macLearning, qosRxtxFactor);
    }
 
@@ -448,6 +462,7 @@ public class Port {
             .add("hostId", hostId)
             .add("profile", profile)
             .add("portSecurity", portSecurity)
+            .add("portStats", portStats)
             .add("profileId", profileId)
             .add("macLearning", macLearning)
             .add("qosRxtxFactor", qosRxtxFactor)
