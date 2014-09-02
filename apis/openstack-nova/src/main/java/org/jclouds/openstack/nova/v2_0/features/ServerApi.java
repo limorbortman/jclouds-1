@@ -44,6 +44,7 @@ import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.openstack.nova.v2_0.domain.InterfaceAttachment;
 import org.jclouds.openstack.nova.v2_0.domain.SecurityGroup;
 import org.jclouds.openstack.nova.v2_0.options.AttachInterfaceOptions;
+import org.jclouds.openstack.nova.v2_0.options.ListServerOptions;
 import org.jclouds.openstack.v2_0.domain.PaginatedCollection;
 import org.jclouds.openstack.keystone.v2_0.KeystoneFallbacks.EmptyPaginatedCollectionOnNotFoundOr404;
 import org.jclouds.openstack.keystone.v2_0.filters.AuthenticateRequest;
@@ -94,7 +95,7 @@ public interface ServerApi {
    @GET
    @ResponseParser(ParseServers.class)
    @Fallback(EmptyPaginatedCollectionOnNotFoundOr404.class)
-   PaginatedCollection<Resource> list(PaginationOptions options);
+   PaginatedCollection<Resource> list(ListServerOptions options);
 
    /**
     * List all servers (all details)
@@ -114,7 +115,7 @@ public interface ServerApi {
    @Path("/detail")
    @ResponseParser(ParseServerDetails.class)
    @Fallback(EmptyPaginatedCollectionOnNotFoundOr404.class)
-   PaginatedCollection<Server> listInDetail(PaginationOptions options);
+   PaginatedCollection<Server> listInDetail(ListServerOptions options);
 
    /**
     * List details of the specified server

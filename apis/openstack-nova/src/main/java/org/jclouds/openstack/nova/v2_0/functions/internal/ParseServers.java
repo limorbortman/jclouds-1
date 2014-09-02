@@ -28,6 +28,7 @@ import org.jclouds.collect.IterableWithMarker;
 import org.jclouds.collect.internal.Arg0ToPagedIterable;
 import org.jclouds.http.functions.ParseJson;
 import org.jclouds.json.Json;
+import org.jclouds.openstack.nova.v2_0.options.ListServerOptions;
 import org.jclouds.openstack.v2_0.domain.PaginatedCollection;
 import org.jclouds.openstack.nova.v2_0.NovaApi;
 import org.jclouds.openstack.nova.v2_0.features.ServerApi;
@@ -78,8 +79,8 @@ public class ParseServers extends ParseJson<Servers> {
             @SuppressWarnings("unchecked")
             @Override
             public IterableWithMarker<Resource> apply(Object input) {
-               PaginationOptions paginationOptions = PaginationOptions.class.cast(input);
-               return IterableWithMarker.class.cast(serverApi.list(paginationOptions));
+               ListServerOptions listServerOptions = ListServerOptions.class.cast(input);
+               return IterableWithMarker.class.cast(serverApi.list(listServerOptions));
             }
 
             @Override
