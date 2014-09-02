@@ -18,12 +18,12 @@
  */
 package  org.jclouds.openstack.neutron.v2;
 
-import java.io.Closeable;
-import java.util.Set;
-
+import com.google.common.base.Optional;
+import com.google.inject.Provides;
 import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.location.Region;
 import org.jclouds.location.functions.RegionToEndpoint;
+import org.jclouds.openstack.neutron.v2.extensions.FloatingIPApi;
 import org.jclouds.openstack.neutron.v2.extensions.RouterApi;
 import org.jclouds.openstack.neutron.v2.features.NetworkApi;
 import org.jclouds.openstack.neutron.v2.features.PortApi;
@@ -32,8 +32,8 @@ import org.jclouds.openstack.v2_0.features.ExtensionApi;
 import org.jclouds.rest.annotations.Delegate;
 import org.jclouds.rest.annotations.EndpointParam;
 
-import com.google.common.base.Optional;
-import com.google.inject.Provides;
+import java.io.Closeable;
+import java.util.Set;
 
 /**
  * Provides synchronous access to the OpenStack Networking (Neutron) v2 API
@@ -75,4 +75,10 @@ public interface NeutronApi extends Closeable {
     */
    @Delegate
    Optional<? extends RouterApi> getRouterExtensionApi(@EndpointParam(parser = RegionToEndpoint.class) @Nullable String region);
+
+   /**
+    * Provides synchronous access to FloatingIP features
+    */
+   @Delegate
+   Optional<? extends FloatingIPApi> getFloatingIPExtensionApi(@EndpointParam(parser = RegionToEndpoint.class) @Nullable String region);
 }
