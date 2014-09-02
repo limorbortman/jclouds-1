@@ -31,6 +31,7 @@ import org.jclouds.Fallbacks.NullOnNotFoundOr404;
 import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.openstack.keystone.v2_0.filters.AuthenticateRequest;
 import org.jclouds.openstack.nova.v2_0.domain.FloatingIP;
+import org.jclouds.openstack.nova.v2_0.options.CreateFloatingIPOptions;
 import org.jclouds.openstack.v2_0.ServiceType;
 import org.jclouds.openstack.v2_0.services.Extension;
 import org.jclouds.rest.annotations.Fallback;
@@ -89,6 +90,21 @@ public interface FloatingIPApi {
    @Fallback(NullOnNotFoundOr404.class)
    @Nullable
    FloatingIP create();
+
+   /**
+    * Allocates a Floating IP address
+    *
+    * @return a newly created FloatingIP
+    */
+   @Named("floatingIP:create")
+   @POST
+   @Path("/os-floating-ips")
+   @SelectJson("floating_ip")
+   @Produces(MediaType.APPLICATION_JSON)
+   @Payload("{}")
+   @Fallback(NullOnNotFoundOr404.class)
+   @Nullable
+   FloatingIP create(CreateFloatingIPOptions... options);
 
    /**
     * Allocates a Floating IP address from a pool
