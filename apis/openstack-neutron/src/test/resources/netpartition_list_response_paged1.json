@@ -1,0 +1,24 @@
+{
+    "net_partitions":[
+       {
+          "enterprise_id": "1489734678",
+          "name":"jclouds-netpartition-A",
+          "id":"16dba3bc-f3fa-4775-afdc-237e12c72f6a"
+       },
+       {
+          "enterprise_id": "1234567890",
+          "name":"jclouds-netpartition-B",
+          "id":"1a104cf5-cb18-4d35-9407-2fd2646d9d0b"
+       }
+    ],
+    "net_partitions_links": [
+        {
+            "href": "/v2.0/net-partitions.json?marker=16dba3bc-f3fa-4775-afdc-237e12c72f6a",
+            "rel": "next"
+        },
+        {
+            "href": "/v2.0/net-partitions.json?marker=1a104cf5-cb18-4d35-9407-2fd2646d9d0b&page_reverse=True",
+            "rel": "previous"
+        }
+    ]
+}

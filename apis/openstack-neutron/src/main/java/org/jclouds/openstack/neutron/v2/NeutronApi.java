@@ -24,6 +24,7 @@ import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.location.Region;
 import org.jclouds.location.functions.RegionToEndpoint;
 import org.jclouds.openstack.neutron.v2.extensions.FloatingIPApi;
+import org.jclouds.openstack.neutron.v2.extensions.NetPartitionApi;
 import org.jclouds.openstack.neutron.v2.extensions.RouterApi;
 import org.jclouds.openstack.neutron.v2.extensions.SecurityGroupApi;
 import org.jclouds.openstack.neutron.v2.extensions.SecurityGroupRuleApi;
@@ -95,4 +96,10 @@ public interface NeutronApi extends Closeable {
     */
    @Delegate
    Optional<? extends FloatingIPApi> getFloatingIPExtensionApi(@EndpointParam(parser = RegionToEndpoint.class) @Nullable String region);
+
+   /**
+    * Provides synchronous access to NetPartition features
+    */
+   @Delegate
+   Optional<? extends NetPartitionApi> getNetPartitionExtensionApi(@EndpointParam(parser = RegionToEndpoint.class) @Nullable String region);
 }
