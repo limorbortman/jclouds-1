@@ -31,6 +31,7 @@ import org.jclouds.openstack.neutron.v2.domain.Networks;
 import org.jclouds.openstack.neutron.v2.fallbacks.EmptyNetworksFallback;
 import org.jclouds.openstack.neutron.v2.functions.NetworksToPagedIterable;
 import org.jclouds.openstack.neutron.v2.functions.ParseNetworks;
+import org.jclouds.openstack.neutron.v2.options.ListNetworkOptions;
 import org.jclouds.openstack.v2_0.options.PaginationOptions;
 import org.jclouds.rest.annotations.Fallback;
 import org.jclouds.rest.annotations.RequestFilters;
@@ -76,7 +77,7 @@ public interface NetworkApi {
    @ResponseParser(ParseNetworks.class)
    @Transform(NetworksToPagedIterable.class)
    @Fallback(EmptyPagedIterableOnNotFoundOr404.class)
-   PagedIterable<Network> list();
+   PagedIterable<Network> list(ListNetworkOptions... options);
 
    /**
     * @see <a href="http://docs.openstack.org/api/openstack-network/2.0/content/pagination.html">api doc</a>

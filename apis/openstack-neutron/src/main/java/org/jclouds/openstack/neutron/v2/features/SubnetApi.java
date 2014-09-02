@@ -29,6 +29,7 @@ import org.jclouds.openstack.neutron.v2.domain.Subnets;
 import org.jclouds.openstack.neutron.v2.fallbacks.EmptySubnetsFallback;
 import org.jclouds.openstack.neutron.v2.functions.ParseSubnets;
 import org.jclouds.openstack.neutron.v2.functions.SubnetsToPagedIterable;
+import org.jclouds.openstack.neutron.v2.options.ListSubnetOptions;
 import org.jclouds.openstack.v2_0.options.PaginationOptions;
 import org.jclouds.rest.annotations.Fallback;
 import org.jclouds.rest.annotations.RequestFilters;
@@ -72,7 +73,7 @@ public interface SubnetApi {
    @ResponseParser(ParseSubnets.class)
    @Transform(SubnetsToPagedIterable.class)
    @Fallback(EmptyPagedIterableOnNotFoundOr404.class)
-   PagedIterable<Subnet> list();
+   PagedIterable<Subnet> list(ListSubnetOptions... options);
 
    /**
     * @see <a href="http://docs.openstack.org/api/openstack-network/2.0/content/pagination.html">api doc</a>
