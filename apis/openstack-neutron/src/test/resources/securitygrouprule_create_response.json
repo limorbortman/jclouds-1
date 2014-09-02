@@ -1,0 +1,8 @@
+{"security_group_rule":{
+    "id": "16dba3bc-f3fa-4775-afdc-237e12c72f6a",
+    "security_group_id": "1234567890",
+    "direction":"egress",
+    "protocol":"tcp",
+    "port_range_min":80,
+    "port_range_max":80
+}}

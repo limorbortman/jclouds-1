@@ -25,6 +25,8 @@ import org.jclouds.location.Region;
 import org.jclouds.location.functions.RegionToEndpoint;
 import org.jclouds.openstack.neutron.v2.extensions.FloatingIPApi;
 import org.jclouds.openstack.neutron.v2.extensions.RouterApi;
+import org.jclouds.openstack.neutron.v2.extensions.SecurityGroupApi;
+import org.jclouds.openstack.neutron.v2.extensions.SecurityGroupRuleApi;
 import org.jclouds.openstack.neutron.v2.features.NetworkApi;
 import org.jclouds.openstack.neutron.v2.features.PortApi;
 import org.jclouds.openstack.neutron.v2.features.SubnetApi;
@@ -75,6 +77,18 @@ public interface NeutronApi extends Closeable {
     */
    @Delegate
    Optional<? extends RouterApi> getRouterExtensionApi(@EndpointParam(parser = RegionToEndpoint.class) @Nullable String region);
+
+   /**
+    * Provides synchronous access to SecurityGroup features
+    */
+   @Delegate
+   Optional<? extends SecurityGroupApi> getSecurityGroupExtensionApi(@EndpointParam(parser = RegionToEndpoint.class) @Nullable String region);
+
+   /**
+    * Provides synchronous access to SecurityGroupRule features
+    */
+   @Delegate
+   Optional<? extends SecurityGroupRuleApi> getSecurityGroupRuleExtensionApi(@EndpointParam(parser = RegionToEndpoint.class) @Nullable String region);
 
    /**
     * Provides synchronous access to FloatingIP features
