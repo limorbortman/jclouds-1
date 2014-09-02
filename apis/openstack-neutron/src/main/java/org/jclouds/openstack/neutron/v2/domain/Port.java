@@ -121,15 +121,19 @@ public class Port {
    @Named("rxtx_factor")
    private Integer qosRxtxFactor;
 
+   // nuage_plugin.py
+   @Named("nuagetag")
+   private String vportTagId;
+
    @ConstructorProperties({"id", "status", "binding:vif_type", "binding:vif_details", "queue_id", "name", "network_id",
          "admin_state_up", "mac_address", "fixed_ips", "device_id", "device_owner", "tenant_id", "security_groups",
          "allowed_address_pairs", "extra_dhcp_opts", "binding:vnic_type", "binding:host_id", "binding:profile",
-         "port_security_enabled", "binding:stats", "n1kv:profile_id", "mac_learning_enabled", "rxtx_factor"})
+         "port_security_enabled", "binding:stats", "n1kv:profile_id", "mac_learning_enabled", "rxtx_factor", "nuagetag"})
    protected Port(String id, NetworkStatus status, VIFType vifType, ImmutableMap<String, Object> vifDetails, String qosQueueId,
          String name, String networkId, Boolean adminStateUp, String macAddress, ImmutableSet<IP> fixedIps, String deviceId,
          String deviceOwner, String tenantId, ImmutableSet<String> securityGroups, ImmutableSet<AddressPair> allowedAddressPairs,
          ImmutableSet<ExtraDhcpOption> extraDhcpOptions, VNICType vnicType, String hostId, ImmutableMap<String, Object> profile,
-         Boolean portSecurity, PortStats portStats, String profileId, Boolean macLearning, Integer qosRxtxFactor) {
+         Boolean portSecurity, PortStats portStats, String profileId, Boolean macLearning, Integer qosRxtxFactor, String vportTagId) {
       this.id = id;
       this.status = status;
       this.vifType = vifType;
@@ -154,6 +158,7 @@ public class Port {
       this.profileId = profileId;
       this.macLearning = macLearning;
       this.qosRxtxFactor = qosRxtxFactor;
+      this.vportTagId = vportTagId;
    }
 
    /**
@@ -189,7 +194,8 @@ public class Port {
       port.portStats,
       port.profileId,
       port.macLearning,
-      port.qosRxtxFactor);
+      port.qosRxtxFactor,
+      port.vportTagId);
    }
 
    /**
@@ -395,6 +401,14 @@ public class Port {
       return qosRxtxFactor;
    }
 
+   /**
+    * @return the vportTagId of the Port
+    */
+   @Nullable
+   public String getVportTagId() {
+      return vportTagId;
+   }
+
    @Override
    public boolean equals(Object o) {
       if (this == o)
@@ -427,7 +441,8 @@ public class Port {
             Objects.equal(this.portStats, that.portStats) &&
             Objects.equal(this.profileId, that.profileId) &&
             Objects.equal(this.macLearning, that.macLearning) &&
-            Objects.equal(this.qosRxtxFactor, that.qosRxtxFactor);
+            Objects.equal(this.qosRxtxFactor, that.qosRxtxFactor) &&
+            Objects.equal(this.vportTagId, that.vportTagId);
    }
 
    @Override
@@ -436,7 +451,7 @@ public class Port {
             networkId, adminStateUp, macAddress, fixedIps, deviceId,
             deviceOwner, tenantId, securityGroups, allowedAddressPairs, extraDhcpOptions,
             vnicType, hostId, profile, portSecurity, portStats, profileId,
-            macLearning, qosRxtxFactor);
+            macLearning, qosRxtxFactor, vportTagId);
    }
 
    @Override
@@ -466,6 +481,7 @@ public class Port {
             .add("profileId", profileId)
             .add("macLearning", macLearning)
             .add("qosRxtxFactor", qosRxtxFactor)
+            .add("vportTagId", vportTagId)
             .toString();
    }
 
@@ -699,6 +715,17 @@ public class Port {
        */
       public ParameterizedBuilderType qosRxtxFactor(int qosRxtxFactor) {
          port.qosRxtxFactor = qosRxtxFactor;
+         return self();
+      }
+
+      /**
+       * Provide the vportTagId to the Port's Builder.
+       *
+       * @return the Builder.
+       * @see  org.jclouds.openstack.neutron.v2.domain.Port#getVportTagId()
+       */
+      public ParameterizedBuilderType vportTagId(String vportTagId) {
+         port.vportTagId = vportTagId;
          return self();
       }
    }
