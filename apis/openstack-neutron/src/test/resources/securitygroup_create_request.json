@@ -1,0 +1,4 @@
+{"security_group":{
+    "name": "jclouds-securitygroup",
+    "description": "jclouds-securitygroup-desc"
+}}

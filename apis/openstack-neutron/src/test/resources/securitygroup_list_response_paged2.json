@@ -1,0 +1,20 @@
+{
+    "security_groups":[
+       {
+          "description": "jclouds-securitygroup-desc-A2",
+          "name":"jclouds-securitygroup-A2",
+          "id":"16dba3bc-f3fa-4775-afdc-237e12c72f6a_2"
+       },
+       {
+          "description": "jclouds-securitygroup-desc-B2",
+          "name":"jclouds-securitygroup-B2",
+          "id":"1a104cf5-cb18-4d35-9407-2fd2646d9d0b_2"
+       }
+    ],
+    "security_groups_links": [
+        {
+            "href": "/v2.0/security-groups.json?marker=1a104cf5-cb18-4d35-9407-2fd2646d9d0b&page_reverse=True",
+            "rel": "previous"
+        }
+    ]
+}
