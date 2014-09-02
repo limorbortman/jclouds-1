@@ -288,6 +288,17 @@ public class SecurityGroupRule {
       }
 
       /**
+       * Provide the remoteIpPrefix to the SecurityGroupRule's Builder.
+       *
+       * @return the Builder.
+       * @see  org.jclouds.openstack.neutron.v2.domain.SecurityGroupRule#getEtherType()
+       */
+      public ParameterizedBuilderType remoteIpPrefix(String remoteIpPrefix) {
+         securityGroupRule.remoteIpPrefix = remoteIpPrefix;
+         return self();
+      }
+
+      /**
        * Provide the etherType to the SecurityGroupRule's Builder.
        *
        * @return the Builder.
