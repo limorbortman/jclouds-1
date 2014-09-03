@@ -310,7 +310,7 @@ public class JavaUrlHttpCommandExecutorService extends BaseHttpCommandExecutorSe
          logger.error(e, "error after writing %d/%s bytes to %s", out.getCount(), lengthDesc, connection.getURL());
          throw e;
       } finally {
-         Closeables.closeQuietly(is);
+         Closeables.close(is, true);
       }
    }
 

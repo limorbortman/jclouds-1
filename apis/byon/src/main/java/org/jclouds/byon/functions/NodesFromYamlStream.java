@@ -102,7 +102,11 @@ public class NodesFromYamlStream implements Function<ByteSource, LoadingCache<St
       } catch (IOException ioe) {
          throw Throwables.propagate(ioe);
       } finally {
-         Closeables.closeQuietly(in);
+         try {
+            Closeables.close(in, true);
+         } catch (IOException e) {
+            e.printStackTrace();
+         }
       }
       checkState(config != null, "missing config: class");
       checkState(config.nodes != null, "missing nodes: collection");

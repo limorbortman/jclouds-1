@@ -90,7 +90,11 @@ public class JcloudsVersion {
         } catch (IOException exception) {
             throw new IllegalStateException(format("Unable to load version resource file '%s'", VERSION_RESOURCE_FILE), exception);
         } finally {
-            Closeables.closeQuietly(is);
+           try {
+              Closeables.close(is, true);
+           } catch (IOException e) {
+              e.printStackTrace();
+           }
         }
         return checkNotNull(versionProperties.getProperty(VERSION_PROPERTY_NAME), VERSION_PROPERTY_NAME);
     }

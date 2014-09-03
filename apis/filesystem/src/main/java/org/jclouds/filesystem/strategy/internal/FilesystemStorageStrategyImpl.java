@@ -226,7 +226,7 @@ public class FilesystemStorageStrategyImpl implements LocalStorageStrategy {
          }
          throw ex;
       } finally {
-         Closeables.closeQuietly(his);
+         Closeables.close(his, true);
          payload.release();
       }
    }
