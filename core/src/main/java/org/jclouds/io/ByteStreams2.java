@@ -39,7 +39,7 @@ public class ByteStreams2 {
          ByteStreams.copy(his, ByteStreams.nullOutputStream());
          return his.hash();
       } finally {
-         Closeables.closeQuietly(input);
+         Closeables.close(input, true);
       }
    }
 
@@ -48,7 +48,7 @@ public class ByteStreams2 {
       try {
          return ByteStreams.toByteArray(input);
       } finally {
-         Closeables.closeQuietly(input);
+         Closeables.close(input, true);
       }
    }
 
