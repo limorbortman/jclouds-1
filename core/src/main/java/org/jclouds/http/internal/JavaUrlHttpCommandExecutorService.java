@@ -65,6 +65,7 @@ import com.google.common.io.Closeables;
 import com.google.common.io.CountingOutputStream;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.inject.Inject;
+import org.jclouds.util.Closeables2;
 
 /**
  * Basic implementation of a {@link HttpCommandExecutorService}.
@@ -310,7 +311,7 @@ public class JavaUrlHttpCommandExecutorService extends BaseHttpCommandExecutorSe
          logger.error(e, "error after writing %d/%s bytes to %s", out.getCount(), lengthDesc, connection.getURL());
          throw e;
       } finally {
-         Closeables.close(is, true);
+         Closeables2.closeQuietly(is);
       }
    }
 

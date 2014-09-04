@@ -30,6 +30,7 @@ import org.jclouds.javax.annotation.Nullable;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.io.Closeables;
+import org.jclouds.util.Closeables2;
 
 public class JcloudsVersion {
     @VisibleForTesting
@@ -90,11 +91,7 @@ public class JcloudsVersion {
         } catch (IOException exception) {
             throw new IllegalStateException(format("Unable to load version resource file '%s'", VERSION_RESOURCE_FILE), exception);
         } finally {
-           try {
-              Closeables.close(is, true);
-           } catch (IOException e) {
-              e.printStackTrace();
-           }
+            Closeables2.closeQuietly(is);
         }
         return checkNotNull(versionProperties.getProperty(VERSION_PROPERTY_NAME), VERSION_PROPERTY_NAME);
     }

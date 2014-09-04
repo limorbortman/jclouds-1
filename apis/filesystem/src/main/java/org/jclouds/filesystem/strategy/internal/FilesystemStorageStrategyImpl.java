@@ -54,6 +54,7 @@ import com.google.common.hash.HashingInputStream;
 import com.google.common.io.ByteSource;
 import com.google.common.io.Closeables;
 import com.google.common.io.Files;
+import org.jclouds.util.Closeables2;
 
 public class FilesystemStorageStrategyImpl implements LocalStorageStrategy {
 
@@ -226,7 +227,7 @@ public class FilesystemStorageStrategyImpl implements LocalStorageStrategy {
          }
          throw ex;
       } finally {
-         Closeables.close(his, true);
+         Closeables2.closeQuietly(his);
          payload.release();
       }
    }
