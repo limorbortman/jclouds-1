@@ -231,6 +231,20 @@ public interface ServerApi {
    void resize(@PathParam("id") String id, @PayloadParam("flavorId") String flavorId);
 
    /**
+    * get a url to connect to the server console
+    *
+    * @param id
+    *          id of the server
+    */
+   @Named("server:getVmConsole")
+   @POST
+   @Path("/{id}/action")
+   @Produces(MediaType.APPLICATION_JSON)
+   @SelectJson("url")
+   @Payload("{\"os-getVNCConsole\":{\"type\":\"novnc\"}}")
+   String getVmConsole(@PathParam("id") String id);
+
+   /**
     * Confirm a resize operation.
     *
     * @param id
