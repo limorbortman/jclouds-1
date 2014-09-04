@@ -28,6 +28,7 @@ import com.google.common.hash.HashingInputStream;
 import com.google.common.io.ByteSource;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Closeables;
+import org.jclouds.util.Closeables2;
 
 @Beta
 public class ByteStreams2 {
@@ -39,7 +40,7 @@ public class ByteStreams2 {
          ByteStreams.copy(his, ByteStreams.nullOutputStream());
          return his.hash();
       } finally {
-         Closeables.close(input, true);
+         Closeables2.closeQuietly(input);
       }
    }
 
