@@ -22,12 +22,12 @@
   <parent>
     <groupId>org.apache.jclouds</groupId>
     <artifactId>jclouds-project</artifactId>
-    <version>1.8.1-SNAPSHOT</version>
+    <version>1.8.1-SNAPSHOT-CB-1</version>
+    <relativePath>../../project/pom.xml</relativePath>
   </parent>
 
   <groupId>org.apache.jclouds.api</groupId>
   <artifactId>openstack-neutron</artifactId>
-  <version>1.8.1-SNAPSHOT</version>
   <name>jclouds openstack-neutron api</name>
   <description>jclouds components to access an implementation of OpenStack Neutron</description>
   <packaging>bundle</packaging>
