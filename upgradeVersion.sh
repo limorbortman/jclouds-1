@@ -15,9 +15,9 @@
 #
 
 
-oldVersion=$(grep "version" pom.xml | grep "1.8.1-SNAPSHOT-CB" | grep -o -P "(?<=CB-).*(?=</version>)")
+oldVersion=$(grep "version" pom.xml | grep "1.8.1-CB" | grep -o -P "(?<=CB-).*(?=</version>)")
 newVersion=$((oldVersion+1))
 
-find . -name "pom.xml" -not -path "./archetypes/compute-service-archetype/target/*" -not -path "./archetypes/rest-client-archetype/target/*" | xargs sed -i "s/1.8.1-SNAPSHOT-CB-$oldVersion/1.8.1-SNAPSHOT-CB-$newVersion/"
+find . -name "pom.xml" -not -path "./archetypes/compute-service-archetype/target/*" -not -path "./archetypes/rest-client-archetype/target/*" | xargs sed -i "s/1.8.1-CB-$oldVersion/1.8.1-CB-$newVersion/"
 find . -name "pom.xml" -not -path "./archetypes/compute-service-archetype/target/*" -not -path "./archetypes/rest-client-archetype/target/*" | xargs git add
-git commit -m "Incrementing version number to 1.8.1-SNAPSHOT-CB-$newVersion"
+git commit -m "Incrementing version number to 1.8.1-CB-$newVersion"
