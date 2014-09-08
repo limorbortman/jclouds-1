@@ -37,7 +37,7 @@ public class UpdateUserOptions implements MapBinder{
    private String name;
    private String email;
    private String password;
-   private boolean enabled;
+   private Boolean enabled;
 
    @Override
    public boolean equals(Object object) {
@@ -63,7 +63,7 @@ public class UpdateUserOptions implements MapBinder{
       toString.add("name", name);
       toString.add("email", email);
       toString.add("password", password);
-      toString.add("enabled", Boolean.valueOf(enabled));
+      toString.add("enabled", enabled);
       return toString;
    }
 
@@ -77,7 +77,7 @@ public class UpdateUserOptions implements MapBinder{
       String name;
       String email;
       String password;
-      boolean enabled;
+      Boolean enabled;
 
    }
 
@@ -90,7 +90,8 @@ public class UpdateUserOptions implements MapBinder{
          user.name = name;
       if (password != null)
          user.password = password;
-      user.enabled = enabled;
+      if (enabled != null)
+         user.enabled = enabled;
 
       return bindToRequest(request, ImmutableMap.of("user", user));
    }
@@ -137,11 +138,11 @@ public class UpdateUserOptions implements MapBinder{
       return this;
    }
 
-   public boolean isEnabled() {
+   public Boolean isEnabled() {
       return this.enabled;
    }
 
-   public UpdateUserOptions enabled(boolean enabled) {
+   public UpdateUserOptions enabled(Boolean enabled) {
       this.enabled = enabled;
       return this;
    }
@@ -165,9 +166,9 @@ public class UpdateUserOptions implements MapBinder{
       }
 
       /**
-       * @see UpdateUserOptions#enabled(boolean)
+       * @see UpdateUserOptions#enabled(Boolean)
        */
-      public static UpdateUserOptions enabled(boolean enabled) {
+      public static UpdateUserOptions enabled(Boolean enabled) {
          UpdateUserOptions options = new UpdateUserOptions();
          return options.enabled(enabled);
       }
