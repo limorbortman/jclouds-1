@@ -38,6 +38,15 @@ public class ListServerOptions extends ListOptions {
    }
 
    /**
+    * list servers of all tenants
+    *
+    */
+   public ListServerOptions allTenants() {
+      queryParameters.put("all_tenants", "1");
+      return this;
+   }
+
+   /**
     * {@inheritDoc}
     */
    @Override
@@ -85,6 +94,13 @@ public class ListServerOptions extends ListOptions {
          return options.host(host);
       }
 
+      /**
+       * @see ListServerOptions#allTenants()
+       */
+      public static ListServerOptions allTenants() {
+         ListServerOptions options = new ListServerOptions();
+         return options.allTenants();
+      }
 
       /**
        * @see ListOptions#withDetails()
