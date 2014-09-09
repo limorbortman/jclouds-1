@@ -31,6 +31,7 @@ import org.jclouds.Fallbacks.FalseOnNotFoundOr404;
 import org.jclouds.Fallbacks.NullOnNotFoundOr404;
 import org.jclouds.openstack.cinder.v1.domain.Volume;
 import org.jclouds.openstack.cinder.v1.options.CreateVolumeOptions;
+import org.jclouds.openstack.cinder.v1.options.ListVolumeOptions;
 import org.jclouds.openstack.keystone.v2_0.filters.AuthenticateRequest;
 import org.jclouds.rest.annotations.Fallback;
 import org.jclouds.rest.annotations.MapBinder;
@@ -66,6 +67,14 @@ public interface VolumeApi {
    @Fallback(EmptyFluentIterableOnNotFoundOr404.class)
    FluentIterable<? extends Volume> list();
 
+   @Named("volume:list")
+   @GET
+   @Path("/volumes")
+   @SelectJson("volumes")
+   @Consumes(MediaType.APPLICATION_JSON)
+   @Fallback(EmptyFluentIterableOnNotFoundOr404.class)
+   FluentIterable<? extends Volume> list(ListVolumeOptions... options);
+
    /**
     * Returns a detailed list of Volumes.
     *
@@ -78,6 +87,14 @@ public interface VolumeApi {
    @Consumes(MediaType.APPLICATION_JSON)
    @Fallback(EmptyFluentIterableOnNotFoundOr404.class)   
    FluentIterable<? extends Volume> listInDetail();
+
+   @Named("volume:list")
+   @GET
+   @Path("/volumes/detail")
+   @SelectJson("volumes")
+   @Consumes(MediaType.APPLICATION_JSON)
+   @Fallback(EmptyFluentIterableOnNotFoundOr404.class)
+   FluentIterable<? extends Volume> listInDetail(ListVolumeOptions... options);
 
    /**
     * Return data about the given Volume.
