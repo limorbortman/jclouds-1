@@ -31,6 +31,7 @@ import org.jclouds.Fallbacks.FalseOnNotFoundOr404;
 import org.jclouds.Fallbacks.NullOnNotFoundOr404;
 import org.jclouds.openstack.cinder.v1.domain.Snapshot;
 import org.jclouds.openstack.cinder.v1.options.CreateSnapshotOptions;
+import org.jclouds.openstack.cinder.v1.options.ListSnapshotOptions;
 import org.jclouds.openstack.keystone.v2_0.filters.AuthenticateRequest;
 import org.jclouds.rest.annotations.Fallback;
 import org.jclouds.rest.annotations.MapBinder;
@@ -62,6 +63,14 @@ public interface SnapshotApi {
    @Fallback(EmptyFluentIterableOnNotFoundOr404.class)	
    FluentIterable<? extends Snapshot> list();
 
+   @Named("snapshot:list")
+   @GET
+   @Path("/snapshots")
+   @SelectJson("snapshots")
+   @Consumes(MediaType.APPLICATION_JSON)
+   @Fallback(EmptyFluentIterableOnNotFoundOr404.class)
+   FluentIterable<? extends Snapshot> list(ListSnapshotOptions... options);
+
    /**
     * Returns a detailed list of Snapshots.
     *
@@ -74,6 +83,14 @@ public interface SnapshotApi {
    @Consumes(MediaType.APPLICATION_JSON)
    @Fallback(EmptyFluentIterableOnNotFoundOr404.class)   
    FluentIterable<? extends Snapshot> listInDetail();
+
+   @Named("snapshot:list")
+   @GET
+   @Path("/snapshots/detail")
+   @SelectJson("snapshots")
+   @Consumes(MediaType.APPLICATION_JSON)
+   @Fallback(EmptyFluentIterableOnNotFoundOr404.class)
+   FluentIterable<? extends Snapshot> listInDetail(ListSnapshotOptions... options);
 
    /**
     * Return data about the given Snapshot.

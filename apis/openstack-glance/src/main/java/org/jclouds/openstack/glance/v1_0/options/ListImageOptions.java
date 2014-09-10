@@ -118,8 +118,8 @@ public class ListImageOptions extends PaginationOptions {
    /**
     * Return only public images or only private images
     */
-   public ListImageOptions isPublic(boolean isPublic) {
-      queryParameters.put(IS_PUBLIC.asParam(), Boolean.toString(isPublic));
+   public ListImageOptions isPublic(Boolean isPublic) {
+      queryParameters.put(IS_PUBLIC.asParam(), isPublic !=null ? Boolean.toString(isPublic) : "None");
       return this;
    }
 
@@ -224,7 +224,7 @@ public class ListImageOptions extends PaginationOptions {
       /**
        * @see  org.jclouds.openstack.glance.v1_0.options.ListImageOptions#isPublic
        */
-      public static ListImageOptions isPublic(boolean isPublic) {
+      public static ListImageOptions isPublic(Boolean isPublic) {
          return ListImageOptions.class.cast(new ListImageOptions().isPublic(isPublic));
       }
 

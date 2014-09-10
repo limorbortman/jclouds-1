@@ -15,51 +15,40 @@
  * limitations under the License.
  */
 
-package org.jclouds.openstack.nova.v2_0.options;
+package org.jclouds.openstack.cinder.v1.options;
 
 import java.util.Date;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
- * Options used to control list of servers results.
+ * Options used to control list of volumes results.
  */
-public class ListServerOptions extends ListOptions {
+public class ListSnapshotOptions extends ListOptions {
 
-   public static final ListServerOptions NONE = new ListServerOptions();
-
-   /**
-    * list servers by host name
-    *
-    */
-   public ListServerOptions host(String host) {
-      queryParameters.put("host", checkNotNull(host, "host"));
-      return this;
-   }
-
-   /**
-    * list servers of all tenants
-    *
-    */
-   public ListServerOptions allTenants() {
-      queryParameters.put("all_tenants", "1");
-      return this;
-   }
+   public static final ListSnapshotOptions NONE = new ListSnapshotOptions();
 
    /**
     * {@inheritDoc}
     */
    @Override
-   public ListServerOptions withDetails() {
+   public ListSnapshotOptions withDetails() {
       super.withDetails();
       return this;
    }
 
    /**
+    * list snapshots of all tenants
+    */
+   @Override
+   public ListSnapshotOptions allTenants() {
+      super.allTenants();
+      return this;
+   }
+
+   /**
     * {@inheritDoc}
     */
    @Override
-   public ListServerOptions changesSince(Date ifModifiedSince) {
+   public ListSnapshotOptions changesSince(Date ifModifiedSince) {
       super.changesSince(ifModifiedSince);
       return this;
    }
@@ -68,7 +57,7 @@ public class ListServerOptions extends ListOptions {
     * {@inheritDoc}
     */
    @Override
-   public ListServerOptions limit(int limit) {
+   public ListSnapshotOptions limit(int limit) {
       super.limit(limit);
       return this;
 
@@ -78,60 +67,52 @@ public class ListServerOptions extends ListOptions {
     * {@inheritDoc}
     */
    @Override
-   public ListServerOptions marker(String marker) {
+   public ListSnapshotOptions marker(String marker) {
       super.marker(marker);
       return this;
    }
 
-
    public static class Builder {
 
       /**
-       * @see ListServerOptions#host(String)
+       * @see ListSnapshotOptions#allTenants()
        */
-      public static ListServerOptions host(String host) {
-         ListServerOptions options = new ListServerOptions();
-         return options.host(host);
-      }
-
-      /**
-       * @see ListServerOptions#allTenants()
-       */
-      public static ListServerOptions allTenants() {
-         ListServerOptions options = new ListServerOptions();
+      public static ListSnapshotOptions allTenants() {
+         ListSnapshotOptions options = new ListSnapshotOptions();
          return options.allTenants();
       }
 
       /**
        * @see ListOptions#withDetails()
        */
-      public static ListServerOptions withDetails() {
-         ListServerOptions options = new ListServerOptions();
+      public static ListSnapshotOptions withDetails() {
+         ListSnapshotOptions options = new ListSnapshotOptions();
          return options.withDetails();
       }
 
       /**
        * @see org.jclouds.openstack.v2_0.options.PaginationOptions#marker(String)
        */
-      public static ListServerOptions marker(String marker) {
-         ListServerOptions options = new ListServerOptions();
+      public static ListSnapshotOptions marker(String marker) {
+         ListSnapshotOptions options = new ListSnapshotOptions();
          return options.marker(marker);
       }
 
       /**
        * @see org.jclouds.openstack.v2_0.options.PaginationOptions#limit(long)
        */
-      public static ListServerOptions maxResults(int maxKeys) {
-         ListServerOptions options = new ListServerOptions();
+      public static ListSnapshotOptions maxResults(int maxKeys) {
+         ListSnapshotOptions options = new ListSnapshotOptions();
          return options.limit(maxKeys);
       }
 
       /**
        * @see org.jclouds.openstack.v2_0.options.PaginationOptions#changesSince(Date)
        */
-      public static ListServerOptions changesSince(Date since) {
-         ListServerOptions options = new ListServerOptions();
+      public static ListSnapshotOptions changesSince(Date since) {
+         ListSnapshotOptions options = new ListSnapshotOptions();
          return options.changesSince(since);
       }
    }
+
 }
