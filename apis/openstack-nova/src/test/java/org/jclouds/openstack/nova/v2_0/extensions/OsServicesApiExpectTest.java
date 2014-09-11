@@ -33,7 +33,7 @@ import java.util.Collection;
 import static org.testng.Assert.assertEquals;
 
 /**
- * Tests HostAggregateApi guice wiring and parsing
+ * Tests OsServicesApi guice wiring and parsing
  *
  * @author Adam Lowe
  */
