@@ -115,4 +115,10 @@ public interface ExtensionNamespaces {
     * Floating IP pools support
     */
    public static final String FLOATING_IP_POOLS = "http://docs.openstack.org/ext/floating_ip_pools/api/v1.1";
+
+   /**
+    * OS-Services extension
+    */
+   public static final String OS_SERVICES = "http://docs.openstack.org/compute/ext/services/api/v2";
+
 }
