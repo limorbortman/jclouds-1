@@ -257,5 +257,6 @@ public class ServerApiLiveTest extends BaseNovaApiLiveTest {
    private void checkServer(Server server) {
       checkResource(server);
       assertNotNull(server.getFlavor());
+      assertNotNull(server.getAvailabilityZone());
    }
 }
