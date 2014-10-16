@@ -31,4 +31,9 @@ public class ListSecurityGroupRuleOptions extends BaseHttpRequestOptions {
       return this;
    }
 
+   public ListSecurityGroupRuleOptions securityGroupId(String securityGroupId) {
+      this.queryParameters.replaceValues("security_group_id", ImmutableSet.of(securityGroupId));
+      return this;
+   }
+
 }
