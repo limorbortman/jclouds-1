@@ -38,6 +38,11 @@
       <artifactId>openstack-cinder</artifactId>
       <version>${project.version}</version>
     </dependency>
+      <dependency>
+          <groupId>org.apache.jclouds.api</groupId>
+          <artifactId>openstack-ceilometer</artifactId>
+          <version>${project.version}</version>
+      </dependency>
     <dependency>
       <groupId>org.apache.jclouds.api</groupId>
       <artifactId>rackspace-clouddns</artifactId>
