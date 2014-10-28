@@ -22,7 +22,7 @@
   <parent>
     <artifactId>jclouds-project</artifactId>
     <groupId>org.apache.jclouds</groupId>
-    <version>1.8.1-CB-5</version>
+    <version>1.8.1-CB-6</version>
     <relativePath>../project/pom.xml</relativePath>
   </parent>
   <groupId>org.apache.jclouds.api</groupId>
@@ -44,6 +44,7 @@
     <module>swift</module>
     <module>openstack-keystone</module>
     <module>openstack-cinder</module>
+      <module>openstack-ceilometer</module>
     <module>openstack-nova</module>
     <module>openstack-heat</module>
     <module>openstack-glance</module>

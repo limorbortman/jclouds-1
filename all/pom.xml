@@ -22,7 +22,7 @@
   <parent>
     <groupId>org.apache.jclouds</groupId>
     <artifactId>jclouds-project</artifactId>        
-    <version>1.8.1-CB-5</version>
+    <version>1.8.1-CB-6</version>
     <relativePath>../project/pom.xml</relativePath>
   </parent>
   <artifactId>jclouds-all</artifactId>
@@ -38,6 +38,11 @@
       <artifactId>openstack-cinder</artifactId>
       <version>${project.version}</version>
     </dependency>
+      <dependency>
+          <groupId>org.apache.jclouds.api</groupId>
+          <artifactId>openstack-ceilometer</artifactId>
+          <version>${project.version}</version>
+      </dependency>
     <dependency>
       <groupId>org.apache.jclouds.api</groupId>
       <artifactId>rackspace-clouddns</artifactId>
