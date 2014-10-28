@@ -21,14 +21,11 @@ import org.jclouds.openstack.ceilometer.v2.domain.Meter;
 import org.jclouds.openstack.ceilometer.v2.options.QueryOptions;
 import org.jclouds.openstack.keystone.v2_0.filters.AuthenticateRequest;
 import org.jclouds.rest.annotations.Fallback;
-import org.jclouds.rest.annotations.MapBinder;
 import org.jclouds.rest.annotations.RequestFilters;
-import org.jclouds.rest.binders.BindToJsonPayload;
 
 import javax.inject.Named;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -42,7 +39,7 @@ import java.util.List;
 @RequestFilters(AuthenticateRequest.class)
 @Consumes(MediaType.APPLICATION_JSON)
 @Path("/v2/meters")
-public interface MetersApi {
+public interface MeterApi {
 
    @Named("resource:listMeters")
    @GET
@@ -50,9 +47,8 @@ public interface MetersApi {
    List<Meter> listMeters();
 
    @Named("resource:listMeters")
-   @POST
+   @GET
    @Produces(MediaType.APPLICATION_JSON)
-   @MapBinder(BindToJsonPayload.class)
    @Fallback(EmptyListOnNotFoundOr404.class)
    List<Meter> listMeters(QueryOptions... options);
 }

@@ -20,15 +20,17 @@ import org.jclouds.openstack.ceilometer.v2.domain.Sample;
 import org.jclouds.openstack.ceilometer.v2.internal.BaseCeilometerApiLiveTest;
 import org.testng.annotations.Test;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Tests parsing and Guice wiring of MetersApi
+ * Tests parsing and Guice wiring of MeterApi
  */
-@Test(groups = "live", testName = "MetersApiLiveTest")
-public class SamplesApiLiveTest extends BaseCeilometerApiLiveTest {
+@Test(groups = "live", testName = "MeterApiLiveTest")
+public class SampleApiLiveTest extends BaseCeilometerApiLiveTest {
 
    /**
     * use carefully since this test returns all the samples and might stuck ceilometer
@@ -49,9 +51,17 @@ public class SamplesApiLiveTest extends BaseCeilometerApiLiveTest {
       for (String region : regions) {
          QueryApi queryApi = api.getQueryApi(region);
 
-         List<Sample> samples = queryApi.listSamples(1);
+         Calendar calendarFrom = Calendar.getInstance();
+         calendarFrom.set(Calendar.HOUR, calendarFrom.get(Calendar.HOUR) - 10);
+         Calendar calendarTo = Calendar.getInstance();
 
-         validate(samples);
+         //Ceilometer timestamp is in '2014-10-28T16:16:07' format
+         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+         SimpleDateFormat hourFormater = new SimpleDateFormat("HH:mm:ss");
+
+         String filter = "{\\\"and\\\": [{\\\">=\\\": {\\\"timestamp\\\": \\\"" + dateFormat.format(calendarFrom.getTime()) + "T" + hourFormater.format(calendarFrom.getTime())
+               + "\\\"}}, {\\\"<=\\\": {\\\"timestamp\\\": \\\"" + dateFormat.format(calendarTo.getTime()) + "T" + hourFormater.format(calendarTo.getTime()) + "\\\"}}]}";
+         List<Sample> samples = queryApi.listSamples(filter, 5);
       }
    }
 
