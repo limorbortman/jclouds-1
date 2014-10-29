@@ -16,24 +16,23 @@
  */
 package org.jclouds.openstack.ceilometer.v2.features;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-
+import com.squareup.okhttp.mockwebserver.MockResponse;
+import com.squareup.okhttp.mockwebserver.MockWebServer;
 import org.jclouds.openstack.ceilometer.v2.CeilometerApi;
 import org.jclouds.openstack.ceilometer.v2.domain.Meter;
 import org.jclouds.openstack.ceilometer.v2.internal.BaseCeilometerApiMockTest;
 import org.jclouds.openstack.ceilometer.v2.options.QueryOptions;
 import org.testng.annotations.Test;
 
-import com.squareup.okhttp.mockwebserver.MockResponse;
-import com.squareup.okhttp.mockwebserver.MockWebServer;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Tests annotation parsing of {@code MetersApi}
+ * Tests annotation parsing of {@code MeterApi}
  */
 @Test(groups = "unit", testName = "ResourceApiMockTest")
-public class MetersApiMockTest extends BaseCeilometerApiMockTest{
+public class MeterApiMockTest extends BaseCeilometerApiMockTest{
 
    public void testListMeters() throws Exception {
       MockWebServer server = mockOpenStackServer();
@@ -43,9 +42,9 @@ public class MetersApiMockTest extends BaseCeilometerApiMockTest{
 
       try {
          CeilometerApi ceilometerApi = api(server.getUrl("/").toString(), "openstack-ceilometer", overrides);
-         MetersApi metersApi = ceilometerApi.getMetersApi("RegionOne");
+         MeterApi meterApi = ceilometerApi.getMeterApi("RegionOne");
 
-         List<Meter> meters = metersApi.listMeters();
+         List<Meter> meters = meterApi.listMeters();
 
          /*
           * Check request
@@ -53,6 +52,42 @@ public class MetersApiMockTest extends BaseCeilometerApiMockTest{
          assertThat(server.getRequestCount()).isEqualTo(2);
          assertAuthentication(server);
          assertRequest(server.takeRequest(), "GET", BASE_URI + "/meters");
+
+         /*
+          * Check response
+          */
+         assertThat(meters).isNotEmpty();
+         assertThat(meters.size()).isEqualTo(650);
+
+         validate(meters);
+
+      } finally {
+         server.shutdown();
+      }
+   }
+
+
+   public void testListMetersWithQuery() throws Exception {
+      MockWebServer server = mockOpenStackServer();
+      server.enqueue(addCommonHeaders(new MockResponse().setBody(stringFromResource("/access.json"))));
+      server.enqueue(addCommonHeaders(
+            new MockResponse().setResponseCode(200).setBody(stringFromResource("/meters_list_response.json"))));
+
+      try {
+         CeilometerApi ceilometerApi = api(server.getUrl("/").toString(), "openstack-ceilometer", overrides);
+         MeterApi meterApi = ceilometerApi.getMeterApi("RegionOne");
+
+         QueryOptions queryOptions = QueryOptions.Builder.field("resource_id").op(QueryOptions.OP.EQ).value("58a63330-b5cd-4bfb-8f92-af6f95482ac3")
+               .field("user_id").op(QueryOptions.OP.EQ).value("50d315884a92431a9251ae0824a0312f");
+         List<Meter> meters = meterApi.listMeters(queryOptions);
+
+         /*
+          * Check request
+          */
+         assertThat(server.getRequestCount()).isEqualTo(2);
+         assertAuthentication(server);
+         assertRequest(server.takeRequest(), "GET", BASE_URI + "/meters?q.field=resource_id&q.op=eq&q.value=58a63330-b5cd-4bfb-8f92-af6f95482ac3" +
+               "&q.field=user_id&q.value=50d315884a92431a9251ae0824a0312f");
 
          /*
           * Check response

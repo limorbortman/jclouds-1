@@ -16,7 +16,6 @@
  */
 package org.jclouds.openstack.ceilometer.v2.options;
 
-import com.google.common.collect.ImmutableSet;
 import org.jclouds.http.options.BaseHttpRequestOptions;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -27,7 +26,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class QueryOptions extends BaseHttpRequestOptions {
 
    public static enum OP {
-      LT, LE, EQ, NE, GE, GT, UNRECOGNIZED;
+      EQ, UNRECOGNIZED;
 
       public String value() {
          return name().toLowerCase();
@@ -48,22 +47,22 @@ public class QueryOptions extends BaseHttpRequestOptions {
    }
 
    public QueryOptions field(String field) {
-      this.queryParameters.replaceValues("q.field", ImmutableSet.of(field));
+      this.queryParameters.put("q.field", field);
       return this;
    }
 
    public QueryOptions op(OP op) {
-      this.queryParameters.replaceValues("q.op", ImmutableSet.of(op.toString()));
+      this.queryParameters.put("q.op", op.toString());
       return this;
    }
 
    public QueryOptions type(String type) {
-      this.queryParameters.replaceValues("q.type", ImmutableSet.of(type));
+      this.queryParameters.put("q.type", type);
       return this;
    }
 
    public QueryOptions value(String value) {
-      this.queryParameters.replaceValues("q.value", ImmutableSet.of(value));
+      this.queryParameters.put("q.value", value);
       return this;
    }
 

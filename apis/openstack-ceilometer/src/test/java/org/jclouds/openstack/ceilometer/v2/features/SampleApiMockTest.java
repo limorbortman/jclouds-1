@@ -28,10 +28,10 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Tests annotation parsing of {@code MetersApi}
+ * Tests annotation parsing of {@code MeterApi}
  */
 @Test(groups = "unit", testName = "ResourceApiMockTest")
-public class SamplesApiMockTest extends BaseCeilometerApiMockTest{
+public class SampleApiMockTest extends BaseCeilometerApiMockTest{
 
    public void testListSamples() throws Exception {
       MockWebServer server = mockOpenStackServer();
@@ -75,7 +75,8 @@ public class SamplesApiMockTest extends BaseCeilometerApiMockTest{
          CeilometerApi ceilometerApi = api(server.getUrl("/").toString(), "openstack-ceilometer", overrides);
          QueryApi queryApi = ceilometerApi.getQueryApi("RegionOne");
 
-         List<Sample> samples = queryApi.listSamples(10);
+         String filter = "{\"filter\" : \"{\\\"and\\\": [{\\\">=\\\": {\\\"timestamp\\\": \\\"2014-10-28T01:36:07\\\"}}, {\\\"<=\\\": {\\\"timestamp\\\": \\\"2014-10-28T02:36:07\\\"}}]}\"}";
+         List<Sample> samples = queryApi.listSamples(filter, 10);
 
          /*
           * Check request

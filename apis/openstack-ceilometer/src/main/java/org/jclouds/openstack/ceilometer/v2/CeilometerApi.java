@@ -16,18 +16,16 @@
  */
 package org.jclouds.openstack.ceilometer.v2;
 
-import java.io.Closeable;
-import java.util.Set;
-
-import org.jclouds.location.Region;
+import com.google.inject.Provides;
 import org.jclouds.location.Zone;
 import org.jclouds.location.functions.RegionToEndpoint;
-import org.jclouds.openstack.ceilometer.v2.features.MetersApi;
+import org.jclouds.openstack.ceilometer.v2.features.MeterApi;
 import org.jclouds.openstack.ceilometer.v2.features.QueryApi;
 import org.jclouds.rest.annotations.Delegate;
 import org.jclouds.rest.annotations.EndpointParam;
 
-import com.google.inject.Provides;
+import java.io.Closeable;
+import java.util.Set;
 
 /**
  * Provides access to the OpenStack Orchestration (Heat) API.
@@ -43,7 +41,7 @@ public interface CeilometerApi extends Closeable {
     * Provides access to Meters features.
     */
    @Delegate
-   MetersApi getMetersApi(@EndpointParam(parser = RegionToEndpoint.class) String region);
+   MeterApi getMeterApi(@EndpointParam(parser = RegionToEndpoint.class) String region);
 
    /**
     * Provides access to Query features.

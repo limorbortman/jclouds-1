@@ -26,18 +26,16 @@ import org.jclouds.openstack.ceilometer.v2.options.QueryOptions;
 import org.testng.annotations.Test;
 
 /**
- * Tests parsing and Guice wiring of MetersApi
+ * Tests parsing and Guice wiring of MeterApi
  */
-@Test(groups = "live", testName = "MetersApiLiveTest")
-public class MetersApiLiveTest extends BaseCeilometerApiLiveTest {
+@Test(groups = "live", testName = "MeterApiLiveTest")
+public class MeterApiLiveTest extends BaseCeilometerApiLiveTest {
 
    public void testListMeters() {
       for (String region : regions) {
-         MetersApi metersApi = api.getMetersApi(region);
+         MeterApi meterApi = api.getMeterApi(region);
 
-         List<Meter> meters = metersApi.listMeters();
-         assertThat(meters).isNotNull();
-         assertThat(meters).isNotEmpty();
+         List<Meter> meters = meterApi.listMeters();
 
          validate(meters);
       }
@@ -45,19 +43,18 @@ public class MetersApiLiveTest extends BaseCeilometerApiLiveTest {
 
    public void testListMetersWithQuery() {
       for (String region : regions) {
-         MetersApi metersApi = api.getMetersApi(region);
+         MeterApi meterApi = api.getMeterApi(region);
 
-         QueryOptions queryOptions = QueryOptions.Builder.field("resource_id").op(QueryOptions.OP.EQ).value("58a63330-b5cd-4bfb-8f92-af6f95482ac3").type("");
-         List<Meter> meters = metersApi.listMeters(queryOptions);
-
-         assertThat(meters).isNotNull();
-         assertThat(meters).isNotEmpty();
+         QueryOptions queryOptions = QueryOptions.Builder.field("resource_id").op(QueryOptions.OP.EQ).value("58a63330-b5cd-4bfb-8f92-af6f95482ac3")
+               .field("user_id").op(QueryOptions.OP.EQ).value("50d315884a92431a9251ae0824a0312f");
+         List<Meter> meters = meterApi.listMeters(queryOptions);
 
          validate(meters);
       }
    }
 
    private void validate(List<Meter> meters) {
+      assertThat(meters).isNotEmpty();
       for (Meter meter : meters) {
          assertThat(meter.getMeterId()).isNotEmpty();
          assertThat(meter.getName()).isNotEmpty();
