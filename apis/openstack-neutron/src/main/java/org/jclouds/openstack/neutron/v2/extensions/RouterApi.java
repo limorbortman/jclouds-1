@@ -60,7 +60,7 @@ import javax.ws.rs.core.MediaType;
  *      "http://docs.openstack.org/api/openstack-network/2.0/content/router_ext.html">api doc</a>
  */
 @Beta
-@Path("/v2.0/routers")
+@Path("/routers")
 @RequestFilters(AuthenticateRequest.class)
 @Consumes(MediaType.APPLICATION_JSON)
 public interface RouterApi {

@@ -51,7 +51,7 @@ import javax.ws.rs.core.MediaType;
  *
  */
 @Beta
-@Path("/v2.0/floatingips")
+@Path("/floatingips")
 @RequestFilters(AuthenticateRequest.class)
 @Consumes(MediaType.APPLICATION_JSON)
 public interface FloatingIPApi {

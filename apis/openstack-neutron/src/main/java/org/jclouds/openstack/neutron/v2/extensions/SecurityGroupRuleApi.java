@@ -51,7 +51,7 @@ import javax.ws.rs.core.MediaType;
  *      "http://docs.openstack.org/api/openstack-network/2.0/content/security-groups-ext.html">api doc</a>
  */
 @Beta
-@Path("/v2.0/security-group-rules")
+@Path("/security-group-rules")
 @RequestFilters(AuthenticateRequest.class)
 @Consumes(MediaType.APPLICATION_JSON)
 public interface SecurityGroupRuleApi {

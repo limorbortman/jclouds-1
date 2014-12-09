@@ -20,6 +20,7 @@ package  org.jclouds.openstack.neutron.v2;
 
 import com.google.common.base.Optional;
 import com.google.inject.Provides;
+import org.jclouds.Constants;
 import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.location.Region;
 import org.jclouds.location.functions.RegionToEndpoint;
@@ -35,12 +36,14 @@ import org.jclouds.openstack.v2_0.features.ExtensionApi;
 import org.jclouds.rest.annotations.Delegate;
 import org.jclouds.rest.annotations.EndpointParam;
 
+import javax.ws.rs.Path;
 import java.io.Closeable;
 import java.util.Set;
 
 /**
  * Provides synchronous access to the OpenStack Networking (Neutron) v2 API
  */
+@Path("{" + Constants.PROPERTY_API_VERSION + "}")
 public interface NeutronApi extends Closeable {
    /**
     * @return the Region codes configured
