@@ -50,7 +50,7 @@ import javax.ws.rs.core.MediaType;
  *
  */
 @Beta
-@Path("/v2.0/net-partitions")
+@Path("/net-partitions")
 @RequestFilters(AuthenticateRequest.class)
 @Consumes(MediaType.APPLICATION_JSON)
 public interface NetPartitionApi {
