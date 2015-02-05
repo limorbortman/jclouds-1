@@ -14,30 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jclouds.openstack.heat.v1.features;
+package org.jclouds.openstack.heat.v1;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-
-import org.jclouds.openstack.heat.v1.domain.Stack;
-import org.jclouds.openstack.heat.v1.internal.BaseHeatApiLiveTest;
+import org.jclouds.View;
+import org.jclouds.apis.internal.BaseApiMetadataTest;
 import org.testng.annotations.Test;
 
+import com.google.common.collect.ImmutableSet;
+import com.google.common.reflect.TypeToken;
+
 /**
- * Tests parsing and Guice wiring of StackApi
+ * Tests the Heat {@link ApiMetadata}.
  */
-@Test(groups = "live", testName = "StackApiLiveTest")
-public class StackApiLiveTest extends BaseHeatApiLiveTest {
-
-    public void testList() {
-        for (String region : api.getConfiguredRegions()) {
-            StackApi stackApi = api.getStackApi(region);
-
-            List<Stack> stacks = stackApi.list().toList();
-
-            assertThat(stacks).isNotNull();
-        }
-    }
-
+@Test(groups = "unit", testName = "HeatApiMetadataTest")
+public class HeatApiMetadataTest extends BaseApiMetadataTest {
+   public HeatApiMetadataTest() {
+      super(new HeatApiMetadata(), ImmutableSet.<TypeToken<? extends View>> of());
+   }
 }

@@ -16,30 +16,29 @@
  */
 package org.jclouds.openstack.heat.v1;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.inject.Module;
-import org.jclouds.openstack.heat.v1.config.HeatHttpApiModule;
-import org.jclouds.openstack.heat.v1.config.HeatParserModule;
-import org.jclouds.openstack.keystone.v2_0.config.CredentialTypes;
-import org.jclouds.openstack.keystone.v2_0.config.KeystoneAuthenticationModule;
-import org.jclouds.openstack.v2_0.ServiceType;
-import org.jclouds.rest.internal.BaseHttpApiMetadata;
-import org.jclouds.rest.internal.BaseRestApiMetadata;
+import static org.jclouds.openstack.keystone.v2_0.config.KeystoneProperties.CREDENTIAL_TYPE;
+import static org.jclouds.openstack.keystone.v2_0.config.KeystoneProperties.SERVICE_TYPE;
 
 import java.net.URI;
 import java.util.Properties;
 
-import static org.jclouds.openstack.keystone.v2_0.config.KeystoneProperties.CREDENTIAL_TYPE;
-import static org.jclouds.openstack.keystone.v2_0.config.KeystoneProperties.SERVICE_TYPE;
+import org.jclouds.apis.ApiMetadata;
+import org.jclouds.openstack.heat.v1.config.HeatHttpApiModule;
+import org.jclouds.openstack.keystone.v2_0.config.AuthenticationApiModule;
+import org.jclouds.openstack.keystone.v2_0.config.CredentialTypes;
+import org.jclouds.openstack.keystone.v2_0.config.KeystoneAuthenticationModule;
+import org.jclouds.openstack.keystone.v2_0.config.KeystoneAuthenticationModule.RegionModule;
+import org.jclouds.rest.internal.BaseHttpApiMetadata;
+
+import com.google.auto.service.AutoService;
+import com.google.common.collect.ImmutableSet;
+import com.google.inject.Module;
 
 /**
- * User: Maty Grosz
- * Date: 19/Nov/2013
- * <p/>
- * Implementation of {@link org.jclouds.apis.ApiMetadata} for Heat v1 API
+ * Implementation of {@link ApiMetadata} for the Heat API.
  */
+@AutoService(ApiMetadata.class)
 public class HeatApiMetadata extends BaseHttpApiMetadata<HeatApi> {
-
 
    @Override
    public Builder toBuilder() {
@@ -55,32 +54,29 @@ public class HeatApiMetadata extends BaseHttpApiMetadata<HeatApi> {
    }
 
    public static Properties defaultProperties() {
-      Properties properties = BaseRestApiMetadata.defaultProperties();
-
-      properties.setProperty(SERVICE_TYPE, ServiceType.ORCHESTRATION);
+      Properties properties = BaseHttpApiMetadata.defaultProperties();
+      properties.setProperty(SERVICE_TYPE, "orchestration");
       properties.setProperty(CREDENTIAL_TYPE, CredentialTypes.PASSWORD_CREDENTIALS);
-
       return properties;
    }
 
-   public static class Builder extends  BaseHttpApiMetadata.Builder<HeatApi, Builder> {
+   public static class Builder extends BaseHttpApiMetadata.Builder<HeatApi, Builder> {
 
       protected Builder() {
-         id("openstack-heat")
-               .name("OpenStack Heat Havana API")
-               .identityName("${tenantName}:${userName} or ${userName}, if your keystone supports a default tenant")
-               .credentialName("${password}")
-               .endpointName("Keystone base URL ending in /v2.0/")
-               .documentation(URI.create("http://api.openstack.org/"))
-               .version("1")
-               .defaultEndpoint("http://localhost:5000/v2.0/")
-               .defaultProperties(HeatApiMetadata.defaultProperties())
-               .defaultModules(ImmutableSet.<Class<? extends Module>>builder()
-                     .add(KeystoneAuthenticationModule.class)
-                     .add(KeystoneAuthenticationModule.ZoneModule.class)
-                     .add(HeatParserModule.class)
-                     .add(HeatHttpApiModule.class)
-                     .build());
+          id("openstack-heat")
+         .name("OpenStack Heat API")
+         .identityName("${tenantName}:${userName} or ${userName}, if your keystone supports a default tenant")
+         .credentialName("${password}")
+         .documentation(URI.create("https://wiki.openstack.org/wiki/Heat"))
+         .version("1")
+         .endpointName("Keystone base url ending in /v2.0/")
+         .defaultEndpoint("http://localhost:5000/v2.0/")
+         .defaultProperties(HeatApiMetadata.defaultProperties())
+         .defaultModules(ImmutableSet.<Class<? extends Module>>builder()
+                           .add(AuthenticationApiModule.class)
+                           .add(KeystoneAuthenticationModule.class)
+                           .add(RegionModule.class)
+                           .add(HeatHttpApiModule.class).build());
       }
 
       @Override

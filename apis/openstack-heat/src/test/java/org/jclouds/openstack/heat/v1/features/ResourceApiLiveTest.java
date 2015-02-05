@@ -20,24 +20,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import org.jclouds.openstack.heat.v1.domain.Stack;
 import org.jclouds.openstack.heat.v1.internal.BaseHeatApiLiveTest;
 import org.testng.annotations.Test;
 
 /**
- * Tests parsing and Guice wiring of StackApi
+ * Tests parsing and Guice wiring of ResourceApi
  */
-@Test(groups = "live", testName = "StackApiLiveTest")
-public class StackApiLiveTest extends BaseHeatApiLiveTest {
+@Test(groups = "live", testName = "ResourceApiLiveTest")
+public class ResourceApiLiveTest extends BaseHeatApiLiveTest {
 
-    public void testList() {
-        for (String region : api.getConfiguredRegions()) {
-            StackApi stackApi = api.getStackApi(region);
+    public void testListTypes() {
+        for (String region : filterZones(api.getConfiguredRegions())) {
+            ResourceApi resourceApi = api.getResourceApi(region);
 
-            List<Stack> stacks = stackApi.list().toList();
-
-            assertThat(stacks).isNotNull();
+            List<String> resourceTypes = resourceApi.listTypes();
+            assertThat(resourceTypes).isNotNull();
         }
     }
-
 }
