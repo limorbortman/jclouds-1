@@ -17,16 +17,17 @@
 package org.jclouds.openstack.heat.v1.features;
 
 import javax.inject.Named;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
+import org.jclouds.Fallbacks;
 import org.jclouds.Fallbacks.EmptyFluentIterableOnNotFoundOr404;
 import org.jclouds.openstack.heat.v1.domain.Stack;
+import org.jclouds.openstack.heat.v1.options.CreateStackOptions;
 import org.jclouds.openstack.keystone.v2_0.filters.AuthenticateRequest;
 import org.jclouds.openstack.v2_0.options.PaginationOptions;
 import org.jclouds.rest.annotations.Fallback;
+import org.jclouds.rest.annotations.PayloadParam;
 import org.jclouds.rest.annotations.RequestFilters;
 import org.jclouds.rest.annotations.SelectJson;
 
@@ -51,5 +52,26 @@ public interface StackApi {
     @SelectJson("stacks")
     @Fallback(EmptyFluentIterableOnNotFoundOr404.class)
     FluentIterable<Stack> list(PaginationOptions options);
+
+   @Named("stack:get")
+   @GET
+   @SelectJson("stack")
+   @Path("/{name}/{id}")
+   @Consumes(MediaType.APPLICATION_JSON)
+   @Fallback(Fallbacks.NullOnNotFoundOr404.class)
+   Stack get(@PathParam("name") String stackName, @PathParam("id") String stackId);
+
+   @Named("stack:get")
+   @GET
+   @SelectJson("stack")
+   @Path("/{id}")
+   @Consumes(MediaType.APPLICATION_JSON)
+   @Fallback(Fallbacks.NullOnNotFoundOr404.class)
+   Stack get(@PathParam("id") String stackId);
+
+    @Named("stack:create")
+    @POST
+    @SelectJson("stack")
+    Stack create(CreateStackOptions... options);
 
 }
