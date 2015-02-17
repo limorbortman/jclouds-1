@@ -16,36 +16,37 @@
  */
 package org.jclouds.openstack.heat.v1;
 
-/**
- *
- */
+import java.io.Closeable;
+import java.util.Set;
 
-import com.google.inject.Provides;
-import org.jclouds.javax.annotation.Nullable;
-import org.jclouds.location.Zone;
-import org.jclouds.location.functions.ZoneToEndpoint;
+import org.jclouds.location.Region;
+import org.jclouds.location.functions.RegionToEndpoint;
+import org.jclouds.openstack.heat.v1.features.ResourceApi;
 import org.jclouds.openstack.heat.v1.features.StackApi;
 import org.jclouds.rest.annotations.Delegate;
 import org.jclouds.rest.annotations.EndpointParam;
 
-import java.io.Closeable;
+import com.google.inject.Provides;
 
 /**
- * Provides access to Openstack Heat REST API.
+ * Provides access to the OpenStack Orchestration (Heat) API.
+ *
  */
 public interface HeatApi extends Closeable {
 
-   /**
-    * @return the Zone codes configured
-    */
    @Provides
-   @Zone
-   java.util.Set<String> getConfiguredZones();
+   @Region
+   Set<String> getConfiguredRegions();
 
    /**
-    * Provides synchronous access to Stack features.
+    * Provides access to Resource features.
     */
    @Delegate
-   StackApi getStackApiForZone(
-         @EndpointParam(parser = ZoneToEndpoint.class) @Nullable String zone);
+   ResourceApi getResourceApi(@EndpointParam(parser = RegionToEndpoint.class) String region);
+
+    /**
+     * Provides access to Stack features.
+     */
+    @Delegate
+    StackApi getStackApi(@EndpointParam(parser = RegionToEndpoint.class) String region);
 }
