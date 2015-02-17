@@ -27,7 +27,7 @@
   </parent>
   <groupId>org.apache.jclouds</groupId>
   <artifactId>jclouds-project</artifactId>
-  <version>1.8.1-CB-8</version>
+  <version>1.8.1-CB-9</version>
   <packaging>pom</packaging>
   <name>Apache jclouds Project</name>
   <url>http://jclouds.apache.org/</url>
@@ -209,6 +209,10 @@
     <sourceReleaseAssemblyDescriptor>source-release-zip-tar</sourceReleaseAssemblyDescriptor>
     <okhttp.version>1.6.0</okhttp.version>
     <surefire.version>2.17</surefire.version>
+    <auto-value.version>1.0-rc2</auto-value.version>
+    <auto-service.version>1.0-rc2</auto-service.version>
+    <auto-service.version>1.0-rc2</auto-service.version>
+    <json-simple.version>1.1</json-simple.version>
   </properties>
 
   <dependencyManagement>
@@ -253,6 +257,21 @@
         <artifactId>mockwebserver</artifactId>
         <version>${okhttp.version}</version>
       </dependency>
+      <dependency>
+            <groupId>com.google.auto.value</groupId>
+            <artifactId>auto-value</artifactId>
+            <version>${auto-value.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.auto.service</groupId>
+            <artifactId>auto-service</artifactId>
+            <version>${auto-service.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>${json-simple.version}</version>
+        </dependency>
       <dependency>
         <groupId>org.testng</groupId>
         <artifactId>testng</artifactId>

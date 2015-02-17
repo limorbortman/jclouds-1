@@ -1,0 +1,16 @@
+{
+    "template": {
+        "heat_template_version": "2013-05-23",
+
+        "description": "HOT template to deploy volume",
+
+        "resources": {
+            "cinder_volume": {
+                "type": "OS::Cinder::Volume",
+                "properties": {
+                    "size": "1"
+                }
+            }
+        }
+    }
+}

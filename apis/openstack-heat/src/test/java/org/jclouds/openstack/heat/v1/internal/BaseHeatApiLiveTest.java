@@ -61,5 +61,4 @@ public class BaseHeatApiLiveTest extends BaseApiLiveTest<HeatApi> {
 
         // create a stack
     }
-
 }

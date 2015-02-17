@@ -17,15 +17,13 @@
     limitations under the License.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.apache.jclouds</groupId>
         <artifactId>jclouds-project</artifactId>
-        <version>1.8.1-CB-8</version>
-        <relativePath>../../project/pom.xml</relativePath>
+    <version>1.8.1-CB-9</version>
+    <relativePath>../../project/pom.xml</relativePath>
     </parent>
     <groupId>org.apache.jclouds.api</groupId>
     <artifactId>openstack-heat</artifactId>
@@ -36,13 +34,11 @@
     <properties>
         <!-- keystone endpoint -->
         <test.openstack-heat.endpoint>http://localhost:5000/v2.0/</test.openstack-heat.endpoint>
-        <!-- keystone version -->
         <test.openstack-heat.api-version>1</test.openstack-heat.api-version>
         <test.openstack-heat.build-version/>
         <test.openstack-heat.identity>FIXME_IDENTITY</test.openstack-heat.identity>
         <test.openstack-heat.credential>FIXME_CREDENTIALS</test.openstack-heat.credential>
         <test.jclouds.keystone.credential-type>passwordCredentials</test.jclouds.keystone.credential-type>
-
         <jclouds.osgi.export>org.jclouds.openstack.heat.v1*;version="${project.version}"</jclouds.osgi.export>
         <jclouds.osgi.import>
             org.jclouds.rest.internal;version="${project.version}",
@@ -51,35 +47,87 @@
         </jclouds.osgi.import>
     </properties>
 
+    <!--<repositories>-->
+        <!--<repository>-->
+            <!--<id>apache-snapshots</id>-->
+            <!--<url>https://repository.apache.org/content/repositories/snapshots</url>-->
+            <!--<releases>-->
+                <!--<enabled>false</enabled>-->
+            <!--</releases>-->
+            <!--<snapshots>-->
+                <!--<enabled>true</enabled>-->
+            <!--</snapshots>-->
+        <!--</repository>-->
+    <!--</repositories>-->
+
     <dependencies>
         <dependency>
             <groupId>org.apache.jclouds.api</groupId>
             <artifactId>openstack-keystone</artifactId>
-            <version>${project.version}</version>
+      <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.jclouds</groupId>
             <artifactId>jclouds-core</artifactId>
-            <version>${project.version}</version>
+      <version>${project.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.jclouds.api</groupId>
             <artifactId>openstack-keystone</artifactId>
-            <version>${project.version}</version>
+      <version>${project.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
         <dependency>
+          <groupId>org.assertj</groupId>
+          <artifactId>assertj-core</artifactId>
+          <version>1.6.1</version>
+          <scope>test</scope>
+      </dependency>
+      <dependency>
             <groupId>org.apache.jclouds.driver</groupId>
+          <artifactId>jclouds-sshj</artifactId>
+          <version>${project.version}</version>
+          <scope>test</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.jclouds.driver</groupId>
             <artifactId>jclouds-slf4j</artifactId>
-            <version>${project.version}</version>
+      <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp</groupId>
+            <artifactId>mockwebserver</artifactId>
+            <scope>test</scope>
+      <exclusions>
+        <!-- provided by the jclouds-bouncycastle driver -->
+        <exclusion>
+          <groupId>org.bouncycastle</groupId>
+          <artifactId>bcprov-jdk15on</artifactId>
+        </exclusion>
+      </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.google.auto.value</groupId>
+            <artifactId>auto-value</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.auto.service</groupId>
+            <artifactId>auto-service</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
