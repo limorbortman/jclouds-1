@@ -14,17 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jclouds.openstack.heat.v1.config;
+package org.jclouds.openstack.heat.v1.internal;
 
-import com.google.inject.AbstractModule;
-import org.jclouds.json.config.GsonModule;
+import java.util.Properties;
+
+import org.jclouds.openstack.heat.v1.HeatApi;
+import org.jclouds.openstack.v2_0.internal.BaseOpenStackMockTest;
 
 /**
- * Heat Parser
+ * Base class for writing Heat Mock tests
+ *
  */
-public class HeatParserModule extends AbstractModule {
-   @Override
-   protected void configure() {
-      bind(GsonModule.DateAdapter.class).to(GsonModule.Iso8601DateAdapter.class);
+public class BaseHeatApiMockTest extends BaseOpenStackMockTest<HeatApi> {
+   protected Properties overrides;
+
+   protected static String BASE_URI = "/v1/da0d12be20394afb851716e10a49e4a7";
+
+   /**
+    * Base Mock Test
+    */
+   public BaseHeatApiMockTest() {
+      overrides = new Properties();
    }
 }

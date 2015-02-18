@@ -16,45 +16,24 @@
  */
 package org.jclouds.openstack.heat.v1.config;
 
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
-import com.google.inject.Provides;
-import com.google.inject.Singleton;
 import org.jclouds.http.HttpErrorHandler;
 import org.jclouds.http.annotation.ClientError;
 import org.jclouds.http.annotation.Redirection;
 import org.jclouds.http.annotation.ServerError;
+import org.jclouds.json.config.GsonModule.DateAdapter;
+import org.jclouds.json.config.GsonModule.Iso8601DateAdapter;
 import org.jclouds.openstack.heat.v1.HeatApi;
-import org.jclouds.openstack.heat.v1.handler.HeatErrorHandler;
-import org.jclouds.openstack.v2_0.functions.PresentWhenExtensionAnnotationNamespaceEqualsAnyNamespaceInExtensionsSet;
-import org.jclouds.rest.ConfiguresRestClient;
+import org.jclouds.openstack.heat.v1.handlers.HeatErrorHandler;
+import org.jclouds.rest.ConfiguresHttpApi;
 import org.jclouds.rest.config.HttpApiModule;
-import org.jclouds.rest.functions.ImplicitOptionalConverter;
 
-import java.net.URI;
-
-/**
- * Configures the Heat connection.
- */
-
-@ConfiguresRestClient
+@ConfiguresHttpApi
 public class HeatHttpApiModule extends HttpApiModule<HeatApi> {
-
-   public HeatHttpApiModule() {
-
-   }
-
 
    @Override
    protected void configure() {
-      bind(ImplicitOptionalConverter.class).to(PresentWhenExtensionAnnotationNamespaceEqualsAnyNamespaceInExtensionsSet.class);
+      bind(DateAdapter.class).to(Iso8601DateAdapter.class);
       super.configure();
-   }
-
-   @Provides
-   @Singleton
-   public Multimap<URI, URI> aliases() {
-      return ImmutableMultimap.<URI, URI>builder().build();
    }
 
    @Override

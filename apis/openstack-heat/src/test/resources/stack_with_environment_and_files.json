@@ -1,0 +1,23 @@
+{
+    "environment": {
+        "resource_registry": {
+            "ALU::LCP::VolumeB": "LCP-VolumeB.template.yaml"
+        }
+    },
+
+    "template": {
+
+        "heat_template_version": "2013-05-23",
+
+        "resources": {
+            "ALU-LCP-OAMB": {
+                "properties": {
+                    "cardvB": "01",
+                    "deployment_prefix": "For-Test",
+                    "storage_size": 4
+                },
+                "type": "ALU::LCP::VolumeB"
+            }
+        }
+    }
+}
