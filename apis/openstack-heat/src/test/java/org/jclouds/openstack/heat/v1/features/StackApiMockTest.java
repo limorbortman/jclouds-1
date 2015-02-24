@@ -297,7 +297,7 @@ public class StackApiMockTest extends BaseHeatApiMockTest {
          HeatApi heatApi = api(server.getUrl("/").toString(), "openstack-heat", overrides);
          StackApi api = heatApi.getStackApi("RegionOne");
 
-         Map<String, String> metadata = api.getStackResourceMetadata(TEST_STACK_NAME, TEST_STACK_ID,RESOURCES_TEST_NAME);
+         Map<String, Object> metadata = api.getStackResourceMetadata(TEST_STACK_NAME, TEST_STACK_ID,RESOURCES_TEST_NAME);
 
          /*
           * Check request

@@ -120,5 +120,5 @@ public interface StackApi {
    @SelectJson("metadata")
    @Path("/{stack_name}/{stack_id}/resources/{resource_name}/metadata")
    @Fallback(Fallbacks.NullOnNotFoundOr404.class)
-   Map<String, String> getStackResourceMetadata(@PathParam("stack_name") String stackName, @PathParam("stack_id") String stackId, @PathParam("resource_name") String name);
+   Map<String, Object> getStackResourceMetadata(@PathParam("stack_name") String stackName, @PathParam("stack_id") String stackId, @PathParam("resource_name") String name);
 }

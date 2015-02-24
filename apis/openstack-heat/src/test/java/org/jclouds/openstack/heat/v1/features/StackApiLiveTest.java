@@ -228,11 +228,15 @@ public class StackApiLiveTest extends BaseHeatApiLiveTest {
       for (String region : api.getConfiguredRegions()) {
          StackApi stackApi = api.getStackApi(region);
          JSONParser parser = new JSONParser();
-         Object obj = parser.parse(stringFromResource("/simple_stack.json"));
+         Object obj = parser.parse(stringFromResource("/stack_with_parameters.json"));
 
          JSONObject jsonObject = (JSONObject) obj;
+         Map<String, Object> parameters = new HashMap<String, Object>();
+         parameters.put("key_name", "myKey");
+         parameters.put("image_id", "3b7be1fa-d381-4067-bb81-e835df630564");
+         parameters.put("instance_type", "SMALL_1");
 
-         CreateStackOptions createStackOptions = CreateStackOptions.Builder.template(String.valueOf(jsonObject.get("template")));
+         CreateStackOptions createStackOptions = CreateStackOptions.Builder.template(String.valueOf(jsonObject.get("template"))).parameters(parameters);
          String stackName = getName();
          Stack stack = stackApi.create(stackName, createStackOptions);
          assertThat(stack).isNotNull();
@@ -245,6 +249,7 @@ public class StackApiLiveTest extends BaseHeatApiLiveTest {
             String stackResourceName = stackResource.getName();
             assertThat(stackResourceName).isNotNull();
             assertThat(stackResourceName).isNotEmpty();
+            assertThat(stackResource.getStatus()).isNotEqualTo(StackResource.Status.UNRECOGNIZED);
             StackResource resourceFromGet = stackApi.getStackResource(stackName, stack.getId(), stackResourceName);
             assertThat(resourceFromGet).isNotNull();
             assertThat(resourceFromGet.getName()).isEqualTo(stackResourceName);
@@ -273,6 +278,7 @@ public class StackApiLiveTest extends BaseHeatApiLiveTest {
             String stackResourceName = stackResource.getName();
             assertThat(stackResourceName).isNotNull();
             assertThat(stackResourceName).isNotEmpty();
+            assertThat(stackResource.getStatus()).isNotEqualTo(StackResource.Status.UNRECOGNIZED);
             Map metadata = stackApi.getStackResourceMetadata(stackName, stack.getId(), stackResourceName);
             assertThat(metadata).isNotNull();
             assertThat(metadata).isNotEmpty();
