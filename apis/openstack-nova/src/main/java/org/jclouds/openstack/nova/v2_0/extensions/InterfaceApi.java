@@ -23,11 +23,10 @@ import org.jclouds.Fallbacks;
 import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.openstack.keystone.v2_0.filters.AuthenticateRequest;
 import org.jclouds.openstack.nova.v2_0.domain.InterfaceAttachment;
+import org.jclouds.openstack.nova.v2_0.options.AttachInterfaceOptions;
 import org.jclouds.openstack.v2_0.ServiceType;
 import org.jclouds.openstack.v2_0.services.Extension;
 import org.jclouds.rest.annotations.Fallback;
-import org.jclouds.rest.annotations.Payload;
-import org.jclouds.rest.annotations.PayloadParam;
 import org.jclouds.rest.annotations.RequestFilters;
 import org.jclouds.rest.annotations.SelectJson;
 
@@ -38,18 +37,17 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 /**
  * Provides access to the OpenStack Compute (Nova) Attach Interfaces API.
  */
 @Beta
-@Extension(of = ServiceType.COMPUTE, namespace = ExtensionNamespaces.ATTACH_INTERFACES)
+@Extension(of = ServiceType.COMPUTE, namespace = ExtensionNamespaces.INTERFACES)
 @RequestFilters(AuthenticateRequest.class)
 @Consumes(MediaType.APPLICATION_JSON)
 @Path("/servers")
-public interface AttachInterfaceApi {
+public interface InterfaceApi {
 
    /**
     * Returns list of port interfaces for given server
@@ -83,19 +81,13 @@ public interface AttachInterfaceApi {
    InterfaceAttachment get(@PathParam("serverId") String serverId, @PathParam("attachmentId") String attachmentId);
 
    /**
-    * Creates a new port interface and associate with the given port
-    * 
-    * @param portId
-    *           The port ID
-    * @return newly created port interface
+    * Creates and uses a port interface to attach the port to a server instance.
     */
-   @Named("attachInterface:create")
+   @Named("interface:attach")
    @POST
-   @Path("/{serverId}/os-interface")
    @SelectJson("interfaceAttachment")
-   @Payload("%7B\"interfaceAttachment\":%7B\"port_id\":\"{portId}\"%7D%7D")
-   @Produces(MediaType.APPLICATION_JSON)
-   InterfaceAttachment create(@PathParam("serverId") String serverId, @PayloadParam("portId") String portId);
+   @Path("/{server_id}/os-interface")
+   InterfaceAttachment create(@PathParam("server_id") String serverId, AttachInterfaceOptions options);
 
    /**
     * Deletes a port interface for given server, return true if successful,
@@ -112,4 +104,12 @@ public interface AttachInterfaceApi {
    @Path("/{serverId}/os-interface/{attachmentId}")
    @Fallback(Fallbacks.FalseOnNotFoundOr404.class)
    boolean delete(@PathParam("serverId") String serverId, @PathParam("attachmentId") String attachmentId);
+
+   /**
+    * Detaches a specified port interface by port ID.
+    */
+   @Named("interface:detach")
+   @DELETE
+   @Path("/{server_id}/os-interface/{port_id}")
+   void detachInterface(@PathParam("server_id") String serverId, @PathParam("port_id") String portId);
 }

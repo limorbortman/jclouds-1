@@ -16,12 +16,11 @@
  */
 package org.jclouds.openstack.nova.v2_0;
 
-import java.io.Closeable;
-import java.util.Set;
-
+import com.google.common.base.Optional;
+import com.google.inject.Provides;
 import org.jclouds.location.Region;
 import org.jclouds.location.functions.RegionToEndpoint;
-import org.jclouds.openstack.nova.v2_0.extensions.AttachInterfaceApi;
+import org.jclouds.openstack.nova.v2_0.extensions.InterfaceApi;
 import org.jclouds.openstack.nova.v2_0.extensions.AvailabilityZoneApi;
 import org.jclouds.openstack.nova.v2_0.extensions.ConsolesApi;
 import org.jclouds.openstack.nova.v2_0.extensions.FlavorExtraSpecsApi;
@@ -46,8 +45,8 @@ import org.jclouds.openstack.v2_0.features.ExtensionApi;
 import org.jclouds.rest.annotations.Delegate;
 import org.jclouds.rest.annotations.EndpointParam;
 
-import com.google.common.base.Optional;
-import com.google.inject.Provides;
+import java.io.Closeable;
+import java.util.Set;
 
 /**
  * Provides access to the OpenStack Compute (Nova) v2 API.
@@ -278,7 +277,7 @@ public interface NovaApi extends Closeable {
     * Provides access to attach interface features.
     */
    @Delegate
-   Optional<AttachInterfaceApi> getAttachInterfaceApi(
+   Optional<InterfaceApi> getInterfaceApi(
          @EndpointParam(parser = RegionToEndpoint.class) String region);
 
    /**

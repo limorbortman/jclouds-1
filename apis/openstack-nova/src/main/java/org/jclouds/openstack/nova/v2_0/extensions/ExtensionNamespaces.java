@@ -118,9 +118,9 @@ public final class ExtensionNamespaces {
     */
    public static final String FLOATING_IP_POOLS = "http://docs.openstack.org/ext/floating_ip_pools/api/v1.1";
    /**
-    * Attach interfaces extension
+    * interfaces extension
     */
-   public static final String ATTACH_INTERFACES = "http://docs.openstack.org/compute/ext/interfaces/api/v1.1";
+   public static final String INTERFACES = "http://docs.openstack.org/compute/ext/interfaces/api/v1.1";
 
    private ExtensionNamespaces() {
       throw new AssertionError("intentionally unimplemented");

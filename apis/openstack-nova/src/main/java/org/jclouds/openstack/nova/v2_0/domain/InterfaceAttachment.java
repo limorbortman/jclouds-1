@@ -17,15 +17,14 @@
 
 package org.jclouds.openstack.nova.v2_0.domain;
 
-import static com.google.common.base.Objects.toStringHelper;
-import static com.google.common.base.Preconditions.checkNotNull;
-
-import java.beans.ConstructorProperties;
-
-import javax.inject.Named;
-
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableSet;
+
+import javax.inject.Named;
+import java.beans.ConstructorProperties;
+
+import static com.google.common.base.Objects.toStringHelper;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class InterfaceAttachment {
 
@@ -151,10 +150,8 @@ public class InterfaceAttachment {
 
    @Override
    public boolean equals(Object obj) {
-      if (this == obj)
-         return true;
-      if (obj == null || getClass() != obj.getClass())
-         return false;
+      if (this == obj) return true;
+      if (obj == null || getClass() != obj.getClass()) return false;
       InterfaceAttachment that = InterfaceAttachment.class.cast(obj);
       return Objects.equal(this.networkId, that.networkId) && Objects.equal(this.portId, that.portId)
             && Objects.equal(this.portState, that.portState) && Objects.equal(this.macAddress, that.macAddress)
