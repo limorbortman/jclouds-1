@@ -19,8 +19,6 @@ package org.jclouds.openstack.heat.v1.features;
 import com.google.common.base.Predicate;
 import com.google.common.base.Throwables;
 import com.google.common.collect.FluentIterable;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Sets;
 import org.jclouds.openstack.heat.v1.domain.Stack;
 import org.jclouds.openstack.heat.v1.domain.StackResource;
 import org.jclouds.openstack.heat.v1.internal.BaseHeatApiLiveTest;
