@@ -160,7 +160,7 @@ public class ListStackOptions extends PaginationOptions {
     /**
      * Return all the stack of all the tenant
      */
-    public ListStackOptions isGlobalTenant(Boolean globalTenant) {
+    public ListStackOptions globalTenant(Boolean globalTenant) {
         this.queryParameters.put("global_tenant", globalTenant !=null ? Boolean.toString(globalTenant) : "false");
         return this;
     }
@@ -233,10 +233,10 @@ public class ListStackOptions extends PaginationOptions {
       }
 
       /**
-       * @see ListStackOptions#isGlobalTenant(Boolean
+       * @see ListStackOptions#globalTenant(Boolean
        */
-      public static ListStackOptions isGlobalTenant(Boolean globalTenant) {
-         return new ListStackOptions().isGlobalTenant(globalTenant);
+      public static ListStackOptions globalTenant(Boolean globalTenant) {
+         return new ListStackOptions().globalTenant(globalTenant);
       }
    }
 }
