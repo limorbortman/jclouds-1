@@ -17,7 +17,7 @@
 package org.jclouds.openstack.heat.v1.options;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.jclouds.openstack.heat.v1.options.ListStackOptions.Builder.isGlobalTenant;
+import static org.jclouds.openstack.heat.v1.options.ListStackOptions.Builder.globalTenant;
 import static org.jclouds.openstack.heat.v1.options.ListStackOptions.Builder.limit;
 import static org.jclouds.openstack.heat.v1.options.ListStackOptions.Builder.marker;
 import static org.jclouds.openstack.heat.v1.options.ListStackOptions.Builder.name;
@@ -103,7 +103,7 @@ public class ListStackOptionsTest {
    }
 
    public void testGlobalTenant() {
-      ListStackOptions options = isGlobalTenant(true);
+      ListStackOptions options = globalTenant(true);
       assertThat(options.buildQueryParameters().get("global_tenant"))
             .isEqualTo(ImmutableSet.of("true"));
    }
