@@ -48,7 +48,7 @@ public class Stack extends Resource {
    //private final List<Capabilities> capabilities;
    private final Map<String, String> parameters;
    //List<Output> outputs;
-   private final List<String> outputs;
+   private final List<Map<String, Object>> outputs;
    @Named("notification_topics")
    private final List<String> notificationTopics;
    //private final List<NotificationTopics> notificationTopics;
@@ -75,7 +75,7 @@ public class Stack extends Resource {
          "notification_topics", "template_description", "stack_status", "stack_status_reason", "creation_time",
          "updated_time", "timeout_mins", "disable_rollback", "project"})
    public Stack(String id, String name, Set<Link> links, String description, String owner, Set<String> capabilities,
-                Map<String, String> parameters, List<String> outputs, List<String> notificationTopics,
+                Map<String, String> parameters, List<Map<String, Object>> outputs, List<String> notificationTopics,
                 String templateDescription, Stack.Status status, String statusReason, Date created, Date updated, int timeoutMins,
                 boolean disableRollback, String project) {
       super(id, name, links);
@@ -83,7 +83,7 @@ public class Stack extends Resource {
       this.owner = owner;
       this.capabilities = capabilities == null ? ImmutableSet.<String>of() : ImmutableSet.copyOf(capabilities);
       this.parameters = parameters == null ? ImmutableMap.<String, String>of() : ImmutableMap.copyOf(parameters);
-      this.outputs = outputs == null ? ImmutableList.<String>of() : ImmutableList.copyOf(outputs);
+      this.outputs = outputs == null ? ImmutableList.<Map<String, Object>>of() : ImmutableList.copyOf(outputs);
       this.notificationTopics = notificationTopics == null ? ImmutableList.<String>of() : ImmutableList.copyOf(notificationTopics);
       this.templateDescription = templateDescription;
       this.status = status;
@@ -126,7 +126,7 @@ public class Stack extends Resource {
    /**
     * @return the outputs of this Stack.
     */
-   public List<String> getOutputs() {
+   public List<Map<String, Object>> getOutputs() {
       return outputs;
    }
 
@@ -320,7 +320,7 @@ public class Stack extends Resource {
       protected String project;
       protected Set<String> capabilities;
       protected Map<String, String> parameters;  // StackParameter
-      protected List<String> outputs;
+      protected List<Map<String, Object>> outputs;
       protected List<String> notificationTopics;
       protected String templateDescription;
       protected Status status;
@@ -386,7 +386,7 @@ public class Stack extends Resource {
        * @return The builder object.
        * @see Stack#getOutputs()
        */
-      public T outputs(List<String> outputs) {
+      public T outputs(List<Map<String, Object>> outputs) {
          this.outputs = outputs;
          return self();
       }
