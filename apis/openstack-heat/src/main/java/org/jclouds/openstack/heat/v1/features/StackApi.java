@@ -17,8 +17,8 @@
 package org.jclouds.openstack.heat.v1.features;
 
 import com.google.common.collect.FluentIterable;
-import org.jclouds.Fallbacks;
 import org.jclouds.Fallbacks.EmptyFluentIterableOnNotFoundOr404;
+import org.jclouds.Fallbacks.FalseOnNotFoundOr404;
 import org.jclouds.Fallbacks.NullOnNotFoundOr404;
 import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.openstack.heat.v1.domain.Stack;
@@ -77,7 +77,7 @@ public interface StackApi {
    @GET
    @SelectJson("stack")
    @Path("/{id}")
-   @Fallback(Fallbacks.NullOnNotFoundOr404.class)
+   @Fallback(NullOnNotFoundOr404.class)
    Stack get(@PathParam("id") String stackId);
 
    @Named("stack:create")
@@ -89,14 +89,14 @@ public interface StackApi {
    @Named("stack:delete")
    @DELETE
    @Path("/{stack_name}/{stack_id}")
-   @Fallback(NullOnNotFoundOr404.class)
+   @Fallback(FalseOnNotFoundOr404.class)
    @Nullable
    boolean delete(@PathParam("stack_name") String name, @PathParam("stack_id") String id);
 
    @Named("stack:update")
    @PUT
    @Path("/{stack_name}/{stack_id}")
-   @Fallback(NullOnNotFoundOr404.class)
+   @Fallback(FalseOnNotFoundOr404.class)
    @Nullable
    boolean update(@PathParam("stack_name") String name, @PathParam("stack_id") String id, UpdateOptions... options);
 
@@ -112,13 +112,13 @@ public interface StackApi {
    @GET
    @SelectJson("resource")
    @Path("/{stack_name}/{stack_id}/resources/{resource_name}")
-   @Fallback(Fallbacks.NullOnNotFoundOr404.class)
+   @Fallback(NullOnNotFoundOr404.class)
    StackResource getStackResource(@PathParam("stack_name") String stackName, @PathParam("stack_id") String stackId, @PathParam("resource_name") String name);
 
    @Named("stack:get_resources_metadata")
    @GET
    @SelectJson("metadata")
    @Path("/{stack_name}/{stack_id}/resources/{resource_name}/metadata")
-   @Fallback(Fallbacks.NullOnNotFoundOr404.class)
+   @Fallback(NullOnNotFoundOr404.class)
    Map<String, Object> getStackResourceMetadata(@PathParam("stack_name") String stackName, @PathParam("stack_id") String stackId, @PathParam("resource_name") String name);
 }
