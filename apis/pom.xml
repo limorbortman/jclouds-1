@@ -47,6 +47,7 @@
       <module>openstack-ceilometer</module>
     <module>openstack-nova</module>
     <module>openstack-heat</module>
+    <module>openstack-murano</module>
     <module>openstack-glance</module>
     <module>openstack-neutron</module>
     <module>openstack-swift</module>

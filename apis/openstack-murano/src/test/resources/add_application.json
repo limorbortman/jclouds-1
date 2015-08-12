@@ -1,0 +1,12 @@
+{
+  "generatedHeatStackName": "heatStackName",
+  "name": "APP_NAME",
+  "hotEnvironment": "ENV_NAME",
+  "?": {
+    "_26411a1861294160833743e45d0eaad9": {
+      "name": "Vol"
+    },
+    "type": "io.murano.apps.generated.Vol3",
+    "id": "0b2ee98650c5457b8270ce0b4ec78eaf"
+  }
+}

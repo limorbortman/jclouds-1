@@ -1,0 +1,19 @@
+{
+  "class_definitions": [
+    "io.murano.apps.generated.Vol6"
+  ],
+  "description": "Heat-defined application for a template \"vol.yaml\"",
+  "tags": [],
+  "updated": "2015-07-21T08:28:10",
+  "is_public": false,
+  "id": "5b94281f57634f2aba61236d4622f92f",
+  "categories": [],
+  "name": "vol",
+  "author": "admin",
+  "created": "2015-07-21T08:28:10",
+  "enabled": true,
+  "supplier": {},
+  "fully_qualified_name": "io.murano.apps.generated.Vol6",
+  "type": "Application",
+  "owner_id": "e45c029aafcb4dda886b37470647d941"
+}
