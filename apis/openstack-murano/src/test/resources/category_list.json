@@ -1,0 +1,18 @@
+{
+  "categories": [
+    {
+      "id": "217fcae31a6643dfbf2cbcd31f787903",
+      "package_count": 0,
+      "updated": "2015-07-19T14:08:30",
+      "name": "Databases",
+      "created": "2015-07-19T14:08:30"
+    },
+    {
+      "id": "2b9fc2e5e47d48cbbf62a3d0bc0b4163",
+      "package_count": 0,
+      "updated": "2015-07-19T14:08:30",
+      "name": "Big Data",
+      "created": "2015-07-19T14:08:30"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "generatedHeatStackName": "heatStackName",
+    "volume_size": 1,
+    "name": "asdf",
+    "?": {
+      "status": "ready",
+      "_26411a1861294160833743e45d0eaad9": {
+        "name": "Vol"
+      },
+      "type": "io.murano.apps.generated.Volumetemplate",
+      "id": "e2d497a733b84485af0cda95e758c361",
+      "_actions": {}
+    }
+  },
+  {
+    "generatedHeatStackName": "heatVol",
+    "volume_size": 1,
+    "name": "aaa",
+    "?": {
+      "status": "ready",
+      "_26411a1861294160833743e45d0eaad9": {
+        "name": "Vol"
+      },
+      "type": "io.murano.apps.generated.Vol3",
+      "id": "0b2ee98650c5457b8270ce0b4ec78eaf",
+      "_actions": {}
+    }
+  }
+]

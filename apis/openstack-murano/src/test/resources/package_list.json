@@ -1,0 +1,42 @@
+{
+  "packages": [
+    {
+      "updated": "2015-07-20T15:30:18",
+      "description": "Heat-defined application for a template \"vol.yaml\"",
+      "tags": [],
+      "class_definitions": [
+        "io.murano.apps.generated.Vol4"
+      ],
+      "is_public": false,
+      "categories": [],
+      "name": "vol1",
+      "author": "admin",
+      "created": "2015-07-20T15:30:18",
+      "enabled": true,
+      "id": "553341bd3c9945e38aacd6485c2984ee",
+      "supplier": {},
+      "fully_qualified_name": "io.murano.apps.generated.Vol4",
+      "type": "Application",
+      "owner_id": "e45c029aafcb4dda886b37470647d941"
+    },
+    {
+      "updated": "2015-07-21T08:18:19",
+      "description": "Heat-defined application for a template \"vol.yaml\"",
+      "tags": [],
+      "class_definitions": [
+        "io.murano.apps.generated.Vol6"
+      ],
+      "is_public": false,
+      "categories": [],
+      "name": "vol2",
+      "author": "admin",
+      "created": "2015-07-21T08:18:19",
+      "enabled": true,
+      "id": "77f5e8f850484b4b84f6f4b24e212d46",
+      "supplier": {},
+      "fully_qualified_name": "io.murano.apps.generated.Vol6",
+      "type": "Application",
+      "owner_id": "e45c029aafcb4dda886b37470647d941"
+    }
+  ]
+}

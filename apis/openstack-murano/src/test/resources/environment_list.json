@@ -1,0 +1,24 @@
+{
+  "environments": [
+    {
+      "status": "ready",
+      "updated": "2015-07-23T08:59:15",
+      "networking": {},
+      "created": "2015-07-23T08:38:24",
+      "tenant_id": "b5913390e8c1408085a3426838a2f13f",
+      "version": 1,
+      "id": "9fcb0d5378a240efb80adbc063fc086a",
+      "name": "env_name_from_postman"
+    },
+    {
+      "status": "ready",
+      "updated": "2015-07-23T09:24:38",
+      "networking": {},
+      "created": "2015-07-23T09:24:38",
+      "tenant_id": "b5913390e8c1408085a3426838a2f13f",
+      "version": 0,
+      "id": "e8d4028583f74317bba1f9caaffa53d4",
+      "name": "second_env"
+    }
+  ]
+}

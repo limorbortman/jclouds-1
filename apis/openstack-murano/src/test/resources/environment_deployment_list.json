@@ -1,0 +1,125 @@
+{
+  "deployments": [
+    {
+      "updated": "2015-07-23T11:52:59",
+      "environment_id": "e8d4028583f74317bba1f9caaffa53d4",
+      "description": {
+        "services": [
+          {
+            "generatedHeatStackName": null,
+            "volume_size": 1,
+            "name": "opn",
+            "?": {
+              "_26411a1861294160833743e45d0eaad9": {
+                "name": "volumeTemplate"
+              },
+              "type": "io.murano.apps.generated.Volumetemplate",
+              "id": "29efd438-83cd-4ff5-9485-5ffccd57812e",
+              "_actions": {}
+            }
+          },
+          {
+            "volume_size": 1,
+            "name": "twoo",
+            "?": {
+              "_26411a1861294160833743e45d0eaad9": {
+                "name": "vol"
+              },
+              "type": "io.murano.apps.generated.Vol3",
+              "id": "da1e72d3-bb91-4877-9f36-3fd5a0c11d25"
+            }
+          }
+        ],
+        "defaultNetworks": {
+          "environment": {
+            "autoUplink": true,
+            "name": "testingi-network",
+            "externalRouterId": null,
+            "dnsNameservers": [],
+            "autogenerateSubnet": true,
+            "subnetCidr": null,
+            "?": {
+              "_actions": {},
+              "type": "io.murano.resources.NeutronNetwork",
+              "id": "8b91626e063c44399c241cf7a17f52f5"
+            }
+          },
+          "flat": null
+        },
+        "name": "testingi",
+        "?": {
+          "_actions": {
+            "3262c970dbb847378241102fab00670c_deploy": {
+              "enabled": true,
+              "name": "deploy"
+            }
+          },
+          "type": "io.murano.Environment",
+          "id": "3262c970dbb847378241102fab00670c"
+        }
+      },
+      "created": "2015-07-23T11:52:46",
+      "started": "2015-07-23T11:52:46",
+      "finished": "2015-07-23T11:52:59",
+      "state": "success",
+      "result": {
+        "isException": false,
+        "result": null
+      },
+      "action": {
+        "args": {},
+        "method": "deploy",
+        "object_id": "3262c970dbb847378241102fab00670c"
+      },
+      "id": "f6a2832923cd403faa11cc51fb943e1b"
+    },
+    {
+      "updated": "2015-07-23T11:52:03",
+      "environment_id": "e8d4028583f74317bba1f9caaffa53d4",
+      "description": {
+        "services": [
+          {
+            "volume_size": 1,
+            "name": "opn",
+            "?": {
+              "_26411a1861294160833743e45d0eaad9": {
+                "name": "volumeTemplate"
+              },
+              "type": "io.murano.apps.generated.Volumetemplate",
+              "id": "29efd438-83cd-4ff5-9485-5ffccd57812e"
+            }
+          }
+        ],
+        "defaultNetworks": {
+          "environment": {
+            "name": "testingi-network",
+            "?": {
+              "type": "io.murano.resources.NeutronNetwork",
+              "id": "8b91626e063c44399c241cf7a17f52f5"
+            }
+          },
+          "flat": null
+        },
+        "name": "testingi",
+        "?": {
+          "type": "io.murano.Environment",
+          "id": "3262c970dbb847378241102fab00670c"
+        }
+      },
+      "created": "2015-07-23T11:51:51",
+      "started": "2015-07-23T11:51:51",
+      "finished": "2015-07-23T11:52:03",
+      "state": "success",
+      "result": {
+        "isException": false,
+        "result": null
+      },
+      "action": {
+        "args": {},
+        "method": "deploy",
+        "object_id": "3262c970dbb847378241102fab00670c"
+      },
+      "id": "46e3e452bfcd455ab7ee08c436c2f37a"
+    }
+  ]
+}
