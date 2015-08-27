@@ -1,0 +1,112 @@
+[
+  {
+    "alarm_actions": [],
+    "alarm_id": "d4fac6be-310c-4c15-9dc1-6ef4410d84b3",
+    "combination_rule": {
+      "alarm_ids": [
+        "c7fb1649-c1d3-4838-b350-4b986b04b64f",
+        "e018da28-0349-4e97-9a64-09c8f057b70d"
+      ],
+      "operator": "or"
+    },
+    "description": "Combined state of alarms c7fb1649-c1d3-4838-b350-4b986b04b64f or e018da28-0349-4e97-9a64-09c8f057b70d",
+    "enabled": true,
+    "insufficient_data_actions": [],
+    "name": "meta1",
+    "ok_actions": [],
+    "project_id": "",
+    "repeat_actions": false,
+    "severity": "low",
+    "state": "insufficient data",
+    "state_timestamp": "2015-08-27T08:52:46.473000",
+    "time_constraints": [],
+    "timestamp": "2015-08-27T08:52:46.473000",
+    "type": "combination",
+    "user_id": "33928203b541406cb0bf6a11f62f597d"
+  },
+  {
+    "alarm_actions": [
+      "log://"
+    ],
+    "alarm_id": "31e55418-80f6-4488-807a-9fe3d9e07d9f",
+    "combination_rule": {
+      "alarm_ids": [
+        "c7fb1649-c1d3-4838-b350-4b986b04b64f",
+        "e018da28-0349-4e97-9a64-09c8f057b70d"
+      ],
+      "operator": "or"
+    },
+    "description": "Combined state of alarms c7fb1649-c1d3-4838-b350-4b986b04b64f or e018da28-0349-4e97-9a64-09c8f057b70d",
+    "enabled": true,
+    "insufficient_data_actions": [],
+    "name": "meta",
+    "ok_actions": [],
+    "project_id": "",
+    "repeat_actions": false,
+    "severity": "low",
+    "state": "insufficient data",
+    "state_timestamp": "2015-08-27T08:44:28.876000",
+    "time_constraints": [],
+    "timestamp": "2015-08-27T08:44:28.876000",
+    "type": "combination",
+    "user_id": "33928203b541406cb0bf6a11f62f597d"
+  },
+  {
+    "alarm_actions": [],
+    "alarm_id": "e018da28-0349-4e97-9a64-09c8f057b70d",
+    "description": "instance running hot",
+    "enabled": true,
+    "insufficient_data_actions": [],
+    "name": "cpu_high_2",
+    "ok_actions": [],
+    "project_id": "",
+    "repeat_actions": false,
+    "severity": "low",
+    "state": "insufficient data",
+    "state_timestamp": "2015-08-27T08:31:44.280000",
+    "threshold_rule": {
+      "comparison_operator": "gt",
+      "evaluation_periods": 3,
+      "exclude_outliers": false,
+      "meter_name": "cpu_util",
+      "period": 600,
+      "query": [],
+      "statistic": "avg",
+      "threshold": 70.0
+    },
+    "time_constraints": [],
+    "timestamp": "2015-08-27T08:31:44.280000",
+    "type": "threshold",
+    "user_id": "33928203b541406cb0bf6a11f62f597d"
+  },
+  {
+    "alarm_actions": [
+      "log://"
+    ],
+    "alarm_id": "c7fb1649-c1d3-4838-b350-4b986b04b64f",
+    "description": "instance running hot",
+    "enabled": true,
+    "insufficient_data_actions": [],
+    "name": "cpu_high",
+    "ok_actions": [],
+    "project_id": "",
+    "repeat_actions": false,
+    "severity": "low",
+    "state": "insufficient data",
+    "state_timestamp": "2015-08-27T08:24:30.787000",
+    "threshold_rule": {
+      "comparison_operator": "gt",
+      "evaluation_periods": 3,
+      "exclude_outliers": false,
+      "meter_name": "cpu_util",
+      "period": 600,
+      "query": [],
+      "statistic": "avg",
+      "threshold": 70.0
+    },
+    "time_constraints": [],
+    "timestamp": "2015-08-27T08:24:30.787000",
+    "type": "threshold",
+    "user_id": "33928203b541406cb0bf6a11f62f597d"
+  }
+]
