@@ -19,6 +19,7 @@ package org.jclouds.openstack.ceilometer.v2;
 import com.google.inject.Provides;
 import org.jclouds.location.Zone;
 import org.jclouds.location.functions.RegionToEndpoint;
+import org.jclouds.openstack.ceilometer.v2.features.AlarmApi;
 import org.jclouds.openstack.ceilometer.v2.features.MeterApi;
 import org.jclouds.openstack.ceilometer.v2.features.QueryApi;
 import org.jclouds.rest.annotations.Delegate;
@@ -48,5 +49,12 @@ public interface CeilometerApi extends Closeable {
     */
    @Delegate
    QueryApi getQueryApi(@EndpointParam(parser = RegionToEndpoint.class) String region);
+
+    /**
+     * Provides access to Alarm features.
+     */
+    @Delegate
+    AlarmApi getAlarmApi(@EndpointParam(parser = RegionToEndpoint.class) String region);
+
 
 }
