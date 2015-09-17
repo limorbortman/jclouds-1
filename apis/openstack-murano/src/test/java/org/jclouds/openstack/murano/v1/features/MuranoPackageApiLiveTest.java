@@ -19,11 +19,10 @@ package org.jclouds.openstack.murano.v1.features;
 import com.google.common.collect.ImmutableList;
 import org.jclouds.openstack.murano.v1.domain.Category;
 import org.jclouds.openstack.murano.v1.domain.MuranoPackage;
+import org.jclouds.openstack.murano.v1.internal.BaseMuranoApiLiveTest;
 import org.jclouds.openstack.murano.v1.options.CreatePackageOptions;
 import org.jclouds.openstack.murano.v1.options.ListPackagesOptions;
 import org.testng.annotations.Test;
-import org.jclouds.openstack.murano.v1.internal.BaseMuranoApiLiveTest;
-
 
 import java.io.File;
 import java.io.InputStream;
@@ -90,6 +89,7 @@ public class MuranoPackageApiLiveTest extends BaseMuranoApiLiveTest {
          assertThat(muranoPackage.getCategories().toArray()[0]).isEqualTo(TEST_CATEGORY);
          assertThat(muranoPackage.isEnabled()).isTrue();
          assertThat(muranoPackage.isPublic()).isTrue();
+         assertThat(muranoPackage.getOwner()).isNotNull();
          ImmutableList<MuranoPackage> muranoPackages = muranoPackageApi.list().toList();
          assertThat(muranoPackages).isNotNull();
          assertThat(muranoPackages.contains(muranoPackage));

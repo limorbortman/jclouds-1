@@ -45,7 +45,7 @@ public class MuranoPackage extends Resource {
    private final String owner;
 
    @ConstructorProperties({"id", "name", "class_definitions", "description", "tags", "updated", "is_public",
-         "categories", "created", "author", "enabled", "fully_qualified_name", "type", "owner"})
+         "categories", "created", "author", "enabled", "fully_qualified_name", "type", "owner_id"})
    public MuranoPackage(String id, String name, Set<String> classDefinitions, String description, Set<String> tags, Date
          updated, boolean isPublic, Set<String> categories, Date created, String author, boolean enabled,
                         String fullyQualifiedName, String type, String owner) {

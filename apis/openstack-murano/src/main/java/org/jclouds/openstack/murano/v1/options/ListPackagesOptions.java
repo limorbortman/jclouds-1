@@ -98,6 +98,15 @@ public class ListPackagesOptions extends PaginationOptions {
       return this;
    }
 
+   public ListPackagesOptions catalog(boolean catalog){
+      this.queryParameters.put("catalog", String.valueOf(catalog));
+      return this;
+   }
+
+   public ListPackagesOptions owned(boolean owned){
+      this.queryParameters.put("owned", String.valueOf(owned));
+      return this;
+   }
 
    /**
     * Sorts the stack list by one of these attributes:
@@ -135,6 +144,14 @@ public class ListPackagesOptions extends PaginationOptions {
        */
       public static ListPackagesOptions category(String category) {
          return new ListPackagesOptions().category(category);
+      }
+
+      public static ListPackagesOptions catalog(boolean catalog){
+         return new ListPackagesOptions().catalog(catalog);
+      }
+
+      public static ListPackagesOptions owned(boolean owned){
+         return new ListPackagesOptions().owned(owned);
       }
 
       /**

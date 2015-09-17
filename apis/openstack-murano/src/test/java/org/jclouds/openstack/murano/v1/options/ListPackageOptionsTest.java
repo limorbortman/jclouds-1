@@ -58,6 +58,18 @@ public class ListPackageOptionsTest {
             .isEqualTo(ImmutableSet.of("testCategory"));
    }
 
+   public void testOwned() {
+      ListPackagesOptions options = new ListPackagesOptions().owned(true);
+      assertThat(options.buildQueryParameters().get("owned"))
+              .isEqualTo(ImmutableSet.of(String.valueOf(true)));
+   }
+
+   public void testCatalog() {
+      ListPackagesOptions options = new ListPackagesOptions().catalog(true);
+      assertThat(options.buildQueryParameters().get("catalog"))
+              .isEqualTo(ImmutableSet.of(String.valueOf(true)));
+   }
+
    public void testStatusStatic() {
       ListPackagesOptions options = category("testCategory");
       assertThat(options.buildQueryParameters().get("category"))
