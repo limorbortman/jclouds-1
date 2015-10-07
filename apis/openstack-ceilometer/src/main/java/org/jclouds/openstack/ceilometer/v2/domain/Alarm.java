@@ -20,6 +20,7 @@ import com.google.inject.name.Named;
 
 import java.beans.ConstructorProperties;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -32,11 +33,11 @@ import java.util.Set;
 
 public class Alarm {
     @Named("alarm_actions")
-    private final Set<String> alarmActions;
+    private final List<String> alarmActions;
     @Named("insufficient_data_actions")
-    private final Set<String> insufficientDataActions;
+    private final List<String> insufficientDataActions;
     @Named("ok_actions")
-    private final Set<String> okActions;
+    private final List<String> okActions;
     @Named("alarm_id")
     private final String alarmId;
     private final String name;
@@ -67,9 +68,9 @@ public class Alarm {
 
     public static class Builder {
 
-        private Set<String> alarmActions;
-        private Set<String> insufficientDataActions;
-        private Set<String> okActions;
+        private List<String> alarmActions;
+        private List<String> insufficientDataActions;
+        private List<String> okActions;
         private String alarmId;
         private String name;
         private String description;
@@ -149,17 +150,17 @@ public class Alarm {
             return this;
         }
 
-        public Builder okActions(Set<String> okActions) {
+        public Builder okActions(List<String> okActions) {
             this.okActions = okActions;
             return this;
         }
 
-        public Builder alarmActions(Set<String> alarmActions) {
+        public Builder alarmActions(List<String> alarmActions) {
             this.alarmActions = alarmActions;
             return this;
         }
 
-        public Builder insufficientDataActions(Set<String> insufficientDataActions) {
+        public Builder insufficientDataActions(List<String> insufficientDataActions) {
             this.insufficientDataActions = insufficientDataActions;
             return this;
         }
@@ -195,14 +196,14 @@ public class Alarm {
             "alarm_id", "name", "description", "enabled", "repeat_actions",
             "project_id", "state", "severity", "state_timestamp", "threshold_rule",
             "time_constraints", "timestamp", "user_id"})
-    public Alarm(Set<String> alarmActions, Set<String> insufficientDataActions, Set<String> okActions, String alarmId,
+    public Alarm(Object alarmActions, Object insufficientDataActions, Object okActions, String alarmId,
                  String name, String description, boolean enabled, boolean repeatActions, String projectId, String state,
                  String severity, Date stateTimestamp, Map<String, Object> thresholdRule, Set<Map<String, Object>> timeConstraints,
                  Date timestamp, String userId) {
 
-        this.alarmActions = alarmActions;
-        this.insufficientDataActions = insufficientDataActions;
-        this.okActions = okActions;
+        this.alarmActions = (List<String>) alarmActions;
+        this.insufficientDataActions = (List<String>) insufficientDataActions;
+        this.okActions = (List<String>) okActions;
         this.alarmId = alarmId;
         this.name = name;
         this.description = description;
@@ -218,15 +219,15 @@ public class Alarm {
         this.userId = userId;
     }
 
-    public Set<String> getAlarmActions() {
+    public List<String> getAlarmActions() {
         return alarmActions;
     }
 
-    public Set<String> getInsufficientDataActions() {
+    public List<String> getInsufficientDataActions() {
         return insufficientDataActions;
     }
 
-    public Set<String> getOkActions() {
+    public List<String> getOkActions() {
         return okActions;
     }
 

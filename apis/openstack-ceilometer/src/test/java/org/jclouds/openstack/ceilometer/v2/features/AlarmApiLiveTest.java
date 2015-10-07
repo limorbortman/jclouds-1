@@ -55,7 +55,6 @@ public class AlarmApiLiveTest extends BaseCeilometerApiLiveTest {
 
         assertThat(alarms).extracting("projectId").doesNotContainNull();
         assertThat(alarms).extracting("alarmActions").doesNotContainNull();
-        assertThat(alarms).extracting("okActions").doesNotContainNull();
         assertThat(alarms).extracting("description").doesNotContainNull();
         assertThat(alarms).extracting("enabled").doesNotContainNull();
         assertThat(alarms).extracting("repeatActions").doesNotContainNull();

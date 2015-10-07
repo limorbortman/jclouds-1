@@ -1,81 +1,37 @@
 [
   {
-    "alarm_actions": [],
-    "alarm_id": "d4fac6be-310c-4c15-9dc1-6ef4410d84b3",
-    "combination_rule": {
-      "alarm_ids": [
-        "c7fb1649-c1d3-4838-b350-4b986b04b64f",
-        "e018da28-0349-4e97-9a64-09c8f057b70d"
-      ],
-      "operator": "or"
-    },
-    "description": "Combined state of alarms c7fb1649-c1d3-4838-b350-4b986b04b64f or e018da28-0349-4e97-9a64-09c8f057b70d",
-    "enabled": true,
-    "insufficient_data_actions": [],
-    "name": "meta1",
-    "ok_actions": [],
-    "project_id": "",
-    "repeat_actions": false,
-    "severity": "low",
-    "state": "insufficient data",
-    "state_timestamp": "2015-08-27T08:52:46.473000",
-    "time_constraints": [],
-    "timestamp": "2015-08-27T08:52:46.473000",
-    "type": "combination",
-    "user_id": "33928203b541406cb0bf6a11f62f597d"
-  },
-  {
     "alarm_actions": [
-      "log://"
+      "http://10.45.2.5:8000/v1/signal/arn%3Aopenstack%3Aheat%3A%3A1855348fbf7b487182af779cedc6b8e4%3Astacks%2Ftest%2F798fa514-6d9d-4078-ba4c-b43d3909f036%2Fresources%2Fweb_server_scaleup_policy?Timestamp=2015-10-06T06%3A11%3A28Z&SignatureMethod=HmacSHA256&AWSAccessKeyId=a629e946653f4df0a2dce9223ae8d10d&SignatureVersion=2&Signature=JnNxuqW78YsZaXwufFLkdIcyJ5mHGTkkaz1fu6Y3990%3D"
     ],
-    "alarm_id": "31e55418-80f6-4488-807a-9fe3d9e07d9f",
-    "combination_rule": {
-      "alarm_ids": [
-        "c7fb1649-c1d3-4838-b350-4b986b04b64f",
-        "e018da28-0349-4e97-9a64-09c8f057b70d"
-      ],
-      "operator": "or"
-    },
-    "description": "Combined state of alarms c7fb1649-c1d3-4838-b350-4b986b04b64f or e018da28-0349-4e97-9a64-09c8f057b70d",
+    "alarm_id": "ff4d3976-8658-4034-b1e7-081029379f52",
+    "description": "Alarm when cpu_util is gt a avg of 5.0 over 60 seconds",
     "enabled": true,
-    "insufficient_data_actions": [],
-    "name": "meta",
-    "ok_actions": [],
-    "project_id": "",
-    "repeat_actions": false,
+    "insufficient_data_actions": null,
+    "name": "test-cpu_alarm_high-mbzs7d4v2ve3",
+    "ok_actions": null,
+    "project_id": "1855348fbf7b487182af779cedc6b8e4",
+    "repeat_actions": true,
     "severity": "low",
-    "state": "insufficient data",
-    "state_timestamp": "2015-08-27T08:44:28.876000",
-    "time_constraints": [],
-    "timestamp": "2015-08-27T08:44:28.876000",
-    "type": "combination",
-    "user_id": "33928203b541406cb0bf6a11f62f597d"
-  },
-  {
-    "alarm_actions": [],
-    "alarm_id": "e018da28-0349-4e97-9a64-09c8f057b70d",
-    "description": "instance running hot",
-    "enabled": true,
-    "insufficient_data_actions": [],
-    "name": "cpu_high_2",
-    "ok_actions": [],
-    "project_id": "",
-    "repeat_actions": false,
-    "severity": "low",
-    "state": "insufficient data",
-    "state_timestamp": "2015-08-27T08:31:44.280000",
+    "state": "alarm",
+    "state_timestamp": "2015-10-06T06:14:17.311000",
     "threshold_rule": {
       "comparison_operator": "gt",
-      "evaluation_periods": 3,
+      "evaluation_periods": 1,
       "exclude_outliers": false,
       "meter_name": "cpu_util",
-      "period": 600,
-      "query": [],
+      "period": 60,
+      "query": [
+        {
+          "field": "metadata.user_metadata.stack",
+          "op": "eq",
+          "value": "798fa514-6d9d-4078-ba4c-b43d3909f036"
+        }
+      ],
       "statistic": "avg",
-      "threshold": 70.0
+      "threshold": 5.0
     },
     "time_constraints": [],
-    "timestamp": "2015-08-27T08:31:44.280000",
+    "timestamp": "2015-10-06T06:11:54.980000",
     "type": "threshold",
     "user_id": "33928203b541406cb0bf6a11f62f597d"
   },
@@ -83,7 +39,7 @@
     "alarm_actions": [
       "log://"
     ],
-    "alarm_id": "c7fb1649-c1d3-4838-b350-4b986b04b64f",
+    "alarm_id": "04fe2ae7-7db0-44c9-9f43-0c63ee472a0c",
     "description": "instance running hot",
     "enabled": true,
     "insufficient_data_actions": [],
@@ -92,20 +48,50 @@
     "project_id": "",
     "repeat_actions": false,
     "severity": "low",
-    "state": "insufficient data",
-    "state_timestamp": "2015-08-27T08:24:30.787000",
+    "state": "alarm",
+    "state_timestamp": "2015-09-30T08:42:16.187000",
     "threshold_rule": {
       "comparison_operator": "gt",
-      "evaluation_periods": 3,
+      "evaluation_periods": 1,
       "exclude_outliers": false,
       "meter_name": "cpu_util",
-      "period": 600,
+      "period": 60,
       "query": [],
       "statistic": "avg",
-      "threshold": 70.0
+      "threshold": 1.0
     },
     "time_constraints": [],
-    "timestamp": "2015-08-27T08:24:30.787000",
+    "timestamp": "2015-09-20T11:01:50.582000",
+    "type": "threshold",
+    "user_id": "33928203b541406cb0bf6a11f62f597d"
+  },
+  {
+    "alarm_actions": [
+      "log://"
+    ],
+    "alarm_id": "68088ed6-a676-41fa-8cc7-85df088ce962",
+    "description": "instance running hot 2",
+    "enabled": true,
+    "insufficient_data_actions": [],
+    "name": "cpu_high_2",
+    "ok_actions": [],
+    "project_id": "",
+    "repeat_actions": false,
+    "severity": "low",
+    "state": "alarm",
+    "state_timestamp": "2015-09-30T08:42:16.625000",
+    "threshold_rule": {
+      "comparison_operator": "gt",
+      "evaluation_periods": 1,
+      "exclude_outliers": false,
+      "meter_name": "cpu_util",
+      "period": 60,
+      "query": [],
+      "statistic": "avg",
+      "threshold": 1.0
+    },
+    "time_constraints": [],
+    "timestamp": "2015-09-20T11:01:44.401000",
     "type": "threshold",
     "user_id": "33928203b541406cb0bf6a11f62f597d"
   }
