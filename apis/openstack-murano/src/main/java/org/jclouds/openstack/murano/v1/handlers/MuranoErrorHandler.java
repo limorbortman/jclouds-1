@@ -22,6 +22,7 @@ import org.jclouds.http.HttpResponse;
 import org.jclouds.http.HttpResponseException;
 import org.jclouds.rest.AuthorizationException;
 import org.jclouds.rest.InsufficientResourcesException;
+import org.jclouds.rest.ResourceAlreadyExistsException;
 import org.jclouds.rest.ResourceNotFoundException;
 
 import static org.jclouds.http.HttpUtils.closeClientButKeepContentStream;
@@ -56,7 +57,7 @@ public class MuranoErrorHandler implements HttpErrorHandler {
             break;
          case 409:
             if (message.contains("already exist")) {
-               exception = new IllegalStateException(message, exception);
+               exception = new ResourceAlreadyExistsException(message, exception);
             }
             break;
          case 413:

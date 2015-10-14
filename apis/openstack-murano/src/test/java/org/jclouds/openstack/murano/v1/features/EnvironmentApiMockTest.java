@@ -22,6 +22,7 @@ import com.squareup.okhttp.mockwebserver.MockWebServer;
 import org.jclouds.openstack.murano.v1.MuranoApi;
 import org.jclouds.openstack.murano.v1.domain.Deployment;
 import org.jclouds.openstack.murano.v1.domain.Environment;
+import org.jclouds.openstack.murano.v1.domain.MuranoPackage;
 import org.jclouds.openstack.murano.v1.domain.Session;
 import org.jclouds.openstack.murano.v1.internal.BaseMuranoApiMockTest;
 import org.jclouds.openstack.murano.v1.options.AddApplicationOptions;
@@ -34,8 +35,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-
-import org.jclouds.openstack.murano.v1.domain.MuranoPackage;
 
 /**
  * Tests annotation parsing of {@code EnvironmentApi}
@@ -134,7 +133,7 @@ public class EnvironmentApiMockTest extends BaseMuranoApiMockTest {
          MuranoApi muranoApi = api(server.getUrl("/").toString(), "openstack-murano", overrides);
          EnvironmentApi api = muranoApi.getEnvironmentApi("RegionOne");
 
-         boolean result = api.delete(TEST_ENVIRONMENT_ID);
+         boolean result = api.delete(TEST_ENVIRONMENT_ID, false);
 
          /*
           * Check request
