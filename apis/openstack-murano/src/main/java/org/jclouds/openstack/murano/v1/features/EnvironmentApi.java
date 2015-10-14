@@ -19,9 +19,6 @@ package org.jclouds.openstack.murano.v1.features;
 import com.google.common.collect.FluentIterable;
 import org.jclouds.Fallbacks;
 import org.jclouds.openstack.keystone.v2_0.filters.AuthenticateRequest;
-
-import javax.inject.Named;
-
 import org.jclouds.openstack.murano.v1.domain.Deployment;
 import org.jclouds.openstack.murano.v1.domain.Environment;
 import org.jclouds.openstack.murano.v1.domain.Session;
@@ -33,6 +30,7 @@ import org.jclouds.rest.annotations.RequestFilters;
 import org.jclouds.rest.annotations.SelectJson;
 import org.jclouds.rest.annotations.WrapWith;
 
+import javax.inject.Named;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -40,6 +38,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 
@@ -65,6 +64,12 @@ public interface EnvironmentApi {
    @Path("/{id}")
    @Fallback(Fallbacks.NullOnNotFoundOr404.class)
    Environment get(@PathParam("id") String id);
+
+   @Named("environment:delete_or_abandon")
+   @DELETE
+   @Path("/{id}")
+   @Fallback(Fallbacks.FalseOnNotFoundOr404.class)
+   boolean delete(@PathParam("id") String id, @QueryParam("abandon") boolean abandon);
 
    @Named("environment:delete")
    @DELETE

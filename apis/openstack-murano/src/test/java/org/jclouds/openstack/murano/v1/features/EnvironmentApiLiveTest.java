@@ -22,6 +22,7 @@ import org.jclouds.openstack.murano.v1.domain.MuranoPackage;
 import org.jclouds.openstack.murano.v1.domain.Session;
 import org.jclouds.openstack.murano.v1.options.AddApplicationOptions;
 import org.jclouds.openstack.murano.v1.options.CreatePackageOptions;
+import org.jclouds.rest.ResourceAlreadyExistsException;
 import org.testng.annotations.Test;
 import org.jclouds.openstack.murano.v1.internal.BaseMuranoApiLiveTest;
 
@@ -50,10 +51,10 @@ public class EnvironmentApiLiveTest extends BaseMuranoApiLiveTest {
          try {
             environmentApi.create(ENV_NAME);
             fail("environment creation should have failed");
-         } catch (IllegalStateException e) {
+         } catch (ResourceAlreadyExistsException e) {
             assertThat(e.getMessage().contains("already exist"));
          }
-         environmentApi.delete(environment.getId());
+         environmentApi.delete(environment.getId(), false);
          waitForEnvironmentToDelete(environment.getId(), region);
       }
    }
@@ -99,7 +100,7 @@ public class EnvironmentApiLiveTest extends BaseMuranoApiLiveTest {
          assertThat(configure).isNotNull();
          assertThat(configure.getEnvironmentId()).isEqualTo(environment.getId());
          environmentApi.deleteSession(environment.getId(), configure.getId());
-         environmentApi.delete(environment.getId());
+         environmentApi.delete(environment.getId(), false);
          waitForEnvironmentToDelete(environment.getId(), region);
       }
    }
@@ -113,7 +114,7 @@ public class EnvironmentApiLiveTest extends BaseMuranoApiLiveTest {
          Session session = environmentApi.getSession(environment.getId(), configure.getId());
          assertThat(session).isEqualTo(configure);
          environmentApi.deleteSession(environment.getId(), session.getId());
-         environmentApi.delete(environment.getId());
+         environmentApi.delete(environment.getId(), false);
          waitForEnvironmentToDelete(environment.getId(), region);
 
       }
@@ -170,7 +171,7 @@ public class EnvironmentApiLiveTest extends BaseMuranoApiLiveTest {
 
          assertThat(environmentApi.listDeployments(createdEnvironment.getId()).size()).isEqualTo(1);
 
-         environmentApi.delete(environment.getId());
+         environmentApi.delete(environment.getId(), true);
          waitForEnvironmentToDelete(environment.getId(), region);
       }
    }
@@ -178,7 +179,7 @@ public class EnvironmentApiLiveTest extends BaseMuranoApiLiveTest {
    private void waitForEnvironmentToDelete(String envId, String region) {
       EnvironmentApi environmentApi = api.getEnvironmentApi(region);
       Environment environment = environmentApi.get(envId);
-      while (environment != null) {
+      while (environment != null  && !(environment.getStatus().equals("delete failure"))) {
          environment = environmentApi.get(envId);
       }
    }
