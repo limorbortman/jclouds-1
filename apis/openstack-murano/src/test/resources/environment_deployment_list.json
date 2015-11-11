@@ -114,11 +114,7 @@
         "isException": false,
         "result": null
       },
-      "action": {
-        "args": {},
-        "method": "deploy",
-        "object_id": "3262c970dbb847378241102fab00670c"
-      },
+      "action": null,
       "id": "46e3e452bfcd455ab7ee08c436c2f37a"
     }
   ]

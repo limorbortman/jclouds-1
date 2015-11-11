@@ -91,7 +91,7 @@ public interface EnvironmentApi {
    @Named("environment:session-deploy")
    @POST
    @Path("/{env_id}/sessions/{session_id}/deploy")
-   boolean deploy(@PathParam("env_id") String id, @PathParam("session_id") String sessionId);
+   void deploy(@PathParam("env_id") String id, @PathParam("session_id") String sessionId);
 
    @Named("environment:session-get")
    @GET

@@ -25,6 +25,7 @@ import org.jclouds.openstack.keystone.v2_0.config.AuthenticationApiModule;
 import org.jclouds.openstack.keystone.v2_0.config.CredentialTypes;
 import org.jclouds.openstack.keystone.v2_0.config.KeystoneAuthenticationModule;
 import org.jclouds.openstack.keystone.v2_0.config.KeystoneAuthenticationModule.RegionModule;
+import org.jclouds.openstack.murano.v1.config.MuranoParserModule;
 import org.jclouds.rest.internal.BaseHttpApiMetadata;
 
 import java.net.URI;
@@ -75,6 +76,7 @@ public class MuranoApiMetadata extends BaseHttpApiMetadata<MuranoApi> {
                             .add(AuthenticationApiModule.class)
                             .add(KeystoneAuthenticationModule.class)
                             .add(RegionModule.class)
+                            .add(MuranoParserModule.class)
                             .add(MuranoHttpApiModule.class).build());
         }
 

@@ -18,6 +18,7 @@ package org.jclouds.openstack.murano.v1.domain;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableMap;
+import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.openstack.v2_0.domain.Resource;
 
 import javax.inject.Named;
@@ -36,6 +37,7 @@ public class Deployment extends Resource {
    private final Date finished;
    private final String state;
    private final Map<String, Object> result;
+   @Nullable
    private final Map<String, Object> action;
 
 
@@ -52,7 +54,7 @@ public class Deployment extends Resource {
       this.finished = finished;
       this.state = state;
       this.result = ImmutableMap.copyOf(result);
-      this.action = ImmutableMap.copyOf(action);
+      this.action = action != null ? ImmutableMap.copyOf(action) : null;
    }
 
    public Date getUpdated() {
@@ -168,6 +170,7 @@ public class Deployment extends Resource {
       protected Date finished;
       protected String state;
       protected Map<String, Object> result;
+      @Nullable
       protected Map<String, Object> action;
 
       /**

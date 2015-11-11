@@ -207,7 +207,7 @@ public class EnvironmentApiMockTest extends BaseMuranoApiMockTest {
          MuranoApi muranoApi = api(server.getUrl("/").toString(), "openstack-murano", overrides);
          EnvironmentApi api = muranoApi.getEnvironmentApi("RegionOne");
 
-         boolean result = api.deploy(TEST_ENVIRONMENT_ID, TEST_SESSION_ID);
+         api.deploy(TEST_ENVIRONMENT_ID, TEST_SESSION_ID);
 
          /*
           * Check request
@@ -219,7 +219,6 @@ public class EnvironmentApiMockTest extends BaseMuranoApiMockTest {
          /*
           * Check response
           */
-         assertTrue(result);
       } finally {
          server.shutdown();
       }

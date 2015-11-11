@@ -24,7 +24,6 @@ import org.jclouds.http.annotation.ServerError;
 import org.jclouds.json.config.GsonModule.DateAdapter;
 import org.jclouds.json.config.GsonModule.Iso8601DateAdapter;
 import org.jclouds.openstack.murano.v1.MuranoApi;
-//import org.jclouds.openstack.heat.v1.handlers.HeatErrorHandler;
 import org.jclouds.openstack.murano.v1.handlers.MuranoErrorHandler;
 import org.jclouds.rest.ConfiguresHttpApi;
 import org.jclouds.rest.config.HttpApiModule;
