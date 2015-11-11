@@ -20,11 +20,11 @@ import com.google.common.collect.ImmutableList;
 import org.jclouds.openstack.murano.v1.domain.Environment;
 import org.jclouds.openstack.murano.v1.domain.MuranoPackage;
 import org.jclouds.openstack.murano.v1.domain.Session;
+import org.jclouds.openstack.murano.v1.internal.BaseMuranoApiLiveTest;
 import org.jclouds.openstack.murano.v1.options.AddApplicationOptions;
 import org.jclouds.openstack.murano.v1.options.CreatePackageOptions;
 import org.jclouds.rest.ResourceAlreadyExistsException;
 import org.testng.annotations.Test;
-import org.jclouds.openstack.murano.v1.internal.BaseMuranoApiLiveTest;
 
 import java.io.File;
 
@@ -137,8 +137,7 @@ public class EnvironmentApiLiveTest extends BaseMuranoApiLiveTest {
          Object addedApplication = environmentApi.addApplication(createdEnvironment.getId(), configure.getId(), addApplicationOptions);
          assertThat(addedApplication).isNotNull();
 
-         boolean deploy = environmentApi.deploy(createdEnvironment.getId(), configure.getId());
-         assertThat(deploy).isTrue();
+         environmentApi.deploy(createdEnvironment.getId(), configure.getId());
 
          Environment environment = environmentApi.get(createdEnvironment.getId());
          //wait until environment finishes deploying, environment can't be deleted while in "deploying" status.
@@ -160,8 +159,7 @@ public class EnvironmentApiLiveTest extends BaseMuranoApiLiveTest {
          Environment createdEnvironment = environmentApi.create(ENV_NAME);
          Session configure = environmentApi.configure(createdEnvironment.getId());
 
-         boolean deploy = environmentApi.deploy(createdEnvironment.getId(), configure.getId());
-         assertThat(deploy).isTrue();
+         environmentApi.deploy(createdEnvironment.getId(), configure.getId());
 
          Environment environment = environmentApi.get(createdEnvironment.getId());
          //wait until environment finishes deploying, environment can't be deleted while in "deploying" status.
