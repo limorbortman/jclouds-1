@@ -165,6 +165,14 @@ public class ListStackOptions extends PaginationOptions {
         return this;
     }
 
+    /**
+     * Include nested stacks in the stack listing.
+     */
+    public ListStackOptions showNested(Boolean showNested) {
+        this.queryParameters.put("show_nested", showNested !=null ? Boolean.toString(showNested) : "false");
+        return this;
+    }
+
    /**
     * Sorts the stack list by one of these attributes:
     * name, status, created_at, or updated_at
@@ -233,10 +241,17 @@ public class ListStackOptions extends PaginationOptions {
       }
 
       /**
-       * @see ListStackOptions#globalTenant(Boolean
+       * @see ListStackOptions#globalTenant(Boolean)
        */
       public static ListStackOptions globalTenant(Boolean globalTenant) {
          return new ListStackOptions().globalTenant(globalTenant);
       }
+
+       /**
+        * @see ListStackOptions#showNested(Boolean)
+        */
+       public static ListStackOptions showNested(Boolean showNested) {
+           return new ListStackOptions().showNested(showNested);
+       }
    }
 }
