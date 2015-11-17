@@ -24,6 +24,7 @@ import static org.jclouds.openstack.heat.v1.options.ListStackOptions.Builder.nam
 import static org.jclouds.openstack.heat.v1.options.ListStackOptions.Builder.sortDirection;
 import static org.jclouds.openstack.heat.v1.options.ListStackOptions.Builder.sortKey;
 import static org.jclouds.openstack.heat.v1.options.ListStackOptions.Builder.status;
+import static org.jclouds.openstack.heat.v1.options.ListStackOptions.Builder.showNested;
 
 import org.jclouds.openstack.heat.v1.domain.Stack.Status;
 import org.jclouds.openstack.heat.v1.options.ListStackOptions.SortDirection;
@@ -107,4 +108,10 @@ public class ListStackOptionsTest {
       assertThat(options.buildQueryParameters().get("global_tenant"))
             .isEqualTo(ImmutableSet.of("true"));
    }
+
+    public void testShowNested() {
+        ListStackOptions options = showNested(true);
+        assertThat(options.buildQueryParameters().get("show_nested"))
+                .isEqualTo(ImmutableSet.of("true"));
+    }
 }
