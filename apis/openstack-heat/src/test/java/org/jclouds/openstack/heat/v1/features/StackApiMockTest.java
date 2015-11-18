@@ -106,7 +106,39 @@ public class StackApiMockTest extends BaseHeatApiMockTest {
       }
    }
 
-   public void testListResource() throws Exception {
+    public void testListWithNested() throws Exception {
+        MockWebServer server = mockOpenStackServer();
+        server.enqueue(addCommonHeaders(new MockResponse().setBody(stringFromResource("/access.json"))));
+        server.enqueue(addCommonHeaders(
+                new MockResponse().setResponseCode(200).setBody(stringFromResource("/stack_list_response_with_nested.json"))));
+
+        try {
+            HeatApi heatApi = api(server.getUrl("/").toString(), "openstack-heat", overrides);
+            StackApi api = heatApi.getStackApi("RegionOne");
+
+            List<Stack> stacks = api.list().toList();
+
+         /*
+          * Check request
+          */
+            assertThat(server.getRequestCount()).isEqualTo(2);
+            assertAuthentication(server);
+            assertRequest(server.takeRequest(), "GET", BASE_URI + "/stacks");
+
+         /*
+          * Check response
+          */
+            assertThat(stacks).isNotEmpty();
+            assertThat(stacks.size()).isEqualTo(2);
+            assertThat(stacks.get(1).getParent()).isNull();
+            assertThat(stacks.get(0).getParent()).isEqualTo("b3068e15-bd1c-441f-b47f-3bab8a3529ae");
+
+        } finally {
+            server.shutdown();
+        }
+    }
+
+    public void testListResource() throws Exception {
       MockWebServer server = mockOpenStackServer();
       server.enqueue(addCommonHeaders(new MockResponse().setBody(stringFromResource("/access.json"))));
       server.enqueue(addCommonHeaders(

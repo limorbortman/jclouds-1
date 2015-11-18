@@ -23,6 +23,7 @@ import org.jclouds.openstack.heat.v1.domain.Stack;
 import org.jclouds.openstack.heat.v1.domain.StackResource;
 import org.jclouds.openstack.heat.v1.internal.BaseHeatApiLiveTest;
 import org.jclouds.openstack.heat.v1.options.CreateStackOptions;
+import org.jclouds.openstack.heat.v1.options.ListStackOptions;
 import org.jclouds.openstack.heat.v1.options.UpdateOptions;
 import org.jclouds.util.Strings2;
 import org.json.simple.JSONObject;
@@ -120,7 +121,6 @@ public class StackApiLiveTest extends BaseHeatApiLiveTest {
          assertThat(stack).isNotNull();
          assertThat(stack.getId()).isNotEmpty();
          assertThat(stack.isRollbackDisabled()).isFalse();
-
       }
    }
 
@@ -136,6 +136,7 @@ public class StackApiLiveTest extends BaseHeatApiLiveTest {
          Stack stack = stackApi.create(getName(), createStackOptions);
          assertThat(stack).isNotNull();
          assertThat(stack.getId()).isNotEmpty();
+         assertThat(stack.getParent()).isEmpty();
       }
    }
 
@@ -219,6 +220,20 @@ public class StackApiLiveTest extends BaseHeatApiLiveTest {
          Stack stack = stackApi.create(getName(), createStackOptions);
          assertThat(stack).isNotNull();
          assertThat(stack.getId()).isNotEmpty();
+
+          while (Stack.Status.CREATE_IN_PROGRESS.equals(stack.getStatus()) || stack.getStatus() == null) {
+              stack = stackApi.get(stack.getId());
+          }
+
+         FluentIterable<Stack> allStacks = stackApi.list(ListStackOptions.builder().showNested(true));
+         boolean isStackHaveParent = false;
+         for (Stack stackFromNode : allStacks) {
+             if (stackFromNode.getParent() != null && stackFromNode.getParent().equals(stack.getId())) {
+                 isStackHaveParent = true;
+                 break;
+             }
+         }
+         assertThat(isStackHaveParent).isTrue();
       }
    }
 

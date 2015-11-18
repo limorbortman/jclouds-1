@@ -26,6 +26,7 @@ import java.util.Set;
 
 import javax.inject.Named;
 
+import org.jclouds.javax.annotation.Nullable;
 import org.jclouds.openstack.v2_0.domain.Link;
 import org.jclouds.openstack.v2_0.domain.Resource;
 
@@ -70,14 +71,17 @@ public class Stack extends Resource {
    @Named("disable_rollback")
    private final boolean disableRollback;
 
+   @Nullable
+   private final String parent;
+
 
    @ConstructorProperties({"id", "stack_name", "links", "description", "owner", "capabilities", "parameters", "outputs",
          "notification_topics", "template_description", "stack_status", "stack_status_reason", "creation_time",
-         "updated_time", "timeout_mins", "disable_rollback", "project"})
+         "updated_time", "timeout_mins", "disable_rollback", "project", "parent"})
    public Stack(String id, String name, Set<Link> links, String description, String owner, Set<String> capabilities,
                 Map<String, String> parameters, List<Map<String, Object>> outputs, List<String> notificationTopics,
                 String templateDescription, Stack.Status status, String statusReason, Date created, Date updated, int timeoutMins,
-                boolean disableRollback, String project) {
+                boolean disableRollback, String project, String parent) {
       super(id, name, links);
       this.description = description;
       this.owner = owner;
@@ -93,6 +97,7 @@ public class Stack extends Resource {
       this.timeoutMins = timeoutMins;
       this.disableRollback = disableRollback;
       this.project = project;
+      this.parent = parent;
    }
 
    /**
@@ -193,6 +198,12 @@ public class Stack extends Resource {
       return disableRollback;
    }
 
+    /**
+     *
+     * @return return the uuid of the stack parent
+     */
+   public String getParent(){ return  parent; }
+
    public enum Action {
       SUSPEND, RESUME,
       UNRECOGNIZED;
@@ -279,7 +290,8 @@ public class Stack extends Resource {
             Objects.equal(this.updated, that.updated) &&
             Objects.equal(this.timeoutMins, that.timeoutMins) &&
             Objects.equal(this.disableRollback, that.disableRollback) &&
-            Objects.equal(this.project, that.project);
+            Objects.equal(this.project, that.project) &&
+            Objects.equal(this.parent, that.parent) ;
    }
 
    protected Objects.ToStringHelper string() {
@@ -297,7 +309,8 @@ public class Stack extends Resource {
             .add("updated", updated)
             .add("timeoutMins", timeoutMins)
             .add("disableRollback", disableRollback)
-            .add("project", project);
+            .add("project", project)
+            .add("parent", parent);
    }
 
    @Override
@@ -329,6 +342,7 @@ public class Stack extends Resource {
       protected Date updated;
       protected int timeoutMins;
       protected boolean disableRollback;
+      protected String parent;
 
       /**
        * @param name The description of this Stack.
@@ -472,12 +486,22 @@ public class Stack extends Resource {
          return self();
       }
 
+       /**
+        * @param parent The uuid of te stack parent.
+        * @return The builder object.
+        * @see Stack#getParent()
+        */
+       public T parent(String parent) {
+           this.parent = parent;
+           return self();
+       }
+
       /**
        * @return A new Stack object.
        */
       public Stack build() {
          return new Stack(id, name, links, description, owner, capabilities, parameters, outputs, notificationTopics,
-               templateDescription, status, statusReason, created, updated, timeoutMins, disableRollback, project);
+               templateDescription, status, statusReason, created, updated, timeoutMins, disableRollback, project, parent);
       }
 
       public T fromStack(Stack in) {
@@ -495,7 +519,8 @@ public class Stack extends Resource {
                .updated(in.getUpdated())
                .timeoutMins(in.getTimeoutMins())
                .disableRollback(in.isRollbackDisabled())
-               .project(in.getProject());
+               .project(in.getProject())
+               .parent(in.getParent());
       }
 
    }

@@ -1,0 +1,37 @@
+{
+    "stacks": [
+        {
+            "parent": "b3068e15-bd1c-441f-b47f-3bab8a3529ae",
+            "description": "No description",
+            "links": [{
+                "href": "http://10.43.20.5:8004/v1/6d55392b3ecd4622a5bd47cd74c78cac/stacks/Stack2138299414-middle_nested_stack-2jbarszcnde5-last_nested_stack-xbijndf6lqeq/be351cde-6826-4fbd-9320-90ea82bae2de",
+                "rel": "self"
+            }],
+            "stack_status_reason": "Stack CREATE completed successfully",
+            "stack_name": "Stack2138299414-middle_nested_stack-2jbarszcnde5-last_nested_stack-xbijndf6lqeq",
+            "stack_user_project_id": "1a66ff724d8c442dba125e23d2601e95",
+            "creation_time": "2015-11-18T08:28:40Z",
+            "updated_time": null,
+            "project": "6d55392b3ecd4622a5bd47cd74c78cac",
+            "stack_owner": null,
+            "stack_status": "CREATE_COMPLETE",
+            "id": "be351cde-6826-4fbd-9320-90ea82bae2de"
+        },
+        {
+            "parent": null,
+            "creation_time": "2014-06-03T20:59:46Z",
+            "description": "sample stack",
+            "id": "3095aefc-09fb-4bc7-b1f0-f21a304e864c",
+            "links": [
+                {
+                    "href": "http://192.168.123.200:8004/v1/eb1c63a4f77141548385f113a28f0f52/stacks/simple_stack/3095aefc-09fb-4bc7-b1f0-f21a304e864c",
+                    "rel": "self"
+                }
+            ],
+            "stack_name": "simple_stack",
+            "stack_status": "CREATE_COMPLETE",
+            "stack_status_reason": "Stack CREATE completed successfully",
+            "updated_time": "2014-06-03T20:59:46Z"
+        }
+    ]
+}
